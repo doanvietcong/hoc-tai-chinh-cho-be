@@ -10,6 +10,7 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { HeartsRow } from "@/components/ui/Hearts";
 import { CoinDisplay, XPDisplay } from "@/components/ui/Stats";
 import { Penguin } from "@/components/mascot/Penguin";
+import { SceneStoryPlayer } from "@/components/mascot/SceneStoryPlayer";
 import { MultipleChoiceCard } from "@/components/lesson/cards/MultipleChoice";
 import { TrueFalseCard } from "@/components/lesson/cards/TrueFalse";
 import { InputNumberCard } from "@/components/lesson/cards/InputNumber";
@@ -25,6 +26,7 @@ import {
   getTopicOfLesson,
   BADGES,
 } from "@/lib/lessons";
+import { getStoryForLesson } from "@/lib/stories";
 import { useProgress } from "@/lib/store";
 import { cn, shuffle } from "@/lib/utils";
 import { useMounted } from "@/components/useMounted";
@@ -72,6 +74,14 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
   const [showCoinBurst, setShowCoinBurst] = useState(false);
   /** Guards against double-clicks on Kiểm tra / Tiếp tục. */
   const [busy, setBusy] = useState(false);
+  /** Show full-screen story overlay (Pé Ti kể chuyện). */
+  const [showStory, setShowStory] = useState(false);
+
+  /** Story content for this lesson (if any). */
+  const story = useMemo(
+    () => (lesson ? getStoryForLesson(lesson.id) : undefined),
+    [lesson],
+  );
 
   // Per-question local state
   const [mcSelected, setMcSelected] = useState<string | null>(null);
@@ -333,6 +343,29 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
               {lesson.title}
             </h1>
             <p className="text-text-muted">{lesson.subtitle}</p>
+
+            {/* Story CTA — chỉ hiện khi lesson có story */}
+            {story && (
+              <motion.button
+                initial={{ y: 8, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.15 }}
+                onClick={() => setShowStory(true)}
+                className="w-full rounded-2xl border-2 border-brand-purple bg-[#f0e0ff] p-3 text-left hover:shadow-[0_3px_0_#a55fe0] transition-all flex items-center gap-3"
+              >
+                <div className="text-3xl shrink-0">📖</div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-extrabold text-brand-purple text-sm">
+                    Nghe Pé Ti kể chuyện trước!
+                  </p>
+                  <p className="text-[11px] text-text-muted leading-tight">
+                    ~{story.estDurationSec}s · Có hình minh họa chuyển động
+                  </p>
+                </div>
+                <div className="text-brand-purple text-xl shrink-0">▶</div>
+              </motion.button>
+            )}
+
             <div className="rounded-2xl border-2 border-[color:var(--color-border-strong)] bg-[color:var(--color-surface)] p-4 text-sm">
               <p>
                 📚 <b>{totalQ} câu hỏi</b>
@@ -353,6 +386,14 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
             >
               Bắt đầu!
             </Button>
+            {story && (
+              <button
+                onClick={() => setShowStory(true)}
+                className="text-xs text-text-muted hover:text-brand-purple underline underline-offset-2"
+              >
+                hoặc nghe Pé Ti kể chuyện
+              </button>
+            )}
           </motion.div>
         </div>
       )}
@@ -489,6 +530,15 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
         }}
       />
       <CoinBurst show={showCoinBurst} />
+
+      {/* Story overlay (Pé Ti kể chuyện) */}
+      {story && (
+        <SceneStoryPlayer
+          story={story}
+          open={showStory}
+          onClose={() => setShowStory(false)}
+        />
+      )}
     </main>
   );
 }
