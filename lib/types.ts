@@ -25,6 +25,10 @@ export interface ProgressState {
   coins: number;
   hearts: number;
   maxHearts: number;
+  /** Timestamp (ms) of last heart loss or refill. null = at max hearts. */
+  heartsLastChangeAt: number | null;
+  /** Heart regen interval in ms (default 5 minutes). */
+  heartRegenIntervalMs: number;
   streak: number;
   lastLessonDate: string | null; // ISO date YYYY-MM-DD
   completedLessons: string[]; // lesson ids

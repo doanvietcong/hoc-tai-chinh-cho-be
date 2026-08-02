@@ -1058,6 +1058,234 @@ export const STORIES: Story[] = [
       },
     ],
   },
+
+  /* =====================================================
+   * EPAY-1: Thanh toán điện tử là gì
+   * ===================================================== */
+  {
+    lessonId: "epay-1",
+    title: "Ví điện tử thần kỳ",
+    estDurationSec: 25,
+    scenes: [
+      {
+        text: "Bạn thấy mẹ mở điện thoại, quét mã, rồi... trả tiền xong! Không cần tiền mặt! Đó là VÍ ĐIỆN TỬ!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "📱", size: 80 },
+            { type: "emoji", emoji: "✨", size: 50 },
+          ],
+        },
+        mood: "happy",
+      },
+      {
+        text: "MoMo, ZaloPay, ShopeePay là các VÍ ĐIỆN TỬ phổ biến ở Việt Nam. Bạn nạp tiền vào ví rồi dùng để mua đồ, chuyển tiền cho bạn bè!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "💜", size: 50 },
+            { type: "emoji", emoji: "💙", size: 50 },
+            { type: "emoji", emoji: "🧡", size: 50 },
+            { type: "bill", value: 100, tone: "good" },
+          ],
+        },
+        mood: "happy",
+      },
+      {
+        text: "Bí quyết: ví điện tử tiện lắm, NHƯNG phải GIỮ BÍ MẬT mật khẩu. Đừng cho ai biết nhé!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "shield", tone: "safe" },
+            { type: "emoji", emoji: "🔒", size: 60 },
+          ],
+        },
+        mood: "celebrate",
+      },
+    ],
+  },
+
+  /* =====================================================
+   * EPAY-2: Dùng ví điện tử an toàn
+   * ===================================================== */
+  {
+    lessonId: "epay-2",
+    title: "Bảo mật ví thông minh",
+    estDurationSec: 30,
+    scenes: [
+      {
+        text: "Pé Ti thấy tin nhắn 'TRÚNG THƯỞNG 10 TRIỆU! Click ngay!' Pé Ti háo hức click. ĐÚNG HAY SAI?",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "💬", size: 60 },
+            { type: "emoji", emoji: "🎁", size: 60 },
+            { type: "emoji", emoji: "❓", size: 60 },
+          ],
+        },
+        mood: "thinking",
+      },
+      {
+        text: "SAI RỒI! Đó là LỪA ĐẢO! Không có ai tặng 10 triệu qua tin nhắn. Click vào là MẤT TIỀN ngay!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "🚫", size: 80 },
+            { type: "bill", value: 0, tone: "bad" },
+          ],
+        },
+        mood: "sad",
+      },
+      {
+        text: "Bí quyết vàng: GIỮ BÍ MẬT mật khẩu + mã OTP, bật vân tay, và click link lạ là KHÔNG BAO GIỜ!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "shield", tone: "safe" },
+            { type: "emoji", emoji: "👆", size: 60 },
+            { type: "emoji", emoji: "✅", size: 60 },
+          ],
+        },
+        mood: "celebrate",
+      },
+    ],
+  },
+
+  /* =====================================================
+   * EPAY-3: QR code
+   * ===================================================== */
+  {
+    lessonId: "epay-3",
+    title: "QR code thần kỳ",
+    estDurationSec: 25,
+    scenes: [
+      {
+        text: "Trước cửa hàng có 1 ô vuông to to chứa nhiều ô nhỏ đen trắng. Đó là QR CODE!",
+        visual: {
+          kind: "spotlight",
+          prop: { type: "emoji", emoji: "▦", size: 100 },
+        },
+        mood: "thinking",
+      },
+      {
+        text: "Mở app MoMo/ZaloPay → bấm QUÉT → đưa camera vào QR → app tự điền số tiền → bạn KIỂM TRA → bấm XÁC NHẬN → XONG!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "📱", size: 60 },
+            { type: "emoji", emoji: "👉", size: 50 },
+            { type: "emoji", emoji: "✓", size: 50 },
+          ],
+        },
+        mood: "happy",
+      },
+      {
+        text: "LƯU Ý: LUÔN kiểm tra số tiền trước khi xác nhận! Vì QR có thể lừa - hiển thị 25k nhưng thực tế 250k. Cẩn thận nhé!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "👀", size: 60 },
+            { type: "bill", value: 25000, tone: "good" },
+            { type: "shield", tone: "safe" },
+          ],
+        },
+        mood: "celebrate",
+      },
+    ],
+  },
+
+  /* =====================================================
+   * INSURANCE-1: Bảo hiểm là gì
+   * ===================================================== */
+  {
+    lessonId: "insurance-1",
+    title: "Bảo hiểm là gì?",
+    estDurationSec: 25,
+    scenes: [
+      {
+        text: "Pé Ti hỏi: 'Mẹ ơi, tại sao mỗi tháng mình đóng tiền gì đó mà không dùng?' Mẹ nói: 'Đó là BẢO HIỂM!'",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "🤔", size: 80 },
+            { type: "bill", value: 100, tone: "good" },
+          ],
+        },
+        mood: "thinking",
+      },
+      {
+        text: "Bảo hiểm giống như CÁI Ô. Trời nắng không dùng đến, nhưng khi TRỜI MƯA (ốm/tai nạn) thì có ngay!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "☀️", size: 60 },
+            { type: "emoji", emoji: "🌂", size: 60 },
+            { type: "emoji", emoji: "🌧️", size: 60 },
+          ],
+        },
+        mood: "happy",
+      },
+      {
+        text: "Bé có BHYT (bảo hiểm y tế) do Nhà nước cấp. Khi ốm phải nhập viện, BHYT chi trả một phần viện phí - gia đình bớt lo!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "🏥", size: 60 },
+            { type: "shield", tone: "safe" },
+            { type: "emoji", emoji: "💚", size: 60 },
+          ],
+        },
+        mood: "celebrate",
+      },
+    ],
+  },
+
+  /* =====================================================
+   * INSURANCE-2: Các loại bảo hiểm thường gặp
+   * ===================================================== */
+  {
+    lessonId: "insurance-2",
+    title: "Các loại bảo hiểm",
+    estDurationSec: 30,
+    scenes: [
+      {
+        text: "Có 3 loại bảo hiểm phổ biến: BHYT (sức khỏe), bảo hiểm xe (ô tô/xe máy), và bảo hiểm NHÂN THỌ (cả gia đình).",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "🏥", size: 50 },
+            { type: "emoji", emoji: "🏍️", size: 50 },
+            { type: "emoji", emoji: "👨‍👩‍👧", size: 50 },
+          ],
+        },
+        mood: "happy",
+      },
+      {
+        text: "Bảo hiểm NHÂN THỌ bảo vệ cả gia đình. Nếu bố/mẹ (người trụ cột) gặp rủi ro không đi làm được, công ty BH sẽ trả 1 khoản tiền lớn!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "shield", tone: "safe" },
+            { type: "emoji", emoji: "👨‍👩‍👧", size: 60 },
+            { type: "bill", value: 500, tone: "good" },
+          ],
+        },
+        mood: "thinking",
+      },
+      {
+        text: "Bài học: bảo hiểm KHÔNG phải lãng phí, mà là chuẩn bị trước cho lúc khó khăn. Một lần ốm nặng có thể tốn hàng trăm triệu - bảo hiểm giúp gia đình KHÔNG khánh kiệt!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "shield", tone: "safe" },
+            { type: "emoji", emoji: "❤️", size: 60 },
+            { type: "sparkle" },
+          ],
+        },
+        mood: "celebrate",
+      },
+    ],
+  },
 ];
 
 /** Lookup helper. */

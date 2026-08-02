@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Settings, Award, Flame, Coins, Star, Trophy, Volume2, VolumeX } from "lucide-react";
+import { ArrowLeft, Settings, Award, Flame, Coins, Star, Trophy, Volume2, VolumeX, Users } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge as BadgeUI } from "@/components/ui/Badge";
@@ -157,6 +157,16 @@ export default function ProfilePage() {
             <Settings size={20} /> Cài đặt
           </h3>
           <div className="space-y-2">
+            <Link
+              href="/parent"
+              className="w-full flex items-center justify-between gap-3 px-3 h-12 rounded-2xl border-2 border-brand-purple bg-[#f0e0ff] hover:bg-[#e0c8ff] transition-colors"
+            >
+              <span className="flex items-center gap-2 text-sm font-semibold text-brand-purple">
+                <Users size={18} />
+                Khu vực phụ huynh
+              </span>
+              <span className="text-xs text-brand-purple">→</span>
+            </Link>
             <button
               onClick={toggleSound}
               className="w-full flex items-center justify-between gap-3 px-3 h-12 rounded-2xl border-2 border-[color:var(--color-border-strong)] bg-white hover:bg-surface transition-colors"

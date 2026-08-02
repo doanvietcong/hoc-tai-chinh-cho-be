@@ -4,16 +4,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ShoppingBag, CupSoda, PiggyBank } from "lucide-react";
+import { ArrowLeft, ShoppingBag, CupSoda, PiggyBank, ShieldAlert } from "lucide-react";
 import { useMounted } from "@/components/useMounted";
 import { useProgress } from "@/lib/store";
 import { ToyShopGame } from "@/components/games/ToyShopGame";
 import { LemonadeGame } from "@/components/games/LemonadeGame";
 import { PiggyBankGame } from "@/components/games/PiggyBankGame";
+import { ScamDetectorGame } from "@/components/games/ScamDetectorGame";
 import { StoryPlayer } from "@/components/mascot/StoryPlayer";
 import { cn } from "@/lib/utils";
 
-type GameId = "toy-shop" | "lemonade" | "piggy-bank";
+type GameId = "toy-shop" | "lemonade" | "piggy-bank" | "scam-detector";
 
 interface GameInfo {
   id: GameId;
@@ -56,6 +57,16 @@ const GAMES: GameInfo[] = [
     story:
       "Một tuần của bạn với 7 quyết định tiền: mua kem, mua sách, nhận tiền thưởng, sinh nhật bạn thân... Mỗi ngày bạn chọn TIÊU hay TIẾT KIỆM. Cuối tuần xem heo đất bạn còn bao nhiêu!",
   },
+  {
+    id: "scam-detector",
+    title: "Thám tử chống lừa đảo",
+    emoji: "🕵️",
+    icon: <ShieldAlert size={20} />,
+    age: "9-15 tuổi",
+    description: "Phân biệt quảng cáo thật vs lừa đảo",
+    story:
+      "Pé Ti nhận được nhiều tin nhắn và quảng cáo mỗi ngày. Làm sao biết cái nào THẬT, cái nào LỪA ĐẢO? Hãy đọc kỹ và quyết định - mỗi câu trả lời đúng là một bài học quý giá!",
+  },
 ];
 
 export default function PlayPage() {
@@ -85,7 +96,7 @@ export default function PlayPage() {
 
       <div className="mx-auto max-w-2xl px-4 py-6 space-y-5">
         {/* Game tabs */}
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {GAMES.map((g) => (
             <button
               key={g.id}
@@ -136,6 +147,7 @@ export default function PlayPage() {
               <LemonadeGame startCapital={50000} pricePerGlass={12000} days={7} />
             )}
             {activeGame === "piggy-bank" && <PiggyBankGame startSavings={20000} />}
+            {activeGame === "scam-detector" && <ScamDetectorGame />}
           </motion.div>
         </AnimatePresence>
 

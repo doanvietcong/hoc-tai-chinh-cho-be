@@ -31,6 +31,9 @@ interface Actions {
   /** Restore a heart manually (1 heart, costs 50 coins). */
   refillHeart: () => boolean;
 
+  /** Auto-regen: if 5+ min passed since last change, add 1 heart. Returns true if added. */
+  regenHeart: () => boolean;
+
   /** Toggle sound effects on/off. */
   setSoundEnabled: (enabled: boolean) => void;
 
@@ -44,6 +47,8 @@ const initialState: ProgressState = {
   coins: 0,
   hearts: 5,
   maxHearts: 5,
+  heartsLastChangeAt: null,
+  heartRegenIntervalMs: 5 * 60 * 1000, // 5 minutes per heart
   streak: 0,
   lastLessonDate: null,
   completedLessons: [],
@@ -105,6 +110,10 @@ export const useProgress = create<ProgressState & Actions>()(
 
         set({
           hearts: newHearts,
+          // Reset regen timer when a heart is LOST (not when gained).
+          // If at max, set to null so regen doesn't tick.
+          heartsLastChangeAt:
+            newHearts < state.maxHearts ? Date.now() : null,
           xp: state.xp + result.xpEarned,
           coins: state.coins + result.coinsEarned,
           totalCorrect: state.totalCorrect + (result.correct ? 1 : 0),
@@ -144,6 +153,29 @@ export const useProgress = create<ProgressState & Actions>()(
         set({
           hearts: state.hearts + 1,
           coins: state.coins - 50,
+          // Refilled to full → no regen needed
+          heartsLastChangeAt: state.hearts + 1 >= state.maxHearts ? null : Date.now(),
+        });
+        return true;
+      },
+
+      regenHeart: () => {
+        const state = get();
+        if (state.hearts >= state.maxHearts) {
+          // Already full, ensure timer is null
+          if (state.heartsLastChangeAt !== null) {
+            set({ heartsLastChangeAt: null });
+          }
+          return false;
+        }
+        const last = state.heartsLastChangeAt ?? Date.now();
+        const elapsed = Date.now() - last;
+        if (elapsed < state.heartRegenIntervalMs) return false;
+        const newHearts = state.hearts + 1;
+        set({
+          hearts: newHearts,
+          heartsLastChangeAt:
+            newHearts >= state.maxHearts ? null : Date.now(),
         });
         return true;
       },
@@ -155,16 +187,25 @@ export const useProgress = create<ProgressState & Actions>()(
     {
       name: "pe-ti-progress",
       storage: createJSONStorage(() => localStorage),
-      version: 2,
+      version: 3,
       migrate: (persisted, version) => {
-        // v1 → v2: add soundEnabled (default true)
+        let state = persisted as ProgressState;
+        // v1 → v2: add soundEnabled
         if (version < 2) {
-          return {
-            ...(persisted as ProgressState),
-            soundEnabled: (persisted as ProgressState)?.soundEnabled ?? true,
+          state = { ...state, soundEnabled: state.soundEnabled ?? true };
+        }
+        // v2 → v3: add hearts regen
+        if (version < 3) {
+          state = {
+            ...state,
+            heartsLastChangeAt:
+              state.heartsLastChangeAt ??
+              (state.hearts < state.maxHearts ? Date.now() : null),
+            heartRegenIntervalMs:
+              state.heartRegenIntervalMs ?? 5 * 60 * 1000,
           };
         }
-        return persisted as ProgressState;
+        return state;
       },
     },
   ),

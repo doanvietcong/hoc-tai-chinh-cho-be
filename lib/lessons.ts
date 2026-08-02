@@ -1279,6 +1279,243 @@ const investLessons: Lesson[] = [
   },
 ];
 
+/* ============================================================
+ * TOPIC 7 – Thanh toán điện tử (8-15 tuổi)
+ * ============================================================ */
+const epayLessons: Lesson[] = [
+  {
+    id: "epay-1",
+    topicId: "epay",
+    index: 1,
+    title: "Thanh toán điện tử là gì?",
+    subtitle: "MoMo, ZaloPay, banking apps",
+    ageGroup: ["8-11", "12-15"],
+    xpReward: 35,
+    coinReward: 18,
+    questions: [
+      mc(
+        "ep1-q1",
+        "MoMo và ZaloPay là gì?",
+        "ewallet",
+        [
+          { id: "ewallet", label: "Ví điện tử", emoji: "📱" },
+          { id: "atm", label: "Cây ATM", emoji: "🏧" },
+          { id: "bank", label: "Ngân hàng", emoji: "🏦" },
+          { id: "piggy", label: "Heo đất", emoji: "🐷" },
+        ],
+        "MoMo, ZaloPay là ví điện tử phổ biến ở Việt Nam.",
+        "Ví điện tử (e-wallet) là ứng dụng trên điện thoại giúp bạn thanh toán, chuyển tiền, nạp/rút tiền mà không cần tiền mặt. Ở Việt Nam phổ biến: MoMo, ZaloPay, VNPay, ShopeePay.",
+      ),
+      tf(
+        "ep1-q2",
+        "Đúng hay sai?",
+        "Với ví điện tử, bạn có thể chuyển tiền cho bạn bè chỉ bằng số điện thoại.",
+        true,
+        "Đúng! Ví điện tử cho phép chuyển tiền nhanh qua số điện thoại, không cần ra ngân hàng.",
+      ),
+      mc(
+        "ep1-q3",
+        "Để dùng được ví điện tử, bạn cần gì?",
+        "phone",
+        [
+          { id: "phone", label: "Điện thoại thông minh + Internet", emoji: "📱" },
+          { id: "paper", label: "Giấy + bút", emoji: "📝" },
+          { id: "piggy", label: "Heo đất", emoji: "🐷" },
+          { id: "tv", label: "Tivi", emoji: "📺" },
+        ],
+        "Ví điện tử cần điện thoại có kết nối Internet để hoạt động.",
+        "Ví điện tử là ứng dụng trên smartphone. Bạn cần điện thoại thông minh và kết nối Internet (WiFi hoặc 4G) để sử dụng.",
+      ),
+    ],
+  },
+  {
+    id: "epay-2",
+    topicId: "epay",
+    index: 2,
+    title: "Dùng ví điện tử an toàn",
+    subtitle: "Mẹo bảo mật MoMo, ZaloPay",
+    ageGroup: ["8-11", "12-15"],
+    xpReward: 35,
+    coinReward: 18,
+    questions: [
+      mc(
+        "ep2-q1",
+        "Khi dùng ví điện tử, điều nào QUAN TRỌNG NHẤT?",
+        "secret",
+        [
+          { id: "secret", label: "GIỮ BÍ MẬT mật khẩu & mã OTP", emoji: "🔒" },
+          { id: "share", label: "Chia sẻ tài khoản cho bạn bè", emoji: "🤝" },
+          { id: "save", label: "Lưu mật khẩu trong note chung", emoji: "📝" },
+          { id: "show", label: "Cho bạn xem mật khẩu", emoji: "👀" },
+        ],
+        "Không bao giờ chia sẻ mật khẩu hay mã OTP với bất kỳ ai!",
+        "Mật khẩu và mã OTP là chìa khóa bảo vệ tiền của bạn. Tuyệt đối KHÔNG chia sẻ, kể cả với bạn bè, người thân. Nhân viên ngân hàng/ví cũng KHÔNG bao giờ hỏi mã OTP.",
+      ),
+      tf(
+        "ep2-q2",
+        "Đúng hay sai?",
+        "Nếu nhận được tin nhắn 'Trúng thưởng 10 triệu, click link để nhận', bạn nên click ngay.",
+        false,
+        "Sai! Đây là chiêu lừa đảo phổ biến. Không bao giờ click link lạ. Bỏ qua và xóa tin nhắn.",
+      ),
+      drag(
+        "ep2-q3",
+        "Phân loại: đâu là hành vi AN TOÀN vs KHÔNG AN TOÀN khi dùng ví điện tử?",
+        [
+          { id: "a1", label: "AN TOÀN", emoji: "✅" },
+          { id: "b1", label: "KHÔNG AN TOÀN", emoji: "❌" },
+        ],
+        [
+          { id: "i1", label: "Bật xác thực vân tay", emoji: "👆", bucketId: "a1" },
+          { id: "i2", label: "Cho bạn mượn điện thoại đã đăng nhập ví", emoji: "📱", bucketId: "b1" },
+          { id: "i3", label: "Kiểm tra số tiền trước khi xác nhận", emoji: "👀", bucketId: "a1" },
+          { id: "i4", label: "Click link 'trúng thưởng' lạ", emoji: "🎁", bucketId: "b1" },
+        ],
+        "An toàn: bật bảo mật sinh trắc học, kiểm tra giao dịch. Không an toàn: cho mượn điện thoại, click link lạ.",
+      ),
+    ],
+  },
+  {
+    id: "epay-3",
+    topicId: "epay",
+    index: 3,
+    title: "QR code & thanh toán không tiền mặt",
+    subtitle: "Quét mã QR - tiện lợi nhưng cẩn thận",
+    ageGroup: ["8-11", "12-15"],
+    xpReward: 40,
+    coinReward: 20,
+    questions: [
+      mc(
+        "ep3-q1",
+        "QR code hoạt động như thế nào?",
+        "scan",
+        [
+          { id: "scan", label: "Mở app ví → quét mã → xác nhận thanh toán", emoji: "📱" },
+          { id: "magic", label: "Tiền tự bay từ ví vào tài khoản người khác", emoji: "✨" },
+          { id: "sms", label: "Gửi SMS cho ngân hàng", emoji: "💬" },
+          { id: "cash", label: "Cầm tiền mặt cho người bán", emoji: "💵" },
+        ],
+        "QR code là cách thanh toán nhanh bằng cách quét mã qua điện thoại.",
+        "QR code chứa thông tin thanh toán (số tiền, tài khoản nhận). Khi bạn quét bằng app ví điện tử, app sẽ tự điền thông tin, bạn chỉ cần xác nhận để chuyển tiền.",
+      ),
+      num(
+        "ep3-q2",
+        "Bạn mua 1 ly trà sữa 25.000đ bằng QR. Bạn nhập số tiền bao nhiêu vào app?",
+        25000,
+        "đồng",
+        "Đọc kỹ giá tiền trước khi xác nhận!",
+        "Luôn đọc kỹ số tiền trước khi xác nhận QR. Nếu nhập sai, tiền sẽ chuyển nhầm và khó lấy lại.",
+      ),
+      tf(
+        "ep3-q3",
+        "Đúng hay sai?",
+        "Có thể dùng QR code để nhận tiền (thay vì chỉ dùng để trả tiền).",
+        true,
+        "Đúng! QR code có 2 chiều: quét để TRẢ tiền, hoặc đưa mã QR của mình cho người khác quét để NHẬN tiền. Rất tiện!",
+      ),
+    ],
+  },
+];
+
+/* ============================================================
+ * TOPIC 8 – Bảo hiểm cơ bản (9-15 tuổi)
+ * ============================================================ */
+const insuranceLessons: Lesson[] = [
+  {
+    id: "insurance-1",
+    topicId: "insurance",
+    index: 1,
+    title: "Bảo hiểm là gì?",
+    subtitle: "Bảo vệ mình khi ốm đau, tai nạn",
+    ageGroup: ["8-11", "12-15"],
+    xpReward: 35,
+    coinReward: 18,
+    questions: [
+      mc(
+        "in1-q1",
+        "Bảo hiểm y tế giúp gì cho bạn?",
+        "hospital",
+        [
+          { id: "hospital", label: "Giảm tiền viện phí khi ốm/tai nạn", emoji: "🏥" },
+          { id: "rich", label: "Làm bạn giàu lên", emoji: "💰" },
+          { id: "fast", label: "Giúp bạn chạy nhanh hơn", emoji: "🏃" },
+          { id: "smart", label: "Giúp bạn thông minh hơn", emoji: "🧠" },
+        ],
+        "Bảo hiểm y tế giúp gia đình bớt lo chi phí khi ốm đau.",
+        "Bảo hiểm y tế (BHYT) là loại bảo hiểm Nhà nước. Khi bạn đi khám/chữa bệnh, BHYT sẽ chi trả một phần hoặc toàn bộ viện phí, giúp gia đình tiết kiệm tiền.",
+      ),
+      tf(
+        "in1-q2",
+        "Đúng hay sai?",
+        "Bảo hiểm chỉ dành cho người lớn, trẻ em không cần.",
+        false,
+        "Sai! Trẻ em cũng cần bảo hiểm y tế (BHYT do Nhà nước cấp). Ngoài ra còn có bảo hiểm sức khỏe riêng cho trẻ em để phòng khi ốm nặng.",
+      ),
+      mc(
+        "in1-q3",
+        "Bảo hiểm xe (ô tô/xe máy) bồi thường khi nào?",
+        "crash",
+        [
+          { id: "crash", label: "Khi xe bị tai nạn, hư hỏng", emoji: "💥" },
+          { id: "new", label: "Khi muốn đổi xe mới", emoji: "🆕" },
+          { id: "color", label: "Khi muốn sơn xe màu khác", emoji: "🎨" },
+          { id: "gas", label: "Khi hết xăng", emoji: "⛽" },
+        ],
+        "Bảo hiểm xe bồi thường chi phí sửa xe khi gặp tai nạn hoặc mất cắp.",
+        "Bảo hiểm xe (ô tô, xe máy) giúp bạn không phải trả toàn bộ chi phí sửa xe/thay xe khi bị tai nạn, mất cắp. Đây là bảo hiểm BẮT BUỘC theo luật ở Việt Nam.",
+      ),
+    ],
+  },
+  {
+    id: "insurance-2",
+    topicId: "insurance",
+    index: 2,
+    title: "Các loại bảo hiểm thường gặp",
+    subtitle: "Sức khỏe, nhà, xe, nhân thọ",
+    ageGroup: ["8-11", "12-15"],
+    xpReward: 40,
+    coinReward: 20,
+    questions: [
+      mc(
+        "in2-q1",
+        "Bảo hiểm NHÂN THỌ là gì?",
+        "future",
+        [
+          { id: "future", label: "Bảo vệ gia đình khi bố mẹ gặp rủi ro", emoji: "👨‍👩‍👧" },
+          { id: "forever", label: "Bảo hiểm sống mãi mãi", emoji: "♾️" },
+          { id: "fast", label: "Bảo hiểm đi nhanh", emoji: "💨" },
+          { id: "money", label: "Bảo hiểm tiền bạc", emoji: "💰" },
+        ],
+        "Bảo hiểm nhân thọ bảo vệ gia đình khi người trụ cột gặp rủi ro.",
+        "Bảo hiểm nhân thọ là loại bảo hiểm dài hạn. Khi bố/mẹ (người trụ cột) gặp rủi ro (ốm nặng, tai nạn, mất), công ty bảo hiểm sẽ chi trả một khoản tiền lớn để gia đình có tiền trang trải.",
+      ),
+      drag(
+        "in2-q2",
+        "Mỗi rủi ro nên dùng loại bảo hiểm nào?",
+        [
+          { id: "a1", label: "BHYT", emoji: "🏥" },
+          { id: "b1", label: "Bảo hiểm xe", emoji: "🏍️" },
+          { id: "c1", label: "BH nhân thọ", emoji: "👨‍👩‍👧" },
+        ],
+        [
+          { id: "i1", label: "Bị ốm phải nhập viện", emoji: "🤒", bucketId: "a1" },
+          { id: "i2", label: "Xe máy bị tai nạn", emoji: "💥", bucketId: "b1" },
+          { id: "i3", label: "Bố mẹ gặp rủi ro không làm việc được", emoji: "🆘", bucketId: "c1" },
+        ],
+        "Mỗi loại bảo hiểm tương ứng với một rủi ro khác nhau.",
+        "Bảo hiểm y tế (BHYT) → ốm đau, nhập viện. Bảo hiểm xe → tai nạn xe cộ. Bảo hiểm nhân thọ → bảo vệ gia đình khi người trụ cột gặp rủi ro.",
+      ),
+      tf(
+        "in2-q3",
+        "Đúng hay sai?",
+        "Mua bảo hiểm là lãng phí tiền vì 'có khi nào gặp rủi ro đâu'.",
+        false,
+        "Sai! Bảo hiểm giống như mua ô khi trời đang nắng - chuẩn bị trước cho lúc cần. Một lần ốm nặng hoặc tai nạn có thể tốn hàng trăm triệu, bảo hiểm giúp gia đình không khánh kiệt.",
+      ),
+    ],
+  },
+];
+
 /* ---------- Build topics from above ---------- */
 export const TOPICS: Topic[] = [
   {
@@ -1328,6 +1565,22 @@ export const TOPICS: Topic[] = [
     color: "purple",
     description: "Gửi tiết kiệm ngân hàng, lãi kép, cổ phiếu & trái phiếu",
     lessons: investLessons,
+  },
+  {
+    id: "epay",
+    title: "Thanh toán điện tử",
+    emoji: "📱",
+    color: "blue",
+    description: "MoMo, ZaloPay, QR code - tiện lợi nhưng cần an toàn",
+    lessons: epayLessons,
+  },
+  {
+    id: "insurance",
+    title: "Bảo hiểm cơ bản",
+    emoji: "🛡️",
+    color: "pink",
+    description: "BHYT, bảo hiểm xe, nhân thọ - phòng khi rủi ro",
+    lessons: insuranceLessons,
   },
 ];
 
@@ -1434,6 +1687,22 @@ export const BADGES: Badge[] = [
     emoji: "📈",
     condition: (s) =>
       investLessons.every((l) => s.completedLessons.includes(l.id)),
+  },
+  {
+    id: "digital-payer",
+    name: "Dân thanh toán số",
+    description: "Hoàn thành chủ đề 'Thanh toán điện tử'",
+    emoji: "📱",
+    condition: (s) =>
+      epayLessons.every((l) => s.completedLessons.includes(l.id)),
+  },
+  {
+    id: "safety-shield",
+    name: "Khiên bảo vệ",
+    description: "Hoàn thành chủ đề 'Bảo hiểm cơ bản'",
+    emoji: "🛡️",
+    condition: (s) =>
+      insuranceLessons.every((l) => s.completedLessons.includes(l.id)),
   },
   {
     id: "scholar-200",

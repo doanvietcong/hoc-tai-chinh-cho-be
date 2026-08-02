@@ -65,10 +65,18 @@ export default function HomePage() {
               </p>
             </div>
           </Link>
+          <Link
+            href="/parent"
+            className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold text-brand-purple bg-[#f0e0ff] border-2 border-brand-purple rounded-full px-2.5 h-9 hover:bg-[#e0c8ff] transition-colors"
+            aria-label="Trang phụ huynh"
+            title="Phụ huynh xem tiến độ bé"
+          >
+            👨‍👩‍👧 Phụ huynh
+          </Link>
 
           <div className="flex items-center gap-2 sm:gap-3">
             <StreakBadge days={streak} />
-            <Hearts hearts={hearts} />
+            <Hearts />
             <CoinDisplay coins={coins} />
           </div>
         </div>
@@ -100,7 +108,7 @@ export default function HomePage() {
             <div className="flex-1">
               <p className="font-extrabold text-brand-purple">Mini-games vui nhộn!</p>
               <p className="text-xs text-text-muted">
-                Chợ đồ chơi · Quán nước chanh · Heo đất tuần
+                Chợ đồ chơi · Quán nước chanh · Thám tử chống lừa đảo
               </p>
             </div>
             <div className="text-brand-purple text-xl">→</div>
