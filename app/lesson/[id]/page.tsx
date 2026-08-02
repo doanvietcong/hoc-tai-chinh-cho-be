@@ -16,6 +16,11 @@ export const metadata = {
   title: "Bài học – Pé Ti",
 };
 
-export default function LessonPage({ params }: { params: { id: string } }) {
-  return <LessonClient lessonId={params.id} />;
+export default async function LessonPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  return <LessonClient lessonId={id} />;
 }
