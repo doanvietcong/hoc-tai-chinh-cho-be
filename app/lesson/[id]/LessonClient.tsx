@@ -70,6 +70,8 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
     { emoji: string; name: string }[]
   >([]);
   const [showCoinBurst, setShowCoinBurst] = useState(false);
+  /** Guards against double-clicks on Kiểm tra / Tiếp tục. */
+  const [busy, setBusy] = useState(false);
 
   // Per-question local state
   const [mcSelected, setMcSelected] = useState<string | null>(null);
@@ -84,6 +86,32 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
   }, [mounted, user, router]);
 
   useEffect(() => {
+    // Redirect to home if user tries to access a locked lesson.
+    if (mounted && user && lesson) {
+      const completed = useProgress.getState().completedLessons;
+      const isDone = completed.includes(lesson.id);
+      if (!isDone) {
+        // Find topic this lesson belongs to
+        const topic = getTopicOfLesson(lesson.id);
+        if (topic) {
+          // Check that all previous lessons in the same topic are done
+          let blocked = false;
+          for (const l of topic.lessons) {
+            if (l.id === lesson.id) break;
+            if (!completed.includes(l.id)) {
+              blocked = true;
+              break;
+            }
+          }
+          if (blocked) {
+            router.replace("/home");
+          }
+        }
+      }
+    }
+  }, [mounted, user, lesson, router]);
+
+  useEffect(() => {
     // Reset state when lesson id changes
     setPhase("intro");
     setQIdx(0);
@@ -96,6 +124,7 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
     setTfSelected(null);
     setNumValue(null);
     setSortValue(null);
+    setBusy(false);
   }, [lessonId]);
 
   if (!mounted || !lesson || !user) return null;
@@ -112,27 +141,40 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
 
   /** Called when user checks an answer. Returns whether answer is correct. */
   function checkAnswer(): boolean {
-    if (!currentQ) return false;
+    if (!currentQ || busy || isChecked) return false;
+    setBusy(true);
     let correct = false;
 
     switch (currentQ.type) {
       case "multiple-choice": {
-        if (!mcSelected) return false;
+        if (!mcSelected) {
+          setBusy(false);
+          return false;
+        }
         correct = mcSelected === currentQ.correctOptionId;
         break;
       }
       case "true-false": {
-        if (tfSelected == null) return false;
+        if (tfSelected == null) {
+          setBusy(false);
+          return false;
+        }
         correct = tfSelected === currentQ.correct;
         break;
       }
       case "input-number": {
-        if (numValue == null) return false;
+        if (numValue == null) {
+          setBusy(false);
+          return false;
+        }
         correct = numValue === currentQ.correctNumber;
         break;
       }
       case "drag-sort": {
-        if (!sortValue) return false;
+        if (!sortValue) {
+          setBusy(false);
+          return false;
+        }
         correct = currentQ.items.every(
           (it) => sortValue[it.id] === it.bucketId,
         );
@@ -197,12 +239,24 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
   }
 
   function handleContinueAfterFeedback() {
+    if (busy) return;
+    setBusy(true);
     if (hearts <= 0) {
       // game over
       router.push("/home");
       return;
     }
+    // Drag-sort: cho phép retry khi sai, KHÔNG mất thêm heart.
+    // Heart đã trừ 1 lần khi user click "Kiểm tra" lần đầu.
+    if (isCorrect === false && currentQ?.type === "drag-sort") {
+      setIsChecked(false);
+      setIsCorrect(null);
+      setSortValue(null);
+      setBusy(false);
+      return;
+    }
     nextQuestion();
+    setTimeout(() => setBusy(false), 50);
   }
 
   function getCorrectAnswerText(): string {
@@ -290,7 +344,13 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
                 Hoàn thành không sai để nhận thưởng hoàn hảo!
               </p>
             </div>
-            <Button size="xl" variant="primary" onClick={startLessonHandler} fullWidth>
+            <Button
+              size="xl"
+              variant="primary"
+              onClick={startLessonHandler}
+              fullWidth
+              disabled={busy}
+            >
               Bắt đầu!
             </Button>
           </motion.div>
@@ -357,7 +417,7 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
                     size="lg"
                     variant="primary"
                     onClick={checkAnswer}
-                    disabled={!canCheckCurrent()}
+                    disabled={!canCheckCurrent() || busy}
                   >
                     Kiểm tra
                   </Button>
@@ -372,6 +432,7 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
             correctAnswer={getCorrectAnswerText()}
             explainer={currentQ.explainer}
             onContinue={handleContinueAfterFeedback}
+            canContinue={!busy}
           />
         </div>
       )}

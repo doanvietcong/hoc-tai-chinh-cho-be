@@ -82,10 +82,17 @@ export const useProgress = create<ProgressState & Actions>()(
 
       recordAnswer: (lessonId, result) => {
         const state = get();
+        const prevResults = state.lessonResults[lessonId] ?? [];
+        // If user already has a prior attempt for this question (e.g. drag-sort
+        // retry after a wrong answer), don't deduct heart again.
+        const hasPriorAttempt = prevResults.some(
+          (r) => r.questionId === result.questionId,
+        );
         const newHearts = result.correct
           ? state.hearts
-          : Math.max(0, state.hearts - 1);
-        const prevResults = state.lessonResults[lessonId] ?? [];
+          : hasPriorAttempt
+            ? state.hearts
+            : Math.max(0, state.hearts - 1);
         // Replace existing result for this question
         const updatedLessonResults = prevResults.filter(
           (r) => r.questionId !== result.questionId,
