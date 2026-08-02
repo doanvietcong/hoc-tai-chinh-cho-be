@@ -89,6 +89,25 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Mini-game CTA */}
+      <section className="mx-auto max-w-2xl px-4 pb-2">
+        <Link
+          href="/play"
+          className="block rounded-2xl border-2 border-brand-purple bg-[#f0e0ff] p-4 hover:shadow-[0_3px_0_#a55fe0] transition-all"
+        >
+          <div className="flex items-center gap-3">
+            <div className="text-3xl">🎮</div>
+            <div className="flex-1">
+              <p className="font-extrabold text-brand-purple">Mini-games vui nhộn!</p>
+              <p className="text-xs text-text-muted">
+                Chợ đồ chơi · Quán nước chanh · Heo đất tuần
+              </p>
+            </div>
+            <div className="text-brand-purple text-xl">→</div>
+          </div>
+        </Link>
+      </section>
+
       {/* Level map */}
       <section className="mx-auto max-w-2xl px-4 pb-32">
         {topicGroups.map((group, topicIdx) => (
