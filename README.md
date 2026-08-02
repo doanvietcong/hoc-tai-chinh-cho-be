@@ -7,12 +7,13 @@ Một web app học tài chính cá nhân cho trẻ em Việt Nam 5–15 tuổi,
 - **6 chủ đề × 3-4 bài = 21 bài học** đầy đủ nội dung
 - **3 mini-games tương tác thực tế:** Chợ đồ chơi (mua sắm 50k), Quán nước chanh (7 ngày làm ông chủ), Heo đất tuần (7 quyết định tiền)
 - **Audio kể chuyện mini-game:** Pé Ti kể chuyện ngắn cho mỗi mini-game (dùng Web Speech API, miễn phí)
-- **Pé Ti kể chuyện trước bài học (mới!):** 4 bài story-driven có mini-movie 30-60s với minh họa chuyển động (props SVG animate: heo đất, 3 hũ, biểu đồ tròn, tiền xu, két sắt, cây tiền...) + giọng đọc tiếng Việt sync với audio
+- **Pé Ti kể chuyện trước TẤT CẢ 21 bài học (mới!):** mini-movie 25-60s với minh họa chuyển động (props SVG animate: heo đất, 3 hũ, biểu đồ tròn, tiền xu, két sắt, cây tiền, bank, shield, sparkles...) + giọng đọc tiếng Việt sync với audio, auto-advance scenes
+- **Sound effects (mới!):** đúng/sai/coin/heart-loss/badge fanfare/lesson complete/story end v.v. dùng Web Audio API (zero MP3 files), toggle Bật/Tắt trong Hồ sơ
 - **4 dạng câu hỏi tương tác:** Trắc nghiệm, Đúng/Sai, Kéo-xếp (drag-sort), Nhập số
 - **Mascot Pé Ti** với animation (idle/happy/sad/thinking/celebrate/wave)
 - **Level map zig-zag** giống Duolingo, mở bài theo thứ tự
-- **Gamification:** Streak hàng ngày, Hearts (5 tim, sai mất 1, hồi bằng 50 xu), Xu & XP, 14 huy hiệu
-- **Hồ sơ cá nhân:** Thống kê XP, xu, streak, tỉ lệ chính xác, tiến độ từng chủ đề, huy hiệu
+- **Gamification:** Streak hàng ngày, Hearts (5 tim, sai mất 1, hồi bằng 50 xu), Xu & XP, 13 huy hiệu
+- **Hồ sơ cá nhân:** Thống kê XP, xu, streak, tỉ lệ chính xác, tiến độ từng chủ đề, huy hiệu, toggle âm thanh
 - **Lưu localStorage** – không cần backend, refresh là có dữ liệu
 - **Responsive** cho cả mobile & desktop
 - **100% tiếng Việt**, font Be Vietnam Pro
@@ -134,9 +135,9 @@ pe-ti-finance/
 
 ## 🛣 Roadmap (sau MVP)
 
-- [x] ✅ Pé Ti kể chuyện trước bài học (Lottie-style animated scenes) - 4 bài
-- [ ] Thêm storyboards cho 17 bài còn lại (storyboard dạng thường, không cần animation phức tạp)
-- [ ] Sound effects (Howler.js) với toggle
+- [x] ✅ Pé Ti kể chuyện trước bài học (Lottie-style animated scenes) - đủ 21/21 bài
+- [x] ✅ Sound effects (Web Audio API, zero MP3) với toggle trong Hồ sơ
+- [x] ✅ Story polish: fix split-view labels, sparkle confetti cuối stories
 - [ ] Thêm chủ đề 4: Kiếm tiền & Khởi nghiệp (12-15)
 - [ ] Thêm chủ đề 5: Quản lý thu chi cá nhân (12-15)
 - [ ] Trang phụ huynh theo dõi tiến độ con
@@ -145,6 +146,7 @@ pe-ti-finance/
 - [ ] Bảng xếp hạng gia đình / lớp học
 - [ ] Xuất báo cáo PDF cho phụ huynh
 - [ ] Mini-game bổ sung: Mở tài khoản tiết kiệm ảo, Phát hiện quảng cáo lừa đảo
+- [ ] Hearts regen (auto-recover theo thời gian)
 
 ## 📸 Screenshots
 
