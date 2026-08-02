@@ -2,14 +2,20 @@
 /**
  * Generate Vietnamese TTS audio files for all Pé Ti stories.
  *
+ * Supports multiple TTS providers (auto-detect từ .env.local):
+ *   - elevenlabs  (RECOMMENDED) - giọng AI tự nhiên, free 10K chars/tháng
+ *   - vbee        - Vbee.vn, giọng Việt native, free ~100K chars/tháng
+ *   - fpt         - FPT.AI TTS, giọng Việt chuẩn, free 20K chars/tháng
+ *
  * Usage:
- *   1. Set FPT_AI_API_KEY in .env.local
+ *   1. Set API key trong .env.local (ELEVENLABS_API_KEY / VBEE_API_KEY / FPT_AI_API_KEY)
  *   2. Run: npm run generate-audio
+ *   3. Files MP3 xuất hiện trong public/audio/{lessonId}/{sceneIdx}.mp3
  *
- * Output:
- *   public/audio/{lessonId}/{sceneIdx}.mp3
- *
- * Docs: see GUIDE_FPT_TTS.md
+ * Docs:
+ *   - GUIDE_ELEVENLABS.md
+ *   - GUIDE_VBEE.md
+ *   - GUIDE_FPT_TTS.md
  */
 
 const fs = require("fs");
@@ -17,20 +23,44 @@ const path = require("path");
 const https = require("https");
 const { URL } = require("url");
 
-// ----- Config -----
-const VOICE = "lemy"; // FPT.AI voice ID (nữ, miền Nam, dễ thương)
-const SPEED = "1"; // 0=slow, 1=normal, 2=fast, 3=very fast
-const REQUEST_DELAY_MS = 1100; // rate limit: 1 req/sec
+// ----- Paths -----
 const STORIES_PATH = path.join(__dirname, "..", "lib", "stories.ts");
 const OUT_DIR = path.join(__dirname, "..", "public", "audio");
+
+// ----- Config -----
+const REQUEST_DELAY_MS = 1100; // rate limit giữa các request
+
+// ElevenLabs defaults
+const EL_VOICE_ID_DEFAULT = "pNInz6obpgDQGcFmaJgB"; // "Adam" - male, deep, narrative
+const EL_MODEL_ID = "eleven_multilingual_v2"; // hỗ trợ tiếng Việt
+// Voice ID gợi ý:
+//   pNInz6obpgDQGcFmaJgB - Adam (nam, trầm, kể chuyện tốt)
+//   21m00Tcm4TlvDq8ikWAM - Rachel (nữ, dịu dàng)
+//   AZnzlk1XvdvUeBnXmlld - Domi (nữ, trẻ trung)
+//   EXAVITQu4vr4xnSDxMaL - Bella (nữ, mềm mại)
+//   2EiwWnXFnvU5JinP4o6y - Sam (nam, kể chuyện)
+//   gU0LNdkMOjJABWrEB4h3 - Charlie (nam, năng động)
+
+// FPT.AI defaults
+const FPT_VOICE_DEFAULT = "lemy"; // nữ, miền Nam
+const FPT_SPEED_DEFAULT = "1";
+
+// Vbee defaults
+// Voice codes từ Vbee voice library. Free tier accounts thường có sẵn các giọng miền Bắc & Nam.
+// Một số voice codes phổ biến (verify trong dashboard Vbee của anh):
+//   hn_female_ngochuyen_full_48k-fhg  - Ngọc Huyền (nữ, miền Bắc, tự nhiên, kể chuyện tốt)
+//   hn_male_minhquang_full_48k-fhg   - Minh Quang (nam, miền Bắc)
+//   hcm_female_thuyduong_full_48k-fhg - Thùy Dương (nữ, miền Nam)
+//   hcm_male_minhtriet_full_48k-fhg  - Minh Triết (nam, miền Nam)
+const VBEE_VOICE_DEFAULT = "hn_female_ngochuyen_full_48k-fhg";
+const VBEE_SPEED_DEFAULT = 1.0;
 
 // ----- Load env -----
 function loadEnv() {
   const envPath = path.join(__dirname, "..", ".env.local");
   if (!fs.existsSync(envPath)) {
     console.error("❌ Không tìm thấy file .env.local");
-    console.error("   Tạo file .env.local với: FPT_AI_API_KEY=your_key_here");
-    console.error("   Xem GUIDE_FPT_TTS.md để biết chi tiết.");
+    console.error("   Tạo file .env.local với API key. Xem GUIDE_ELEVENLABS.md hoặc GUIDE_FPT_TTS.md.");
     process.exit(1);
   }
   const envContent = fs.readFileSync(envPath, "utf-8");
@@ -39,18 +69,25 @@ function loadEnv() {
     const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.+?)\s*$/);
     if (m) env[m[1]] = m[2].replace(/^['"]|['"]$/g, "");
   }
-  if (!env.FPT_AI_API_KEY) {
-    console.error("❌ FPT_AI_API_KEY chưa có trong .env.local");
-    process.exit(1);
-  }
-  return env.FPT_AI_API_KEY;
+  return env;
 }
 
-// ----- Parse stories.ts (regex, no deps) -----
+// ----- Pick provider -----
+function pickProvider(env) {
+  const explicit = (env.TTS_PROVIDER || "").toLowerCase().trim();
+  if (["vbee", "elevenlabs", "fpt"].includes(explicit)) return explicit;
+
+  // Auto-detect theo thứ tự ưu tiên
+  if (env.ELEVENLABS_API_KEY) return "elevenlabs";
+  if (env.VBEE_API_KEY) return "vbee";
+  if (env.FPT_AI_API_KEY) return "fpt";
+
+  return null;
+}
+
+// ----- Parse stories.ts -----
 function parseStories() {
   const src = fs.readFileSync(STORIES_PATH, "utf-8");
-
-  // Split by lessonId first to get one block per story.
   const storyBlocks = src.split(/lessonId:\s*"/);
   const stories = [];
 
@@ -60,9 +97,6 @@ function parseStories() {
     if (!idMatch) continue;
     const lessonId = idMatch[1];
 
-    // In each block, extract all `text: "..."` fields.
-    // Each scene has exactly one `text:` field, and the lesson object uses
-    // `title:` / `subtitle:` / `explainer:` instead, so this is safe.
     const textRegex = /\btext:\s*"((?:[^"\\]|\\.)*)"/g;
     let m;
     let idx = 0;
@@ -81,129 +115,256 @@ function parseStories() {
   return stories;
 }
 
-// ----- FPT.AI TTS API -----
-function callFptTts(text, apiKey) {
+// ----- HTTP helper -----
+function httpRequest(options, body) {
   return new Promise((resolve, reject) => {
-    const url = new URL("https://api.fpt.ai/hmi/tts/v5");
-    const body = text;
-    const options = {
+    const req = https.request(options, (res) => {
+      const chunks = [];
+      res.on("data", (c) => chunks.push(c));
+      res.on("end", () => {
+        resolve({
+          statusCode: res.statusCode,
+          headers: res.headers,
+          body: Buffer.concat(chunks),
+        });
+      });
+    });
+    req.on("error", reject);
+    if (body) req.write(body);
+    req.end();
+  });
+}
+
+// ----- Provider: ElevenLabs -----
+async function callElevenLabs(text, env) {
+  const apiKey = env.ELEVENLABS_API_KEY;
+  const voiceId = env.ELEVENLABS_VOICE_ID || EL_VOICE_ID_DEFAULT;
+
+  const url = new URL(
+    `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+  );
+
+  const bodyObj = {
+    text,
+    model_id: EL_MODEL_ID,
+    voice_settings: {
+      stability: 0.5,
+      similarity_boost: 0.75,
+      style: 0.0,
+      use_speaker_boost: true,
+    },
+  };
+  const body = JSON.stringify(bodyObj);
+
+  const res = await httpRequest(
+    {
+      method: "POST",
+      hostname: url.hostname,
+      path: url.pathname,
+      headers: {
+        "xi-api-key": apiKey,
+        "Content-Type": "application/json",
+        "Accept": "audio/mpeg",
+        "Content-Length": Buffer.byteLength(body),
+      },
+    },
+    body,
+  );
+
+  if (res.statusCode !== 200) {
+    const errText = res.body.toString("utf-8").slice(0, 300);
+    throw new Error(`HTTP ${res.statusCode}: ${errText}`);
+  }
+
+  const ct = res.headers["content-type"] || "";
+  if (!ct.includes("audio") && !ct.includes("mpeg")) {
+    throw new Error(`Unexpected content-type: ${ct} - ${res.body.toString("utf-8").slice(0, 200)}`);
+  }
+
+  return res.body;
+}
+
+// ----- Provider: FPT.AI -----
+async function callFptTts(text, env) {
+  const apiKey = env.FPT_AI_API_KEY;
+  const voice = env.FPT_AI_VOICE || FPT_VOICE_DEFAULT;
+  const speed = env.FPT_AI_SPEED || FPT_SPEED_DEFAULT;
+
+  const url = new URL("https://api.fpt.ai/hmi/tts/v5");
+  const body = text;
+
+  const res = await httpRequest(
+    {
       method: "POST",
       hostname: url.hostname,
       path: url.pathname,
       headers: {
         "api_key": apiKey,
-        "voice": VOICE,
-        "speed": SPEED,
+        voice,
+        speed,
         "Content-Type": "text/plain",
         "Content-Length": Buffer.byteLength(body),
       },
-    };
+    },
+    body,
+  );
 
-    const chunks = [];
-    const req = https.request(options, (res) => {
-      if (res.statusCode !== 200) {
-        let errBody = "";
-        res.on("data", (c) => (errBody += c));
-        res.on("end", () =>
-          reject(
-            new Error(
-              `HTTP ${res.statusCode}: ${errBody.slice(0, 200)}`,
-            ),
-          ),
-        );
-        return;
-      }
-      res.on("data", (c) => chunks.push(c));
-      res.on("end", () => {
-        // FPT.AI returns MP3 binary directly (not async job)
-        // Check Content-Type
-        const ct = res.headers["content-type"] || "";
-        if (ct.includes("audio") || ct.includes("mpeg")) {
-          resolve(Buffer.concat(chunks));
-        } else {
-          // Try parsing as JSON (error or async)
-          const text = Buffer.concat(chunks).toString("utf-8");
-          try {
-            const json = JSON.parse(text);
-            if (json.async) {
-              // FPT.AI returns async job for v5
-              // We need to poll
-              pollAsyncJob(json.async, apiKey)
-                .then(resolve)
-                .catch(reject);
-            } else {
-              reject(new Error("Unexpected response: " + text.slice(0, 200)));
-            }
-          } catch {
-            reject(new Error("Unexpected response: " + text.slice(0, 200)));
-          }
-        }
-      });
-    });
+  if (res.statusCode !== 200) {
+    throw new Error(`HTTP ${res.statusCode}: ${res.body.toString("utf-8").slice(0, 200)}`);
+  }
 
-    req.on("error", reject);
-    req.write(body);
-    req.end();
-  });
+  return res.body;
 }
 
-function pollAsyncJob(asyncUrl, apiKey) {
-  return new Promise((resolve, reject) => {
-    let attempts = 0;
-    const maxAttempts = 10;
-    const interval = 2000;
+// ----- Provider: Vbee -----
+async function callVbeeTts(text, env) {
+  const apiKey = env.VBEE_API_KEY;
+  const voiceCode = env.VBEE_VOICE_CODE || VBEE_VOICE_DEFAULT;
+  const speed = parseFloat(env.VBEE_SPEED || VBEE_SPEED_DEFAULT);
 
-    const tick = () => {
-      attempts++;
-      const url = new URL(asyncUrl);
-      const req = https.request(
-        {
-          method: "GET",
-          hostname: url.hostname,
-          path: url.pathname + url.search,
-          headers: { "api_key": apiKey, "voice": VOICE, "speed": SPEED },
-        },
-        (res) => {
-          const chunks = [];
-          res.on("data", (c) => chunks.push(c));
-          res.on("end", () => {
-            const data = Buffer.concat(chunks);
-            if (res.statusCode === 200 && data.length > 1000) {
-              resolve(data);
-            } else {
-              if (attempts >= maxAttempts) {
-                reject(new Error("Async job timeout"));
-              } else {
-                setTimeout(tick, interval);
-              }
-            }
-          });
-        },
-      );
-      req.on("error", reject);
-      req.end();
-    };
-    tick();
-  });
+  // Vbee API v1: POST /api/v1/tts
+  // Docs: https://vbee.vn (verify current API)
+  const url = new URL("https://vbee.vn/api/v1/tts");
+  const bodyObj = {
+    text,
+    voice_code: voiceCode,
+    audio_type: "mp3",
+    bit_rate: 128000,
+    speed_rate: speed,
+    // response_type: "audio" returns direct binary; default returns JSON
+    response_type: "audio",
+  };
+  const body = JSON.stringify(bodyObj);
+
+  const res = await httpRequest(
+    {
+      method: "POST",
+      hostname: url.hostname,
+      path: url.pathname,
+      headers: {
+        "apikey": apiKey,
+        "Content-Type": "application/json",
+        "Accept": "audio/mpeg",
+        "Content-Length": Buffer.byteLength(body),
+      },
+    },
+    body,
+  );
+
+  if (res.statusCode !== 200) {
+    const errText = res.body.toString("utf-8").slice(0, 300);
+    throw new Error(`HTTP ${res.statusCode}: ${errText}`);
+  }
+
+  const ct = res.headers["content-type"] || "";
+  // Direct audio response
+  if (ct.includes("audio") || ct.includes("mpeg")) {
+    return res.body;
+  }
+
+  // JSON response với audio_url
+  try {
+    const json = JSON.parse(res.body.toString("utf-8"));
+    if (json.audio_url) {
+      // Download từ URL
+      const dlUrl = new URL(json.audio_url);
+      const dlRes = await httpRequest({
+        method: "GET",
+        hostname: dlUrl.hostname,
+        path: dlUrl.pathname + dlUrl.search,
+        headers: { "apikey": apiKey },
+      });
+      if (dlRes.statusCode !== 200) {
+        throw new Error(`Download failed HTTP ${dlRes.statusCode}`);
+      }
+      return dlRes.body;
+    }
+    if (json.data && json.data.audio_url) {
+      const dlUrl = new URL(json.data.audio_url);
+      const dlRes = await httpRequest({
+        method: "GET",
+        hostname: dlUrl.hostname,
+        path: dlUrl.pathname + dlUrl.search,
+        headers: { "apikey": apiKey },
+      });
+      if (dlRes.statusCode !== 200) {
+        throw new Error(`Download failed HTTP ${dlRes.statusCode}`);
+      }
+      return dlRes.body;
+    }
+    throw new Error("Unexpected Vbee response: " + JSON.stringify(json).slice(0, 200));
+  } catch (e) {
+    if (e instanceof SyntaxError) {
+      throw new Error("Non-JSON response: " + res.body.toString("utf-8").slice(0, 200));
+    }
+    throw e;
+  }
 }
 
 // ----- Main -----
 async function main() {
-  console.log("🎙️  Pé Ti TTS Audio Generator (FPT.AI)\n");
+  console.log("🎙️  Pé Ti TTS Audio Generator\n");
 
-  const apiKey = loadEnv();
-  console.log(`   Voice: ${VOICE}, Speed: ${SPEED}`);
+  const env = loadEnv();
+  const provider = pickProvider(env);
+
+  if (!provider) {
+    console.error("❌ Không tìm thấy API key trong .env.local");
+    console.error("   Cần 1 trong 2:");
+    console.error("     - ELEVENLABS_API_KEY=sk_...");
+    console.error("     - FPT_AI_API_KEY=...");
+    console.error("   Xem GUIDE_ELEVENLABS.md hoặc GUIDE_FPT_TTS.md");
+    process.exit(1);
+  }
+
+  console.log(`   Provider: ${provider.toUpperCase()}`);
+  if (provider === "elevenlabs") {
+    console.log(
+      `   Voice: ${env.ELEVENLABS_VOICE_ID || EL_VOICE_ID_DEFAULT} (model: ${EL_MODEL_ID})`,
+    );
+  } else if (provider === "vbee") {
+    console.log(
+      `   Voice: ${env.VBEE_VOICE_CODE || VBEE_VOICE_DEFAULT} (speed: ${env.VBEE_SPEED || VBEE_SPEED_DEFAULT})`,
+    );
+  } else {
+    console.log(
+      `   Voice: ${env.FPT_AI_VOICE || FPT_VOICE_DEFAULT} (speed: ${env.FPT_AI_SPEED || FPT_SPEED_DEFAULT})`,
+    );
+  }
 
   const stories = parseStories();
   console.log(`   Found ${stories.length} scenes in stories.ts\n`);
 
   if (stories.length === 0) {
-    console.error("❌ Không tìm thấy scene nào. Kiểm tra file lib/stories.ts");
+    console.error("❌ Không tìm thấy scene nào. Kiểm tra lib/stories.ts");
     process.exit(1);
   }
 
-  // Ensure out dir
   fs.mkdirSync(OUT_DIR, { recursive: true });
+
+  let providerFn;
+  if (provider === "elevenlabs") providerFn = callElevenLabs;
+  else if (provider === "vbee") providerFn = callVbeeTts;
+  else providerFn = callFptTts;
+
+  // Quota info
+  const totalChars = stories.reduce((s, x) => s + x.text.length, 0);
+  const freeLimit =
+    provider === "elevenlabs" ? 10000 : provider === "fpt" ? 20000 : 100000;
+  const freeProvider =
+    provider === "elevenlabs"
+      ? "ElevenLabs"
+      : provider === "fpt"
+        ? "FPT.AI"
+        : "Vbee";
+  console.log(
+    `   Tổng ký tự: ${totalChars} (${((totalChars / freeLimit) * 100).toFixed(1)}% free tier ${freeProvider})\n`,
+  );
+  if (totalChars > freeLimit) {
+    console.warn(
+      `⚠️  CẢNH BÁO: Vượt quá free tier! Một số request sẽ fail.\n`,
+    );
+  }
 
   let okCount = 0;
   let skipCount = 0;
@@ -213,11 +374,10 @@ async function main() {
     const { lessonId, sceneIdx, text } = stories[i];
     const outPath = path.join(OUT_DIR, lessonId, `${sceneIdx}.mp3`);
 
-    // Skip if already exists (for idempotent re-runs)
-    if (fs.existsSync(outPath) && process.argv.includes("--force") === false) {
+    if (fs.existsSync(outPath) && !process.argv.includes("--force")) {
       skipCount++;
       console.log(
-        `   ⏭  [${i + 1}/${stories.length}] ${lessonId}/${sceneIdx}.mp3 (exists, skip)`,
+        `   ⏭  [${i + 1}/${stories.length}] ${lessonId}/${sceneIdx}.mp3 (exists)`,
       );
       continue;
     }
@@ -225,21 +385,20 @@ async function main() {
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
 
     try {
-      const audio = await callFptTts(text, apiKey);
+      const audio = await providerFn(text, env);
       fs.writeFileSync(outPath, audio);
       okCount++;
-      const preview = text.slice(0, 50).replace(/\n/g, " ");
+      const preview = text.slice(0, 45).replace(/\n/g, " ");
       console.log(
         `   ✓ [${i + 1}/${stories.length}] ${lessonId}/${sceneIdx}.mp3 (${(audio.length / 1024).toFixed(1)}KB) "${preview}..."`,
       );
     } catch (err) {
       errCount++;
       console.error(
-        `   ✗ [${i + 1}/${stories.length}] ${lessonId}/${sceneIdx}.mp3 - ${err.message}`,
+        `   ✗ [${i + 1}/${stories.length}] ${lessonId}/${sceneIdx}.mp3 - ${err.message.slice(0, 100)}`,
       );
     }
 
-    // Rate limit delay
     if (i < stories.length - 1) {
       await new Promise((r) => setTimeout(r, REQUEST_DELAY_MS));
     }
@@ -254,13 +413,17 @@ async function main() {
   console.log(`   ⏭  Skip (đã có): ${skipCount}`);
   console.log(`   ✗ Lỗi: ${errCount}`);
   console.log(`   📁 Tổng dung lượng: ${(totalSize / 1024 / 1024).toFixed(2)} MB`);
-  console.log(`\n🎉 Xong! Bây giờ commit và push:`);
-  console.log(`   git add public/audio/`);
-  console.log(`   git commit -m "feat: FPT.AI Vietnamese TTS audio"`);
-  console.log(`   git push`);
+
+  if (okCount > 0) {
+    console.log(`\n🎉 Xong! Bây giờ commit và push:`);
+    console.log(`   git add public/audio/`);
+    console.log(`   git commit -m "feat: TTS audio (${provider})"`);
+    console.log(`   git push`);
+  }
 }
 
 function walkDir(dir) {
+  if (!fs.existsSync(dir)) return [];
   const out = [];
   for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, f.name);
