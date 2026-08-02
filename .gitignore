@@ -53,4 +53,7 @@ next-env.d.ts
 /do-fix-push.ps1
 /fix-push.js
 /run-fix.ps1
-/scripts/
+
+# Generated TTS audio (not in repo - generate locally and commit manually)
+# To commit audio: rm -rf .gitignore this line + git add public/audio/
+# Or use: git add -f public/audio/*.mp3

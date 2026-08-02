@@ -17,9 +17,12 @@ interface Props {
   className?: string;
 }
 
+type AudioMode = "mp3" | "speech";
+
 /**
- * Multi-scene story player. Plays each scene's text via Web Speech API
- * and auto-advances to the next scene on audio end.
+ * Multi-scene story player.
+ * Ưu tiên MP3 pre-rendered từ FPT.AI (giọng Việt chuẩn).
+ * Fallback: Web Speech API nếu MP3 không có.
  */
 export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
   const [sceneIdx, setSceneIdx] = useState(0);
@@ -27,8 +30,13 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
   const [isSupported, setIsSupported] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [loadingAudio, setLoadingAudio] = useState(false);
+  const [audioMode, setAudioMode] = useState<AudioMode>("mp3");
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const playSceneRef = useRef<((idx: number) => void) | null>(null);
 
   const currentScene = story.scenes[sceneIdx];
   const totalScenes = story.scenes.length;
@@ -37,12 +45,37 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
     if (typeof window !== "undefined") {
       window.speechSynthesis.cancel();
     }
+    if (audioRef.current) {
+      try {
+        audioRef.current.pause();
+      } catch {
+        /* ignore */
+      }
+      audioRef.current = null;
+    }
     if (advanceTimeoutRef.current) {
       clearTimeout(advanceTimeoutRef.current);
       advanceTimeoutRef.current = null;
     }
   }, []);
 
+  /** Move to next scene (or finish). */
+  const advanceFromScene = useCallback(
+    (idx: number) => {
+      if (idx + 1 < story.scenes.length) {
+        advanceTimeoutRef.current = setTimeout(() => {
+          sfx.scene();
+          setSceneIdx(idx + 1);
+        }, 600);
+      } else {
+        sfx.storyEnd();
+        setIsFinished(true);
+      }
+    },
+    [story.scenes.length],
+  );
+
+  /** Fallback to Web Speech API. */
   const speakScene = useCallback(
     (idx: number) => {
       if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -52,11 +85,17 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
       const scene = story.scenes[idx];
       if (!scene) return;
 
-      cancelAll();
+      setAudioMode("speech");
+      setLoadingAudio(false);
+
       const utter = new SpeechSynthesisUtterance(scene.text);
       utter.lang = "vi-VN";
       const voices = window.speechSynthesis.getVoices();
-      const vnVoice = voices.find((v) => v.lang.startsWith("vi"));
+      // Try multiple Vietnamese voice patterns
+      const vnVoice =
+        voices.find((v) => /^vi[-_]/i.test(v.lang)) ||
+        voices.find((v) => /vietnam/i.test(v.name)) ||
+        voices.find((v) => /VN\b/i.test(v.lang));
       if (vnVoice) utter.voice = vnVoice;
       utter.rate = 0.9;
       utter.pitch = 1.15;
@@ -64,34 +103,96 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
       utter.onstart = () => setIsPlaying(true);
       utter.onend = () => {
         setIsPlaying(false);
-        // Auto-advance after a short pause
-        if (idx + 1 < story.scenes.length) {
-          advanceTimeoutRef.current = setTimeout(() => {
-            sfx.scene();
-            setSceneIdx(idx + 1);
-          }, 600);
-        } else {
-          sfx.storyEnd();
-          setIsFinished(true);
-        }
+        advanceFromScene(idx);
       };
       utter.onerror = () => {
         setIsPlaying(false);
-        if (idx + 1 < story.scenes.length) {
-          advanceTimeoutRef.current = setTimeout(() => {
-            sfx.scene();
-            setSceneIdx(idx + 1);
-          }, 800);
-        } else {
-          sfx.storyEnd();
-          setIsFinished(true);
-        }
+        advanceFromScene(idx);
       };
       utteranceRef.current = utter;
-      window.speechSynthesis.speak(utter);
+      try {
+        window.speechSynthesis.speak(utter);
+      } catch {
+        setIsSupported(false);
+        advanceFromScene(idx);
+      }
     },
-    [story.scenes, isMuted, cancelAll],
+    [story.scenes, isMuted, advanceFromScene],
   );
+
+  /** Try to play MP3. If fails, fallback to speech. */
+  const playScene = useCallback(
+    (idx: number) => {
+      const scene = story.scenes[idx];
+      if (!scene) return;
+      if (typeof window === "undefined") return;
+
+      cancelAll();
+      setIsFinished(false);
+      setLoadingAudio(true);
+      setAudioMode("mp3");
+
+      // Try MP3 first
+      const audio = new Audio(
+        `/audio/${story.lessonId}/${idx}.mp3?t=${Date.now()}`,
+      );
+      audio.volume = isMuted ? 0 : 1;
+      audio.preload = "auto";
+
+      let fellBack = false;
+      const fallback = () => {
+        if (fellBack) return;
+        fellBack = true;
+        setAudioMode("speech");
+        setLoadingAudio(false);
+        speakScene(idx);
+      };
+
+      // Timeout fallback in case onerror doesn't fire fast enough
+      const loadTimeout = setTimeout(() => {
+        if (audio.readyState < 2) {
+          // HAVE_NOTHING or HAVE_METADATA — give up
+          fallback();
+        }
+      }, 3000);
+
+      audio.oncanplay = () => {
+        clearTimeout(loadTimeout);
+        if (fellBack) return;
+        setLoadingAudio(false);
+        audio.play().catch(() => {
+          fallback();
+        });
+      };
+
+      audio.onplay = () => {
+        setIsPlaying(true);
+      };
+
+      audio.onpause = () => {
+        setIsPlaying(false);
+      };
+
+      audio.onended = () => {
+        clearTimeout(loadTimeout);
+        setIsPlaying(false);
+        advanceFromScene(idx);
+      };
+
+      audio.onerror = () => {
+        clearTimeout(loadTimeout);
+        fallback();
+      };
+
+      audioRef.current = audio;
+    },
+    [story.lessonId, story.scenes, isMuted, cancelAll, speakScene, advanceFromScene],
+  );
+
+  // Keep ref for setTimeout callbacks
+  useEffect(() => {
+    playSceneRef.current = playScene;
+  }, [playScene]);
 
   // When open changes, reset state
   useEffect(() => {
@@ -113,17 +214,14 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
     }
   }, [open, cancelAll]);
 
-  // When scene changes, auto-speak
+  // When scene changes, auto-play
   useEffect(() => {
     if (!open || isFinished) return;
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      setIsSupported(false);
-      return;
-    }
+    if (typeof window === "undefined") return;
+    if (!playSceneRef.current) return;
     // Small delay so the scene change animation can play
-    const t = setTimeout(() => speakScene(sceneIdx), 350);
+    const t = setTimeout(() => playSceneRef.current?.(sceneIdx), 350);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sceneIdx, open, isFinished]);
 
   // Cleanup on unmount
@@ -138,17 +236,30 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
 
   const handlePlayPause = () => {
     ensureAudio();
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-    if (isPlaying) {
-      window.speechSynthesis.pause();
-      setIsPlaying(false);
-    } else {
-      if (window.speechSynthesis.paused) {
-        window.speechSynthesis.resume();
-        setIsPlaying(true);
+    if (audioMode === "mp3" && audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
       } else {
-        sfx.click();
-        speakScene(sceneIdx);
+        audioRef.current.play().catch(() => {
+          // Try speech as fallback
+          speakScene(sceneIdx);
+        });
+        setIsPlaying(true);
+      }
+    } else {
+      if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+      if (isPlaying) {
+        window.speechSynthesis.pause();
+        setIsPlaying(false);
+      } else {
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+          setIsPlaying(true);
+        } else {
+          sfx.click();
+          speakScene(sceneIdx);
+        }
       }
     }
   };
@@ -167,6 +278,7 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
 
   const handleRestart = () => {
     sfx.click();
+    cancelAll();
     setSceneIdx(0);
     setIsFinished(false);
   };
@@ -179,12 +291,18 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
   const handleToggleMute = () => {
     if (isMuted) {
       setIsMuted(false);
-      if (utteranceRef.current) {
+      if (audioRef.current) {
+        audioRef.current.volume = 1;
+        if (!isPlaying) audioRef.current.play().catch(() => {});
+      } else if (utteranceRef.current) {
         utteranceRef.current.volume = 1;
         if (!isPlaying) speakScene(sceneIdx);
       }
     } else {
       setIsMuted(true);
+      if (audioRef.current) {
+        audioRef.current.volume = 0;
+      }
       if (typeof window !== "undefined") {
         window.speechSynthesis.pause();
       }
@@ -290,14 +408,22 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
               onClick={handlePlayPause}
               disabled={!isSupported}
               className={cn(
-                "flex items-center justify-center w-14 h-14 rounded-full text-white shadow-lg",
-                isPlaying
-                  ? "bg-brand-red hover:bg-[#e23d3d]"
-                  : "bg-brand-green hover:bg-[#4ca54c]",
+                "flex items-center justify-center w-14 h-14 rounded-full text-white shadow-lg transition-all",
+                loadingAudio
+                  ? "bg-brand-purple animate-pulse"
+                  : isPlaying
+                    ? "bg-brand-red hover:bg-[#e23d3d]"
+                    : "bg-brand-green hover:bg-[#4ca54c]",
               )}
               aria-label={isPlaying ? "Tạm dừng" : "Phát"}
             >
-              {isPlaying ? <Pause size={26} /> : <Play size={26} className="ml-1" />}
+              {loadingAudio ? (
+                <span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+              ) : isPlaying ? (
+                <Pause size={26} />
+              ) : (
+                <Play size={26} className="ml-1" />
+              )}
             </button>
             <button
               onClick={handleSkip}
@@ -306,6 +432,13 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
             >
               <SkipForward size={14} /> Qua
             </button>
+          </div>
+        )}
+
+        {/* Audio source indicator (debug) */}
+        {!isFinished && !loadingAudio && (
+          <div className="absolute bottom-1 right-3 text-[9px] text-white/30 pointer-events-none">
+            🎙️ {audioMode === "mp3" ? "FPT.AI" : "Web Speech"}
           </div>
         )}
 
