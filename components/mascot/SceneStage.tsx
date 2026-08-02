@@ -84,25 +84,33 @@ function SceneContent({ scene }: { scene: Scene }) {
   if (visual.kind === "split") {
     return (
       <div className="absolute inset-0 grid grid-cols-2 gap-2 p-3 pb-16">
-        <div className="bg-white/40 rounded-2xl p-2 flex flex-col items-center justify-end gap-1">
+        <div className="relative bg-white/50 rounded-2xl p-2 flex flex-col items-center justify-end">
           {visual.leftLabel && (
-            <p className="text-[10px] font-bold text-brand-green-dark">
-              {visual.leftLabel}
-            </p>
+            <div className="absolute top-2 left-2 right-2 z-10 flex justify-center pointer-events-none">
+              <span className="bg-white border-2 border-brand-green text-brand-green-dark text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">
+                {visual.leftLabel}
+              </span>
+            </div>
           )}
-          {visual.left.map((p, i) => (
-            <PropRenderer key={i} prop={p} delay={i * 0.12} />
-          ))}
+          <div className="flex flex-col items-center gap-1">
+            {visual.left.map((p, i) => (
+              <PropRenderer key={i} prop={p} delay={i * 0.12} />
+            ))}
+          </div>
         </div>
-        <div className="bg-white/40 rounded-2xl p-2 flex flex-col items-center justify-end gap-1">
+        <div className="relative bg-white/50 rounded-2xl p-2 flex flex-col items-center justify-end">
           {visual.rightLabel && (
-            <p className="text-[10px] font-bold text-brand-red">
-              {visual.rightLabel}
-            </p>
+            <div className="absolute top-2 left-2 right-2 z-10 flex justify-center pointer-events-none">
+              <span className="bg-white border-2 border-brand-red text-brand-red text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">
+                {visual.rightLabel}
+              </span>
+            </div>
           )}
-          {visual.right.map((p, i) => (
-            <PropRenderer key={i} prop={p} delay={i * 0.12} />
-          ))}
+          <div className="flex flex-col items-center gap-1">
+            {visual.right.map((p, i) => (
+              <PropRenderer key={i} prop={p} delay={i * 0.12} />
+            ))}
+          </div>
         </div>
       </div>
     );

@@ -32,6 +32,8 @@ export interface ProgressState {
   badges: string[]; // badge ids
   totalCorrect: number;
   totalAnswered: number;
+  /** Sound effects on/off (default true). */
+  soundEnabled: boolean;
 }
 
 // ---------- Lesson model ----------

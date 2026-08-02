@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Settings, Award, Flame, Coins, Star, Trophy } from "lucide-react";
+import { ArrowLeft, Settings, Award, Flame, Coins, Star, Trophy, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge as BadgeUI } from "@/components/ui/Badge";
@@ -11,6 +11,8 @@ import { Penguin } from "@/components/mascot/Penguin";
 import { useProgress } from "@/lib/store";
 import { BADGES, ALL_LESSONS, TOPICS } from "@/lib/lessons";
 import { useMounted } from "@/components/useMounted";
+import { sfx, setSoundEnabled } from "@/lib/sounds";
+import { cn } from "@/lib/utils";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -26,6 +28,15 @@ export default function ProfilePage() {
   const totalAnswered = useProgress((s) => s.totalAnswered);
   const resetAll = useProgress((s) => s.resetAll);
   const resetUser = useProgress((s) => s.resetUser);
+  const soundEnabled = useProgress((s) => s.soundEnabled);
+  const setSound = useProgress((s) => s.setSoundEnabled);
+
+  function toggleSound() {
+    const next = !soundEnabled;
+    setSound(next);
+    setSoundEnabled(next);
+    if (next) sfx.click();
+  }
 
   useEffect(() => {
     if (mounted && !user) router.replace("/");
@@ -146,6 +157,29 @@ export default function ProfilePage() {
             <Settings size={20} /> Cài đặt
           </h3>
           <div className="space-y-2">
+            <button
+              onClick={toggleSound}
+              className="w-full flex items-center justify-between gap-3 px-3 h-12 rounded-2xl border-2 border-[color:var(--color-border-strong)] bg-white hover:bg-surface transition-colors"
+            >
+              <span className="flex items-center gap-2 text-sm font-semibold">
+                {soundEnabled ? (
+                  <Volume2 size={18} className="text-brand-blue" />
+                ) : (
+                  <VolumeX size={18} className="text-text-muted" />
+                )}
+                Âm thanh hiệu ứng
+              </span>
+              <span
+                className={cn(
+                  "text-xs font-extrabold px-2 py-0.5 rounded-full",
+                  soundEnabled
+                    ? "bg-brand-green text-white"
+                    : "bg-[color:var(--color-surface-2)] text-text-muted",
+                )}
+              >
+                {soundEnabled ? "BẬT" : "TẮT"}
+              </span>
+            </button>
             <Button
               variant="ghost"
               fullWidth

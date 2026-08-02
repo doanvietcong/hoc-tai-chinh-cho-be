@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, SkipForward, X, RotateCcw } from "lucide-react";
 import type { Story } from "@/lib/types";
 import { SceneStage } from "./SceneStage";
+import { sfx, ensureAudio } from "@/lib/sounds";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -66,9 +67,11 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
         // Auto-advance after a short pause
         if (idx + 1 < story.scenes.length) {
           advanceTimeoutRef.current = setTimeout(() => {
+            sfx.scene();
             setSceneIdx(idx + 1);
           }, 600);
         } else {
+          sfx.storyEnd();
           setIsFinished(true);
         }
       };
@@ -76,9 +79,11 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
         setIsPlaying(false);
         if (idx + 1 < story.scenes.length) {
           advanceTimeoutRef.current = setTimeout(() => {
+            sfx.scene();
             setSceneIdx(idx + 1);
           }, 800);
         } else {
+          sfx.storyEnd();
           setIsFinished(true);
         }
       };
@@ -132,6 +137,7 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
   }, [cancelAll]);
 
   const handlePlayPause = () => {
+    ensureAudio();
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
     if (isPlaying) {
       window.speechSynthesis.pause();
@@ -141,21 +147,26 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
         window.speechSynthesis.resume();
         setIsPlaying(true);
       } else {
+        sfx.click();
         speakScene(sceneIdx);
       }
     }
   };
 
   const handleSkip = () => {
+    ensureAudio();
     cancelAll();
     if (sceneIdx + 1 < story.scenes.length) {
+      sfx.scene();
       setSceneIdx(sceneIdx + 1);
     } else {
+      sfx.storyEnd();
       setIsFinished(true);
     }
   };
 
   const handleRestart = () => {
+    sfx.click();
     setSceneIdx(0);
     setIsFinished(false);
   };

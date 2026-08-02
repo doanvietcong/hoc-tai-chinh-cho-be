@@ -31,6 +31,9 @@ interface Actions {
   /** Restore a heart manually (1 heart, costs 50 coins). */
   refillHeart: () => boolean;
 
+  /** Toggle sound effects on/off. */
+  setSoundEnabled: (enabled: boolean) => void;
+
   /** Wipe everything - useful for tests / dev tools. */
   resetAll: () => void;
 }
@@ -48,6 +51,7 @@ const initialState: ProgressState = {
   badges: [],
   totalCorrect: 0,
   totalAnswered: 0,
+  soundEnabled: true,
 };
 
 export const useProgress = create<ProgressState & Actions>()(
@@ -144,12 +148,24 @@ export const useProgress = create<ProgressState & Actions>()(
         return true;
       },
 
+      setSoundEnabled: (enabled) => set({ soundEnabled: enabled }),
+
       resetAll: () => set({ ...initialState }),
     }),
     {
       name: "pe-ti-progress",
       storage: createJSONStorage(() => localStorage),
-      version: 1,
+      version: 2,
+      migrate: (persisted, version) => {
+        // v1 → v2: add soundEnabled (default true)
+        if (version < 2) {
+          return {
+            ...(persisted as ProgressState),
+            soundEnabled: (persisted as ProgressState)?.soundEnabled ?? true,
+          };
+        }
+        return persisted as ProgressState;
+      },
     },
   ),
 );

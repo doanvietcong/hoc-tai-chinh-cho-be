@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
+import { SoundSync } from "@/components/SoundSync";
 
 const beVietnam = Be_Vietnam_Pro({
   variable: "--font-be-vietnam",
@@ -29,6 +30,7 @@ export default function RootLayout({
       className={`${beVietnam.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-[color:var(--color-text)]">
+        <SoundSync />
         {children}
       </body>
     </html>

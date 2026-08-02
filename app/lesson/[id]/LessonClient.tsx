@@ -28,6 +28,7 @@ import {
 } from "@/lib/lessons";
 import { getStoryForLesson } from "@/lib/stories";
 import { useProgress } from "@/lib/store";
+import { sfx, ensureAudio, setSoundEnabled } from "@/lib/sounds";
 import { cn, shuffle } from "@/lib/utils";
 import { useMounted } from "@/components/useMounted";
 import type {
@@ -60,6 +61,12 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
   const completeLesson = useProgress((s) => s.completeLesson);
   const refillHeart = useProgress((s) => s.refillHeart);
   const badges = useProgress((s) => s.badges);
+  const soundEnabled = useProgress((s) => s.soundEnabled);
+
+  // Sync sound toggle → sound module
+  useEffect(() => {
+    setSoundEnabled(soundEnabled);
+  }, [soundEnabled]);
 
   const [phase, setPhase] = useState<Phase>("intro");
   const [qIdx, setQIdx] = useState(0);
@@ -145,7 +152,9 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
   const isLastQ = qIdx === totalQ - 1;
 
   function startLessonHandler() {
+    ensureAudio(); // unlock AudioContext on first user interaction
     startLesson(lesson!.id);
+    sfx.click();
     setPhase("playing");
   }
 
@@ -208,8 +217,15 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
     setXpEarned((v) => v + xp);
     setCoinsEarned((v) => v + coins);
     if (correct) {
+      sfx.correct();
+      if (xp > 0) sfx.coin();
       setShowCoinBurst(true);
       setTimeout(() => setShowCoinBurst(false), 1100);
+    } else {
+      sfx.wrong();
+      if (currentQ?.type !== "drag-sort") {
+        sfx.heartsLost();
+      }
     }
     return correct;
   }
@@ -246,6 +262,12 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
       newlyEarned.map((b) => ({ emoji: b.emoji, name: b.name })),
     );
     setPhase("complete");
+    // Sounds: lesson complete + any new badge
+    sfx.lessonComplete();
+    if (newlyEarned.length > 0) {
+      // play badge sound a moment later for layered effect
+      setTimeout(() => sfx.badge(), 600);
+    }
   }
 
   function handleContinueAfterFeedback() {
@@ -495,7 +517,7 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
                 fullWidth
                 onClick={() => {
                   if (refillHeart()) {
-                    // continue
+                    sfx.heart();
                   }
                 }}
               >
