@@ -6,7 +6,8 @@ Một web app học tài chính cá nhân cho trẻ em Việt Nam 5–15 tuổi,
 
 - **6 chủ đề × 3-4 bài = 21 bài học** đầy đủ nội dung
 - **3 mini-games tương tác thực tế:** Chợ đồ chơi (mua sắm 50k), Quán nước chanh (7 ngày làm ông chủ), Heo đất tuần (7 quyết định tiền)
-- **Audio kể chuyện:** Pé Ti kể chuyện ngắn cho mỗi mini-game (dùng Web Speech API, miễn phí)
+- **Audio kể chuyện mini-game:** Pé Ti kể chuyện ngắn cho mỗi mini-game (dùng Web Speech API, miễn phí)
+- **Pé Ti kể chuyện trước bài học (mới!):** 4 bài story-driven có mini-movie 30-60s với minh họa chuyển động (props SVG animate: heo đất, 3 hũ, biểu đồ tròn, tiền xu, két sắt, cây tiền...) + giọng đọc tiếng Việt sync với audio
 - **4 dạng câu hỏi tương tác:** Trắc nghiệm, Đúng/Sai, Kéo-xếp (drag-sort), Nhập số
 - **Mascot Pé Ti** với animation (idle/happy/sad/thinking/celebrate/wave)
 - **Level map zig-zag** giống Duolingo, mở bài theo thứ tự
@@ -133,6 +134,8 @@ pe-ti-finance/
 
 ## 🛣 Roadmap (sau MVP)
 
+- [x] ✅ Pé Ti kể chuyện trước bài học (Lottie-style animated scenes) - 4 bài
+- [ ] Thêm storyboards cho 17 bài còn lại (storyboard dạng thường, không cần animation phức tạp)
 - [ ] Sound effects (Howler.js) với toggle
 - [ ] Thêm chủ đề 4: Kiếm tiền & Khởi nghiệp (12-15)
 - [ ] Thêm chủ đề 5: Quản lý thu chi cá nhân (12-15)
