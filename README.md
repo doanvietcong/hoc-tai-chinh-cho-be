@@ -2,13 +2,15 @@
 
 Một web app học tài chính cá nhân cho trẻ em Việt Nam 5–15 tuổi, lấy cảm hứng từ Duolingo. Mascot là chú chim cánh cụt **Pé Ti** dẫn dắt bé qua các bài học ngắn, vui nhộn, có gamification đầy đủ (streak, hearts, xu, huy hiệu, level map).
 
-## ✨ Tính năng MVP
+## ✨ Tính năng
 
-- **6 chủ đề × 3 bài = 18 bài học** đầy đủ nội dung
+- **6 chủ đề × 3-4 bài = 21 bài học** đầy đủ nội dung
+- **3 mini-games tương tác thực tế:** Chợ đồ chơi (mua sắm 50k), Quán nước chanh (7 ngày làm ông chủ), Heo đất tuần (7 quyết định tiền)
+- **Audio kể chuyện:** Pé Ti kể chuyện ngắn cho mỗi mini-game (dùng Web Speech API, miễn phí)
 - **4 dạng câu hỏi tương tác:** Trắc nghiệm, Đúng/Sai, Kéo-xếp (drag-sort), Nhập số
 - **Mascot Pé Ti** với animation (idle/happy/sad/thinking/celebrate/wave)
 - **Level map zig-zag** giống Duolingo, mở bài theo thứ tự
-- **Gamification:** Streak hàng ngày, Hearts (5 tim, sai mất 1, hồi bằng 50 xu), Xu & XP, **14 huy hiệu**
+- **Gamification:** Streak hàng ngày, Hearts (5 tim, sai mất 1, hồi bằng 50 xu), Xu & XP, 14 huy hiệu
 - **Hồ sơ cá nhân:** Thống kê XP, xu, streak, tỉ lệ chính xác, tiến độ từng chủ đề, huy hiệu
 - **Lưu localStorage** – không cần backend, refresh là có dữ liệu
 - **Responsive** cho cả mobile & desktop
@@ -54,16 +56,19 @@ npm start
 1. **Mục tiêu tiết kiệm** – SMART, tính thời gian đạt mục tiêu
 2. **Heo đất ảo** – Thói quen tiết kiệm, công thức 30-50%
 3. **Lãi kép & đầu tư cơ bản** – Cách tiền sinh ra tiền
+4. **3 hũ tiền thần kỳ** ⭐ – Save / Spend / Give - phương pháp Mỹ dạy trẻ quản lý tiền
 
-### Chủ đề 4: Kiếm tiền & Nghề nghiệp 💼 (8-15 tuổi) ⭐ MỚI
+### Chủ đề 4: Kiếm tiền & Nghề nghiệp 💼 (8-15 tuổi)
 1. **Tiền đến từ đâu?** – Kiếm tiền chính đáng vs xin tiền
 2. **Lao động & giá trị** – Mỗi nghề đều đáng trân trọng
 3. **Làm việc nhóm & chia tiền** – Công bằng theo công sức
 
-### Chủ đề 5: An toàn tài chính 🛡️ (12-15 tuổi) ⭐ MỚI
+### Chủ đề 5: An toàn tài chính 🛡️ (12-15 tuổi)
 1. **Bảo vệ tiền của mình** – OTP, mật khẩu, lừa đảo
 2. **Quỹ dự phòng** – Cứu cánh khẩn cấp
 3. **Tránh tín dụng đen** – Cho vay nặng lãi
+4. **Lập ngân sách cá nhân** ⭐ – Quản lý thu chi, phân biệt cần/muốn
+5. **Vay có trách nhiệm** ⭐ – Vay đúng cách, xây dựng uy tín tài chính
 
 ### Chủ đề 6: Đầu tư cơ bản 📈 (12-15 tuổi) ⭐ MỚI
 1. **Gửi tiết kiệm ngân hàng** – Lãi suất đơn giản
