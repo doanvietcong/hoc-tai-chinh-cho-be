@@ -102,6 +102,7 @@ export default function HomePage() {
                 group.topic.color === "yellow" && "bg-[#fff4cc] border-brand-yellow",
                 group.topic.color === "purple" && "bg-[#f0e0ff] border-brand-purple",
                 group.topic.color === "orange" && "bg-[#ffe1cc] border-brand-orange",
+                group.topic.color === "red" && "bg-[#ffe1e1] border-brand-red",
                 group.topic.color === "pink" && "bg-[#ffe1f0] border-brand-pink",
               )}
             >
@@ -155,7 +156,7 @@ interface LessonNodeProps {
   lesson: (typeof ALL_LESSONS)[number] & { status: "done" | "open" | "locked" };
   status: "done" | "open" | "locked";
   isLeft: boolean;
-  topicColor: "green" | "blue" | "yellow" | "purple" | "orange" | "pink";
+  topicColor: "green" | "blue" | "yellow" | "purple" | "orange" | "pink" | "red";
   onClick: () => void;
 }
 
@@ -166,6 +167,7 @@ const colorRing: Record<LessonNodeProps["topicColor"], string> = {
   purple: "border-brand-purple",
   orange: "border-brand-orange",
   pink: "border-brand-pink",
+  red: "border-brand-red",
 };
 
 function LessonNode({
@@ -213,7 +215,9 @@ function LessonNode({
                         ? "bg-brand-purple"
                         : topicColor === "orange"
                           ? "bg-brand-orange"
-                          : "bg-brand-pink"),
+                          : topicColor === "red"
+                            ? "bg-brand-red"
+                            : "bg-brand-pink"),
               status === "locked" && "bg-[#cccccc]",
             )}
           >

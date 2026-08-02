@@ -97,7 +97,7 @@ export interface Topic {
   id: string;
   title: string;
   emoji: string;
-  color: "green" | "blue" | "yellow" | "purple" | "orange" | "pink";
+  color: "green" | "blue" | "yellow" | "purple" | "orange" | "pink" | "red";
   description: string;
   lessons: Lesson[];
 }
