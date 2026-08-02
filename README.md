@@ -4,16 +4,17 @@ Một web app học tài chính cá nhân cho trẻ em Việt Nam 5–15 tuổi,
 
 ## ✨ Tính năng
 
-- **6 chủ đề × 3-4 bài = 21 bài học** đầy đủ nội dung
-- **3 mini-games tương tác thực tế:** Chợ đồ chơi (mua sắm 50k), Quán nước chanh (7 ngày làm ông chủ), Heo đất tuần (7 quyết định tiền)
+- **8 chủ đề × 3-4 bài = 26 bài học** đầy đủ nội dung (dựa trên SGK tài chính VN)
+- **4 mini-games tương tác thực tế:** Chợ đồ chơi (mua sắm 50k), Quán nước chanh (7 ngày làm ông chủ), Heo đất tuần (7 quyết định tiền), Thám tử chống lừa đảo (5 quảng cáo cần phân loại)
 - **Audio kể chuyện mini-game:** Pé Ti kể chuyện ngắn cho mỗi mini-game (dùng Web Speech API, miễn phí)
-- **Pé Ti kể chuyện trước TẤT CẢ 21 bài học (mới!):** mini-movie 25-60s với minh họa chuyển động (props SVG animate: heo đất, 3 hũ, biểu đồ tròn, tiền xu, két sắt, cây tiền, bank, shield, sparkles...) + giọng đọc tiếng Việt sync với audio, auto-advance scenes
-- **Sound effects (mới!):** đúng/sai/coin/heart-loss/badge fanfare/lesson complete/story end v.v. dùng Web Audio API (zero MP3 files), toggle Bật/Tắt trong Hồ sơ
+- **Pé Ti kể chuyện trước TẤT CẢ 26 bài học:** mini-movie 25-60s với minh họa chuyển động (props SVG animate: heo đất, 3 hũ, biểu đồ tròn, tiền xu, két sắt, cây tiền, bank, shield, sparkles...) + giọng đọc tiếng Việt sync với audio, auto-advance scenes
+- **Sound effects:** đúng/sai/coin/heart-loss/badge fanfare/lesson complete/story end v.v. dùng Web Audio API (zero MP3 files), toggle Bật/Tắt trong Hồ sơ
 - **4 dạng câu hỏi tương tác:** Trắc nghiệm, Đúng/Sai, Kéo-xếp (drag-sort), Nhập số
 - **Mascot Pé Ti** với animation (idle/happy/sad/thinking/celebrate/wave)
 - **Level map zig-zag** giống Duolingo, mở bài theo thứ tự
-- **Gamification:** Streak hàng ngày, Hearts (5 tim, sai mất 1, hồi bằng 50 xu), Xu & XP, 13 huy hiệu
+- **Gamification:** Streak hàng ngày, Hearts (5 tim, sai mất 1, tự hồi 5 phút/tim HOẶC mua 50 xu), Xu & XP, 15 huy hiệu
 - **Hồ sơ cá nhân:** Thống kê XP, xu, streak, tỉ lệ chính xác, tiến độ từng chủ đề, huy hiệu, toggle âm thanh
+- **Trang phụ huynh /parent (mới!):** PIN 1234, dashboard read-only với 4 stats, tiến độ 8 chủ đề, hoạt động gần đây, 15 huy hiệu, 5 gợi ý nuôi dạy con
 - **Lưu localStorage** – không cần backend, refresh là có dữ liệu
 - **Responsive** cho cả mobile & desktop
 - **100% tiếng Việt**, font Be Vietnam Pro
@@ -128,25 +129,30 @@ pe-ti-finance/
 - 💼 Bậc thầy kiếm tiền – xong "Kiếm tiền & Nghề nghiệp"
 - 🛡️ Vệ sĩ tài chính – xong "An toàn tài chính"
 - 📈 Nhà đầu tư nhí – xong "Đầu tư cơ bản"
+- 📱 Dân thanh toán số – xong "Thanh toán điện tử"
+- 🛡️ Khiên bảo vệ – xong "Bảo hiểm cơ bản"
 - 🪙 Trăm xu đầu tiên – 100 xu
 - 🎓 Học giả tí hon – 100 XP
 - 📚 Học bá tập sự – 200 XP
-- 🏆 Hoàn thành xuất sắc – xong tất cả 18 bài
+- 🏆 Hoàn thành xuất sắc – xong tất cả 26 bài
 
 ## 🛣 Roadmap (sau MVP)
 
-- [x] ✅ Pé Ti kể chuyện trước bài học (Lottie-style animated scenes) - đủ 21/21 bài
+- [x] ✅ Pé Ti kể chuyện trước bài học (Lottie-style animated scenes) - đủ 26/26 bài
 - [x] ✅ Sound effects (Web Audio API, zero MP3) với toggle trong Hồ sơ
 - [x] ✅ Story polish: fix split-view labels, sparkle confetti cuối stories
-- [ ] Thêm chủ đề 4: Kiếm tiền & Khởi nghiệp (12-15)
-- [ ] Thêm chủ đề 5: Quản lý thu chi cá nhân (12-15)
-- [ ] Trang phụ huynh theo dõi tiến độ con
+- [x] ✅ 2 chủ đề mới từ SGK: Thanh toán điện tử + Bảo hiểm cơ bản
+- [x] ✅ Mini-game Thám tử chống lừa đảo
+- [x] ✅ Trang phụ huynh /parent (PIN 1234)
+- [x] ✅ Hearts regen (auto-recover 5 phút/tim)
+- [ ] FPT.AI TTS integration - giọng Việt chuẩn thay Web Speech API
+- [ ] Thêm chủ đề theo SGK: Quản lý thu chi, Tìm hiểu về thuế, Thanh toán điện tử nâng cao
+- [ ] Phân chia độ khó theo lứa tuổi (5-7 / 8-11 / 12-15) - variant câu hỏi
+- [ ] Mini-game: Mở tài khoản tiết kiệm ảo, Phát hiện quảng cáo lừa đảo nâng cao
 - [ ] Backend (Supabase) để đồng bộ giữa nhiều thiết bị
 - [ ] Đăng nhập OAuth (Google) cho phụ huynh
 - [ ] Bảng xếp hạng gia đình / lớp học
 - [ ] Xuất báo cáo PDF cho phụ huynh
-- [ ] Mini-game bổ sung: Mở tài khoản tiết kiệm ảo, Phát hiện quảng cáo lừa đảo
-- [ ] Hearts regen (auto-recover theo thời gian)
 
 ## 📸 Screenshots
 
