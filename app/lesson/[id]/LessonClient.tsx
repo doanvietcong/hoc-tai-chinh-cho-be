@@ -227,6 +227,10 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
         sfx.heartsLost();
       }
     }
+    // Reset busy sau khi check xong — để FeedbackBar "Tiếp tục" button
+    // không bị disabled vĩnh viễn. 300ms đủ để chặn double-click "Kiểm tra"
+    // mà vẫn enable nút Tiếp tục kịp.
+    setTimeout(() => setBusy(false), 300);
     return correct;
   }
 
