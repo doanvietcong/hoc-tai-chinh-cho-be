@@ -4,11 +4,11 @@ Một web app học tài chính cá nhân cho trẻ em Việt Nam 5–15 tuổi,
 
 ## ✨ Tính năng MVP
 
-- **3 chủ đề × 3 bài = 9 bài học** đầy đủ nội dung
+- **6 chủ đề × 3 bài = 18 bài học** đầy đủ nội dung
 - **4 dạng câu hỏi tương tác:** Trắc nghiệm, Đúng/Sai, Kéo-xếp (drag-sort), Nhập số
 - **Mascot Pé Ti** với animation (idle/happy/sad/thinking/celebrate/wave)
 - **Level map zig-zag** giống Duolingo, mở bài theo thứ tự
-- **Gamification:** Streak hàng ngày, Hearts (5 tim, sai mất 1, hồi bằng 50 xu), Xu & XP, 8 huy hiệu
+- **Gamification:** Streak hàng ngày, Hearts (5 tim, sai mất 1, hồi bằng 50 xu), Xu & XP, **14 huy hiệu**
 - **Hồ sơ cá nhân:** Thống kê XP, xu, streak, tỉ lệ chính xác, tiến độ từng chủ đề, huy hiệu
 - **Lưu localStorage** – không cần backend, refresh là có dữ liệu
 - **Responsive** cho cả mobile & desktop
@@ -40,20 +40,35 @@ npm start
 
 ## 📚 Nội dung bài học
 
-### Chủ đề 1: Tiền là gì? 💵
+### Chủ đề 1: Tiền là gì? 💵 (5-11 tuổi)
 1. **Tiền đến từ đâu?** – Nguồn gốc, Ngân hàng Nhà nước, đơn vị VND
 2. **Làm quen với tờ tiền** – Nhận biết mệnh giá, tính tiền thừa
 3. **Tiền dùng để làm gì?** – Công dụng, giới hạn của tiền
 
-### Chủ đề 2: Nhu cầu & Mong muốn 🎯
+### Chủ đề 2: Nhu cầu & Mong muốn 🎯 (8-15 tuổi)
 1. **Nhu cầu vs. Mong muốn** – Phân biệt thứ cần và thứ thích
 2. **Tình huống mua sắm** – Ra quyết định thông minh
 3. **Lập danh sách ưu tiên** – Quy trình 4 bước
 
-### Chủ đề 3: Tiết kiệm thông minh 🐷
+### Chủ đề 3: Tiết kiệm thông minh 🐷 (8-15 tuổi)
 1. **Mục tiêu tiết kiệm** – SMART, tính thời gian đạt mục tiêu
 2. **Heo đất ảo** – Thói quen tiết kiệm, công thức 30-50%
 3. **Lãi kép & đầu tư cơ bản** – Cách tiền sinh ra tiền
+
+### Chủ đề 4: Kiếm tiền & Nghề nghiệp 💼 (8-15 tuổi) ⭐ MỚI
+1. **Tiền đến từ đâu?** – Kiếm tiền chính đáng vs xin tiền
+2. **Lao động & giá trị** – Mỗi nghề đều đáng trân trọng
+3. **Làm việc nhóm & chia tiền** – Công bằng theo công sức
+
+### Chủ đề 5: An toàn tài chính 🛡️ (12-15 tuổi) ⭐ MỚI
+1. **Bảo vệ tiền của mình** – OTP, mật khẩu, lừa đảo
+2. **Quỹ dự phòng** – Cứu cánh khẩn cấp
+3. **Tránh tín dụng đen** – Cho vay nặng lãi
+
+### Chủ đề 6: Đầu tư cơ bản 📈 (12-15 tuổi) ⭐ MỚI
+1. **Gửi tiết kiệm ngân hàng** – Lãi suất đơn giản
+2. **Lãi kép - Sức mạnh thời gian** – Lãi mẹ đẻ lãi con
+3. **Cổ phiếu, trái phiếu là gì?** – Phân loại rủi ro
 
 ## 🗂 Cấu trúc project
 
@@ -95,7 +110,7 @@ pe-ti-finance/
 6. **Complete** → nhận XP, xu, huy hiệu (nếu đủ điều kiện)
 7. **Home** → bài tiếp theo tự mở
 
-## 🏆 8 huy hiệu
+## 🏆 14 huy hiệu
 
 - 🌱 Bước đầu tiên – hoàn thành bài đầu tiên
 - 🔥 Ba ngày liên tục – streak 3
@@ -103,8 +118,13 @@ pe-ti-finance/
 - 💰 Chuyên gia tiền tệ – xong chủ đề "Tiền là gì?"
 - 🛍️ Người mua sắm thông minh – xong "Nhu cầu & Mong muốn"
 - 🐖 Cao thủ tiết kiệm – xong "Tiết kiệm thông minh"
+- 💼 Bậc thầy kiếm tiền – xong "Kiếm tiền & Nghề nghiệp"
+- 🛡️ Vệ sĩ tài chính – xong "An toàn tài chính"
+- 📈 Nhà đầu tư nhí – xong "Đầu tư cơ bản"
 - 🪙 Trăm xu đầu tiên – 100 xu
 - 🎓 Học giả tí hon – 100 XP
+- 📚 Học bá tập sự – 200 XP
+- 🏆 Hoàn thành xuất sắc – xong tất cả 18 bài
 
 ## 🛣 Roadmap (sau MVP)
 
