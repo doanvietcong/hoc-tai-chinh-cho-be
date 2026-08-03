@@ -1,7 +1,10 @@
 /**
  * Audio helper: kiểm tra xem có file MP3 pre-rendered không.
- * Nếu có → dùng <audio> tag (giọng Việt chuẩn FPT.AI).
+ * Nếu có → dùng <audio> tag (giọng ElevenLabs V3 - "Thắm" Vietnamese).
  * Nếu không → fallback Web Speech API.
+ *
+ * Lưu ý: KHÔNG dùng Web Speech / FPT.AI / Vbee trong production.
+ * Chỉ dùng ElevenLabs (xem scripts/generate-audio.js + .env.local).
  */
 
 export interface AudioMeta {
