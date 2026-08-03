@@ -23,7 +23,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[curious] Mỗi ngày Pé Ti bỏ vào heo 5 nghìn đồng tiền tiêu vặt còn dư.",
+        text: "[curious] Mỗi ngày Pé Ti bỏ vào heo năm nghìn đồng tiền tiêu vặt còn dư.",
         visual: {
           kind: "props",
           items: [
@@ -34,7 +34,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Một tuần trôi qua. Pé Ti đếm: một, hai, ba... 35 nghìn rồi!",
+        text: "[happy] Một tuần trôi qua. Pé Ti đếm: một, hai, ba... ba mươi lăm nghìn rồi!",
         visual: {
           kind: "props",
           items: [
@@ -45,7 +45,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[excited] Một tháng! Heo đất nặng trĩu. Pé Ti mở ra đếm: 150 nghìn đồng!",
+        text: "[excited] Một tháng! Heo đất nặng trĩu. Pé Ti mở ra đếm: một trăm năm mươi nghìn đồng!",
         visual: {
           kind: "props",
           items: [
@@ -86,7 +86,7 @@ export const STORIES: Story[] = [
     estDurationSec: 55,
     scenes: [
       {
-        text: "[happy] Pé Ti vừa nhận 200 nghìn tiền lì xì Tết. Nhiều quá! Nhưng mẹ nói phải biết chia.",
+        text: "[happy] Pé Ti vừa nhận hai trăm nghìn tiền lì xì Tết. Nhiều quá! Nhưng mẹ nói phải biết chia.",
         visual: {
           kind: "spotlight",
           prop: { type: "coin", amount: 200, tone: "gold" },
@@ -106,7 +106,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Hũ TIẾT KIỆM to nhất: bỏ vào 50 phần trăm, tức 100 nghìn. Đây là tiền để dành dài hạn.",
+        text: "[happy] Hũ TIẾT KIỆM to nhất: bỏ vào năm mươi phần trăm, tức một trăm nghìn. Đây là tiền để dành dài hạn.",
         visual: {
           kind: "props",
           items: [
@@ -118,7 +118,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[happy] Hũ CHI TIÊU: 40 phần trăm, tức 80 nghìn. Để mua đồ cần thiết và đồ mình thích vừa phải.",
+        text: "[happy] Hũ CHI TIÊU: bốn mươi phần trăm, tức tám mươi nghìn. Để mua đồ cần thiết và đồ mình thích vừa phải.",
         visual: {
           kind: "props",
           items: [
@@ -130,7 +130,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[excited] Hũ CHO ĐI: 10 phần trăm, tức 20 nghìn. Mua quà sinh nhật bà, giúp đỡ bạn có hoàn cảnh khó.",
+        text: "[excited] Hũ CHO ĐI: mười phần trăm, tức hai mươi nghìn. Mua quà sinh nhật bà, giúp đỡ bạn có hoàn cảnh khó.",
         visual: {
           kind: "props",
           items: [
@@ -150,7 +150,7 @@ export const STORIES: Story[] = [
         mood: "wave",
       },
       {
-        text: "[excited] Bạn thử lấy 3 chiếc hũ thật ở nhà và chia tiền tiêu vặt vào nhé! Sẽ thấy mình GIÀU lên từng ngày đó!",
+        text: "[excited] Bạn thử lấy ba chiếc hũ thật ở nhà và chia tiền tiêu vặt vào nhé! Sẽ thấy mình GIÀU lên từng ngày đó!",
         visual: {
           kind: "props",
           items: [
@@ -174,7 +174,7 @@ export const STORIES: Story[] = [
     estDurationSec: 55,
     scenes: [
       {
-        text: "[curious] Đầu tuần, bạn Minh nhận 100 nghìn tiền tiêu vặt. Số tiền này phải dùng cho cả tuần!",
+        text: "[curious] Đầu tuần, bạn Minh nhận một trăm nghìn tiền tiêu vặt. Số tiền này phải dùng cho cả tuần!",
         visual: {
           kind: "spotlight",
           prop: { type: "bill", value: 100, tone: "good" },
@@ -182,7 +182,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Minh ngồi xuống vẽ bản đồ tiền: ăn sáng 30 nghìn, đi học 20 nghìn, tiết kiệm 30 nghìn, giải trí 20 nghìn.",
+        text: "[happy] Minh ngồi xuống vẽ bản đồ tiền: ăn sáng ba mươi nghìn, đi học hai mươi nghìn, tiết kiệm ba mươi nghìn, giải trí hai mươi nghìn.",
         visual: {
           kind: "spotlight",
           prop: {
@@ -198,7 +198,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[sighs] Thứ Tư, Minh thấy quán bánh tráng nướng ngon quá. Tiêu thêm 15 nghìn. Nhưng phần 'Giải trí' chỉ có 20 thôi!",
+        text: "[sighs] Thứ Tư, Minh thấy quán bánh tráng nướng ngon quá. Tiêu thêm mười lăm nghìn. Nhưng phần 'Giải trí' chỉ có hai mươi thôi!",
         visual: {
           kind: "spotlight",
           prop: {
@@ -214,7 +214,7 @@ export const STORIES: Story[] = [
         mood: "sad",
       },
       {
-        text: "[sighs] Cuối tuần, Minh hết sạch 100 nghìn mà KHÔNG còn gì trong hũ tiết kiệm. Bài học: tiêu vượt hạn mất tiết kiệm!",
+        text: "[sighs] Cuối tuần, Minh hết sạch một trăm nghìn mà KHÔNG còn gì trong hũ tiết kiệm. Bài học: tiêu vượt hạn mất tiết kiệm!",
         visual: {
           kind: "split",
           left: [
@@ -229,7 +229,7 @@ export const STORIES: Story[] = [
         mood: "sad",
       },
       {
-        text: "[excited] Tuần sau, Minh lập ngân sách TRƯỚC khi tiêu. Cuối tuần còn 30 nghìn bỏ vào heo đất! Thấy chưa, kế hoạch giúp bạn GIÀU hơn!",
+        text: "[excited] Tuần sau, Minh lập ngân sách TRƯỚC khi tiêu. Cuối tuần còn ba mươi nghìn bỏ vào heo đất! Thấy chưa, kế hoạch giúp bạn GIÀU hơn!",
         visual: {
           kind: "props",
           items: [
@@ -252,7 +252,7 @@ export const STORIES: Story[] = [
     estDurationSec: 60,
     scenes: [
       {
-        text: "[sighs] Pé Ti muốn mua bộ Lego 200 nghìn, nhưng trong heo đất chỉ có 50 nghìn. Pé Ti buồn lắm!",
+        text: "[sighs] Pé Ti muốn mua bộ Lego hai trăm nghìn, nhưng trong heo đất chỉ có năm mươi nghìn. Pé Ti buồn lắm!",
         visual: {
           kind: "props",
           items: [
@@ -272,7 +272,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Cách 1: Vay mẹ. Mẹ đồng ý cho Pé Ti mượn 150 nghìn, trả góp 25 nghìn mỗi tuần, không tính lãi.",
+        text: "[happy] Cách một: Vay mẹ. Mẹ đồng ý cho Pé Ti mượn một trăm năm mươi nghìn, trả góp hai mươi lăm nghìn mỗi tuần, không tính lãi.",
         visual: {
           kind: "props",
           items: [
@@ -284,7 +284,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[sighs] Cách 2: Vay 'tín dụng đen' ngoài phố. Họ cho mượn NHANH, nhưng lãi suất RẤT CAO. Mỗi tuần phải trả gấp rưỡi!",
+        text: "[sighs] Cách hai: Vay 'tín dụng đen' ngoài phố. Họ cho mượn NHANH, nhưng lãi suất RẤT CAO. Mỗi tuần phải trả gấp rưỡi!",
         visual: {
           kind: "props",
           items: [
@@ -296,7 +296,7 @@ export const STORIES: Story[] = [
         mood: "sad",
       },
       {
-        text: "[curious] Sau 1 tháng: Pé Ti vay mẹ trả xong, còn dư 30 nghìn mua cuốn sách hay. Còn bạn Nam vay 'tín dụng đen' đang nợ gấp đôi!",
+        text: "[curious] Sau một tháng: Pé Ti vay mẹ trả xong, còn dư ba mươi nghìn mua cuốn sách hay. Còn bạn Nam vay 'tín dụng đen' đang nợ gấp đôi!",
         visual: {
           kind: "split",
           left: [
@@ -336,7 +336,7 @@ export const STORIES: Story[] = [
     estDurationSec: 45,
     scenes: [
       {
-        text: "[curious] Bạn thử tưởng tượng nhé: nhà bạn có 10 quả táo, nhà bạn Lan có 1 con gấu bông. Bạn muốn đổi gấu bông lấy táo. Nhưng bạn Lan lại muốn có kẹo, không thích táo. Rắc rối chưa nào!",
+        text: "[curious] Bạn thử tưởng tượng nhé: nhà bạn có mười quả táo, nhà bạn Lan có một con gấu bông. Bạn muốn đổi gấu bông lấy táo. Nhưng bạn Lan lại muốn có kẹo, không thích táo. Rắc rối chưa nào!",
         visual: {
           kind: "props",
           items: [
@@ -348,7 +348,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[curious] Ngày xưa, người Việt chưa có tiền. Họ đổi đồ lấy đồ: 1 con gà đổi 2 cái rổ, 1 cái áo đổi 5 nải chuối. Nhưng nếu người ta không cần thứ mình có thì sao? Rất khó trao đổi!",
+        text: "[curious] Ngày xưa, người Việt chưa có tiền. Họ đổi đồ lấy đồ: một con gà đổi hai cái rổ, một cái áo đổi năm nải chuối. Nhưng nếu người ta không cần thứ mình có thì sao? Rất khó trao đổi!",
         visual: {
           kind: "props",
           items: [
@@ -416,7 +416,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[curious] Tiền Việt Nam có nhiều mệnh giá: 1 nghìn, 2 nghìn, 5 nghìn, 10 nghìn, 20 nghìn, 50 nghìn, 100 nghìn, 200 nghìn, 500 nghìn đồng. Tờ càng to thì giá trị càng lớn!",
+        text: "[curious] Tiền Việt Nam có nhiều mệnh giá: một nghìn, hai nghìn, năm nghìn, mười nghìn, hai mươi nghìn, năm mươi nghìn, một trăm nghìn, hai trăm nghìn, năm trăm nghìn đồng. Tờ càng to thì giá trị càng lớn!",
         visual: {
           kind: "props",
           items: [
@@ -429,7 +429,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Mẹo nhớ: 1 tờ 100 nghìn bằng 10 tờ 10 nghìn! Tờ to tiện hơn, nhưng tổng giá trị không đổi.",
+        text: "[happy] Mẹo nhớ: một tờ một trăm nghìn bằng mười tờ mười nghìn! Tờ to tiện hơn, nhưng tổng giá trị không đổi.",
         visual: {
           kind: "props",
           items: [
@@ -442,7 +442,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[excited] Bạn mua cây kem 15 nghìn, đưa tờ 20 nghìn - người bán trả lại 5 nghìn. Đếm tiền thừa là kỹ năng quan trọng, giúp bạn không bị thiếu hoặc mất tiền oan!",
+        text: "[excited] Bạn mua cây kem mười lăm nghìn, đưa tờ hai mươi nghìn - người bán trả lại năm nghìn. Đếm tiền thừa là kỹ năng quan trọng, giúp bạn không bị thiếu hoặc mất tiền oan!",
         visual: {
           kind: "props",
           items: [
@@ -539,7 +539,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Còn có: áo quần để mặc, sách vở để học, thuốc khi ốm. Đây là 5 nhu cầu cơ bản của con người!",
+        text: "[happy] Còn có: áo quần để mặc, sách vở để học, thuốc khi ốm. Đây là năm nhu cầu cơ bản của con người!",
         visual: {
           kind: "props",
           items: [
@@ -616,7 +616,7 @@ export const STORIES: Story[] = [
     estDurationSec: 25,
     scenes: [
       {
-        text: "[curious] Bạn có 100 nghìn. Bạn muốn mua: kem 20k, bút chì màu 30k, truyện tranh 50k.",
+        text: "[curious] Bạn có một trăm nghìn. Bạn muốn mua: kem 20k, bút chì màu 30k, truyện tranh 50k.",
         visual: {
           kind: "props",
           items: [
@@ -662,7 +662,7 @@ export const STORIES: Story[] = [
     estDurationSec: 30,
     scenes: [
       {
-        text: "[curious] Pé Ti muốn mua xe đạp 2 triệu. Nhưng tiết kiệm kiểu gì cho đủ? Mẹ nói: lập mục tiêu SMART!",
+        text: "[curious] Pé Ti muốn mua xe đạp hai triệu. Nhưng tiết kiệm kiểu gì cho đủ? Mẹ nói: lập mục tiêu SMART!",
         visual: {
           kind: "spotlight",
           prop: { type: "emoji", emoji: "🚲", size: 100 },
@@ -670,7 +670,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[curious] S - Cụ thể: 'Mua xe đạp 2 triệu'. M - Đo được: biết chínhá xác bao nhiêu tiền. A - Khả thi: tiết kiệm được.",
+        text: "[curious] S - Cụ thể: 'Mua xe đạp hai triệu'. M - Đo được: biết chínhá xác bao nhiêu tiền. A - Khả thi: tiết kiệm được.",
         visual: {
           kind: "props",
           items: [
@@ -682,7 +682,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[excited] R - Thực tế: mỗi tháng tiết kiệm được 200k. T - Thời hạn: trong 10 tháng. SMART = mục tiêu RÕ RÀNG!",
+        text: "[excited] R - Thực tế: mỗi tháng tiết kiệm được 200k. T - Thời hạn: trong mười tháng. SMART = mục tiêu RÕ RÀNG!",
         visual: {
           kind: "props",
           items: [
@@ -705,7 +705,7 @@ export const STORIES: Story[] = [
     estDurationSec: 30,
     scenes: [
       {
-        text: "[curious] Pé Ti gửi heo 100 nghìn. Sau 1 năm mẹ thưởng thêm 10% là 10 nghìn. Tổng: 110 nghìn!",
+        text: "[curious] Pé Ti gửi heo một trăm nghìn. Sau một năm mẹ thưởng thêm mười phần trăm là mười nghìn. Tổng: một trăm mười nghìn!",
         visual: {
           kind: "spotlight",
           prop: { type: "piggy", coins: 10, mood: "happy" },
@@ -713,7 +713,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Năm sau, 10% của 110 nghìn = 11 nghìn. Tổng 121 nghìn! Tiền CŨ cũng sinh ra tiền MỚI. Đó gọi là LÃI KÉP!",
+        text: "[happy] Năm sau, mười phần trăm của một trăm mười nghìn = mười một nghìn. Tổng một trăm hai mươi mốt nghìn! Tiền CŨ cũng sinh ra tiền MỚI. Đó gọi là LÃI KÉP!",
         visual: {
           kind: "spotlight",
           prop: { type: "tree", size: 50 },
@@ -721,7 +721,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[excited] Càng để lâu, tiền càng nhiều! 100 nghìn sau 5 năm có thể thành 161 nghìn. Thần kỳ chưa nào? [excited] [excited] [excited]",
+        text: "[excited] Càng để lâu, tiền càng nhiều! một trăm nghìn sau năm năm có thể thành một trăm sáu mươi mốt nghìn. Thần kỳ chưa nào? [excited] [excited] [excited]",
         visual: {
           kind: "spotlight",
           prop: { type: "tree", size: 90 },
@@ -799,7 +799,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Pé Ti dọn phòng, rửa bát, gấp quần áo. Mẹ vui lắm! Mẹ thưởng 30 nghìn. Vui quá!",
+        text: "[happy] Pé Ti dọn phòng, rửa bát, gấp quần áo. Mẹ vui lắm! Mẹ thưởng ba mươi nghìn. Vui quá!",
         visual: {
           kind: "props",
           items: [
@@ -877,7 +877,7 @@ export const STORIES: Story[] = [
     estDurationSec: 30,
     scenes: [
       {
-        text: "[curious] Pé Ti có tài khoản ngân hàng. Có 3 điều BẮT BUỘC phải nhớ: KHÔNG chia sẻ mật khẩu, KHÔNG cho ai mã OTP, KHÔNG click link lạ!",
+        text: "[curious] Pé Ti có tài khoản ngân hàng. Có ba điều BẮT BUỘC phải nhớ: KHÔNG chia sẻ mật khẩu, KHÔNG cho ai mã OTP, KHÔNG click link lạ!",
         visual: {
           kind: "props",
           items: [
@@ -920,7 +920,7 @@ export const STORIES: Story[] = [
     estDurationSec: 25,
     scenes: [
       {
-        text: "[sighs] Cuối tuần, bạn Pé Ti bị ốm phải đi khám bác sĩ. Tốn 200 nghìn tiền khám. May có tiền dành!",
+        text: "[sighs] Cuối tuần, bạn Pé Ti bị ốm phải đi khám bác sĩ. Tốn hai trăm nghìn tiền khám. May có tiền dành!",
         visual: {
           kind: "props",
           items: [
@@ -932,7 +932,7 @@ export const STORIES: Story[] = [
         mood: "sad",
       },
       {
-        text: "[curious] Bố nói: 'Đó là QUỸ KHẨN CẤP! Mỗi tháng bố để dành 1 phần tiền để dùng khi CẦN GẤP mà không kịp kiếm.'",
+        text: "[curious] Bố nói: 'Đó là QUỸ KHẨN CẤP! Mỗi tháng bố để dành một phần tiền để dùng khi CẦN GẤP mà không kịp kiếm.'",
         visual: {
           kind: "spotlight",
           prop: { type: "emoji", emoji: "💼", size: 100 },
@@ -940,7 +940,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[whispers] Bí quyết: nên có QUỸ KHẨN CẤP bằng 3 tháng chi tiêu. Khi ốm đau, sửa xe, mất việc - đều có tiền xoay xở!",
+        text: "[whispers] Bí quyết: nên có QUỸ KHẨN CẤP bằng ba tháng chi tiêu. Khi ốm đau, sửa xe, mất việc - đều có tiền xoay xở!",
         visual: {
           kind: "spotlight",
           prop: { type: "shield", tone: "safe" },
@@ -959,7 +959,7 @@ export const STORIES: Story[] = [
     estDurationSec: 30,
     scenes: [
       {
-        text: "[curious] Bạn Nam cần tiền gấp, thấy quảng cáo '[whispers] VAY NHANH trong 24h'. Nam vay 1 triệu.",
+        text: "[curious] Bạn Nam cần tiền gấp, thấy quảng cáo '[whispers] VAY NHANH trong 24h'. Nam vay một triệu.",
         visual: {
           kind: "props",
           items: [
@@ -970,7 +970,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[sighs] 1 tháng sau, người cho vay đòi 2 triệu! Gấp đôi! Gọi điện đòi liên tục. Nam sợ quá!",
+        text: "[sighs] một tháng sau, người cho vay đòi hai triệu! Gấp đôi! Gọi điện đòi liên tục. Nam sợ quá!",
         visual: {
           kind: "props",
           items: [
@@ -1001,7 +1001,7 @@ export const STORIES: Story[] = [
     estDurationSec: 30,
     scenes: [
       {
-        text: "[curious] Bạn có 1 triệu đồng. Để trong nhà dễ mất, lại không sinh thêm tiền. Mang gửi NGÂN HÀNG nhé!",
+        text: "[curious] Bạn có một triệu đồng. Để trong nhà dễ mất, lại không sinh thêm tiền. Mang gửi NGÂN HÀNG nhé!",
         visual: {
           kind: "spotlight",
           prop: { type: "bank", label: "Ngân hàng" },
@@ -1009,7 +1009,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Gửi 1 năm, lãi suất 6%/năm. Sau 1 năm bạn có 1 triệu 60 nghìn. Vừa AN TOÀN vừa CÓ LÃI!",
+        text: "[happy] Gửi một năm, lãi suất sáu phần trăm/năm. Sau một năm bạn có một triệu sáu mươi nghìn. Vừa AN TOÀN vừa CÓ LÃI!",
         visual: {
           kind: "props",
           items: [
@@ -1042,7 +1042,7 @@ export const STORIES: Story[] = [
     estDurationSec: 30,
     scenes: [
       {
-        text: "[curious] Bạn gửi 1 triệu, lãi 10%/năm. Năm 1: 1.1 triệu. Năm 2: 1.21 triệu. Năm 3: 1.33 triệu!",
+        text: "[curious] Bạn gửi một triệu, lãi mười phần trăm/năm. Năm một: một phẩy một triệu. Năm hai: một phẩy hai mươi mốt triệu. Năm ba: một phẩy ba mươi ba triệu!",
         visual: {
           kind: "spotlight",
           prop: { type: "tree", size: 40 },
@@ -1050,7 +1050,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[happy] Sau 10 năm, 1 triệu ban đầu thành 2.59 triệu! Gấp 2.5 lần mà BẠN KHÔNG PHẢI LÀM GÌ thêm!",
+        text: "[happy] Sau mười năm, một triệu ban đầu thành hai phẩy năm mươi chín triệu! Gấp hai phẩy năm lần mà BẠN KHÔNG PHẢI LÀM GÌ thêm!",
         visual: {
           kind: "spotlight",
           prop: { type: "tree", size: 80 },
@@ -1058,7 +1058,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[excited] Sau 20 năm: 6.73 triệu! Gấp 6.7 lần! [whispers] Bí mật: BẮT ĐẦU SỚM. Càng trẻ gửi tiết kiệm, càng giàu khi lớn lên!",
+        text: "[excited] Sau hai mươi năm: sáu phẩy bảy mươi ba triệu! Gấp sáu phẩy bảy lần! [whispers] Bí mật: BẮT ĐẦU SỚM. Càng trẻ gửi tiết kiệm, càng giàu khi lớn lên!",
         visual: {
           kind: "spotlight",
           prop: { type: "tree", size: 100 },
@@ -1077,7 +1077,7 @@ export const STORIES: Story[] = [
     estDurationSec: 30,
     scenes: [
       {
-        text: "[curious] CỔ PHIẾU là gì? Khi bạn mua cổ phiếu, bạn trở thành 1 CHỦ SỞ HỮU nhỏ của công ty!",
+        text: "[curious] CỔ PHIẾU là gì? Khi bạn mua cổ phiếu, bạn trở thành một chủ sở hữu nhỏ của công ty!",
         visual: {
           kind: "props",
           items: [
@@ -1174,7 +1174,7 @@ export const STORIES: Story[] = [
     estDurationSec: 30,
     scenes: [
       {
-        text: "[curious] Pé Ti thấy tin nhắn '[whispers] TRÚNG THƯỞNG 10 TRIỆU! Click ngay!' Pé Ti háo hức click. ĐÚNG HAY SAI? [curious]",
+        text: "[curious] Pé Ti thấy tin nhắn '[whispers] TRÚNG THƯỞNG mười triệu! Click ngay!' Pé Ti háo hức click. ĐÚNG HAY SAI? [curious]",
         visual: {
           kind: "props",
           items: [
@@ -1186,7 +1186,7 @@ export const STORIES: Story[] = [
         mood: "thinking",
       },
       {
-        text: "[sighs] SAI RỒI! Đó là LỪA ĐẢO! Không có ai tặng 10 triệu qua tin nhắn. Click vào là MẤT TIỀN ngay!",
+        text: "[sighs] SAI RỒI! Đó là LỪA ĐẢO! Không có ai tặng mười triệu qua tin nhắn. Click vào là MẤT TIỀN ngay!",
         visual: {
           kind: "props",
           items: [
@@ -1220,7 +1220,7 @@ export const STORIES: Story[] = [
     estDurationSec: 25,
     scenes: [
       {
-        text: "[curious] Trước cửa hàng có 1 ô vuông to to chứa nhiều ô nhỏ đen trắng. Đó là QR CODE!",
+        text: "[curious] Trước cửa hàng có một ô vuông to to chứa nhiều ô nhỏ đen trắng. Đó là QR CODE!",
         visual: {
           kind: "spotlight",
           prop: { type: "emoji", emoji: "▦", size: 100 },
@@ -1309,7 +1309,7 @@ export const STORIES: Story[] = [
     estDurationSec: 30,
     scenes: [
       {
-        text: "[happy] Có 3 loại bảo hiểm phổ biến: BHYT (sức khỏe), bảo hiểm xe (ô tô/xe máy), và bảo hiểm NHÂN THỌ (cả gia đình).",
+        text: "[happy] Có ba loại bảo hiểm phổ biến: BHYT (sức khỏe), bảo hiểm xe (ô tô/xe máy), và bảo hiểm NHÂN THỌ (cả gia đình).",
         visual: {
           kind: "props",
           items: [
@@ -1321,7 +1321,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[curious] Bảo hiểm NHÂN THỌ bảo vệ cả gia đình. Nếu bố/mẹ (người trụ cột) gặp rủi ro không đi làm được, công ty BH sẽ trả 1 khoản tiền lớn!",
+        text: "[curious] Bảo hiểm NHÂN THỌ bảo vệ cả gia đình. Nếu bố/mẹ (người trụ cột) gặp rủi ro không đi làm được, công ty BH sẽ trả một khoản tiền lớn!",
         visual: {
           kind: "props",
           items: [
