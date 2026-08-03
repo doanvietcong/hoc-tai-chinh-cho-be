@@ -46,6 +46,25 @@ next-env.d.ts
 /test-*.ps1
 /debug-*.js
 /.playwright/
+/qc-report.txt
+/demo/test-*.mp3
+/demo/regen-*.mp3
+/demo/clip-*.mp4
+/public/banknotes-test/
+/public/banknotes-test100k.png
+/public/banknotes-tmp/
+/public/anknotes-extra/
+/public/anknotes-extra.zip
+
+# QC baseline — COMMIT (shared "known good" snapshot for CI)
+# Update via: npm run qc:baseline (khi regen audio có chủ đích)
+# .qc-baseline.json
+
+# Scripts chỉ dùng lúc debug
+/scripts/check-voice.js
+/scripts/test-elevenlabs.js
+/scripts/regen-sample.js
+/scripts/debug-qc.js
 
 /do-push.ps1
 /push-github.js

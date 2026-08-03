@@ -12,7 +12,12 @@
     "start": "next start",
     "lint": "eslint",
     "generate-audio": "node scripts/generate-audio.js",
-    "add-audio-tags": "node scripts/add-audio-tags.js"
+    "add-audio-tags": "node scripts/add-audio-tags.js",
+    "qc": "node scripts/qc.js",
+    "qc:baseline": "node scripts/qc-baseline.js",
+    "qc:watch": "node scripts/qc-watch.js",
+    "qc:install-hook": "node scripts/qc-install-hook.js",
+    "count-scenes": "node scripts/count-scenes.js"
   },
   "dependencies": {
     "clsx": "^2.1.1",
