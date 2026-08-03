@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 220" width="440" height="220">
+  <defs>
+    <linearGradient id="bg-20k" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd"/>
+      <stop offset="100%" stop-color="#7dd3fc"/>
+    </linearGradient>
+    <pattern id="pat-20k" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+      <path d="M 7 0 L 8 6 L 14 7 L 8 8 L 7 14 L 6 8 L 0 7 L 6 6 Z" fill="#0c4a6e" opacity="0.06"/>
+    </pattern>
+    <pattern id="lines-20k" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="20" x2="40" y2="20" stroke="#0c4a6e" stroke-width="0.4" opacity="0.15"/>
+      <line x1="20" y1="0" x2="20" y2="40" stroke="#0c4a6e" stroke-width="0.4" opacity="0.15"/>
+    </pattern>
+    <radialGradient id="shine-20k" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- base -->
+  <rect width="440" height="220" rx="12" fill="url(#bg-20k)"/>
+  <rect width="440" height="220" rx="12" fill="url(#pat-20k)"/>
+  <rect width="440" height="220" rx="12" fill="url(#lines-20k)"/>
+  <ellipse cx="220" cy="110" rx="220" ry="110" fill="url(#shine-20k)"/>
+
+  <!-- outer border (decorative) -->
+  <rect x="4" y="4" width="432" height="212" rx="9" fill="none" stroke="#0c4a6e" stroke-width="1.5" opacity="0.5"/>
+  <rect x="8" y="8" width="424" height="204" rx="7" fill="none" stroke="#0c4a6e" stroke-width="0.6" stroke-dasharray="3,2" opacity="0.4"/>
+
+  <!-- corner ornaments -->
+  <g fill="#0369a1" opacity="0.85">
+    <path d="M 16 16 L 18 21 L 23 21 L 19 24 L 21 29 L 16 26 L 11 29 L 13 24 L 9 21 L 14 21 Z"/>
+    <path d="M 424 16 L 426 21 L 431 21 L 427 24 L 429 29 L 424 26 L 419 29 L 421 24 L 417 21 L 422 21 Z"/>
+    <path d="M 16 204 L 18 199 L 23 199 L 19 196 L 21 191 L 16 194 L 11 191 L 13 196 L 9 199 L 14 199 Z"/>
+    <path d="M 424 204 L 426 199 L 431 199 L 427 196 L 429 191 L 424 194 L 419 191 L 421 196 L 417 199 L 422 199 Z"/>
+  </g>
+
+  <!-- header -->
+  <text x="220" y="26" text-anchor="middle" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="11" font-weight="800" fill="#0c4a6e" letter-spacing="1.4">NGÂN HÀNG NHÀ NƯỚC VIỆT NAM</text>
+
+  <!-- 国徽 style star (left) -->
+  <g transform="translate(48, 60)"><g transform="translate(0,0)">
+      <circle r="14" fill="#fbbf24" stroke="#0c4a6e" stroke-width="1.5"/>
+      <path d="M 0 -10 L 2.5 -3 L 9 -3 L 4 1.5 L 6 9 L 0 5 L -6 9 L -4 1.5 L -9 -3 L -2.5 -3 Z" fill="#0c4a6e"/>
+    </g></g>
+  <text x="48" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#0c4a6e" letter-spacing="0.5">★</text>
+  <text x="48" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#0c4a6e" letter-spacing="0.5">★</text>
+  <text x="48" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#0c4a6e" letter-spacing="0.5">★</text>
+  <text x="48" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#0c4a6e" letter-spacing="0.5">★</text>
+
+  <!-- 国徽 style star (right) -->
+  <g transform="translate(392, 60)"><g transform="translate(0,0)">
+      <circle r="14" fill="#fbbf24" stroke="#0c4a6e" stroke-width="1.5"/>
+      <path d="M 0 -10 L 2.5 -3 L 9 -3 L 4 1.5 L 6 9 L 0 5 L -6 9 L -4 1.5 L -9 -3 L -2.5 -3 Z" fill="#0c4a6e"/>
+    </g></g>
+  <text x="392" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#0c4a6e" letter-spacing="0.5">★</text>
+  <text x="392" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#0c4a6e" letter-spacing="0.5">★</text>
+  <text x="392" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#0c4a6e" letter-spacing="0.5">★</text>
+  <text x="392" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#0c4a6e" letter-spacing="0.5">★</text>
+
+  <!-- central iconic illustration -->
+  <g>
+    <g transform="translate(220, 125)">
+      <!-- base -->
+      <rect x="-30" y="20" width="60" height="8" fill="#0c4a6e"/>
+      <rect x="-32" y="14" width="64" height="6" fill="#075985"/>
+      <!-- 1st tier body -->
+      <rect x="-22" y="-2" width="44" height="16" fill="#fef3c7" stroke="#0c4a6e" stroke-width="1"/>
+      <rect x="-18" y="2" width="36" height="10" fill="#0369a1" opacity="0.5"/>
+      <!-- 1st tier roof -->
+      <path d="M -28 -2 L 28 -2 L 24 -10 L -24 -10 Z" fill="#dc2626" stroke="#0c4a6e" stroke-width="1"/>
+      <path d="M -24 -10 L 24 -10 L 18 -18 L -18 -18 Z" fill="#b91c1c" stroke="#0c4a6e" stroke-width="1"/>
+      <!-- 2nd tier body -->
+      <rect x="-16" y="-26" width="32" height="14" fill="#fef3c7" stroke="#0c4a6e" stroke-width="1"/>
+      <!-- 2nd tier roof -->
+      <path d="M -20 -26 L 20 -26 L 16 -32 L -16 -32 Z" fill="#dc2626" stroke="#0c4a6e" stroke-width="1"/>
+      <path d="M -16 -32 L 16 -32 L 10 -38 L -10 -38 Z" fill="#b91c1c" stroke="#0c4a6e" stroke-width="1"/>
+      <!-- 3rd tier -->
+      <rect x="-10" y="-46" width="20" height="10" fill="#fef3c7" stroke="#0c4a6e" stroke-width="1"/>
+      <path d="M -13 -46 L 13 -46 L 9 -52 L -9 -52 Z" fill="#dc2626" stroke="#0c4a6e" stroke-width="1"/>
+      <!-- top finial -->
+      <line x1="0" y1="-52" x2="0" y2="-62" stroke="#fbbf24" stroke-width="1.5"/>
+      <circle cx="0" cy="-64" r="3" fill="#fbbf24"/>
+    </g>
+  </g>
+
+  <!-- big denomination number watermark (subtle) -->
+  <text x="220" y="200" text-anchor="middle" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="46" font-weight="900" fill="#0c4a6e" opacity="0.18">20.000</text>
+
+  <!-- bottom text -->
+  <text x="220" y="212" text-anchor="middle" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="10" font-weight="800" fill="#0c4a6e" letter-spacing="2" opacity="0.9">HAI MƯƠI NGHÌN ĐỒNG</text>
+
+  <!-- side number copies (small, near star) -->
+  <text x="76" y="64" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="14" font-weight="800" fill="#0c4a6e">20.000</text>
+  <text x="364" y="64" text-anchor="end" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="14" font-weight="800" fill="#0c4a6e">20.000</text>
+
+  <!-- coin glyph next to numbers -->
+  <g transform="translate(76, 80)">
+    <circle r="7" fill="#fbbf24" stroke="#0c4a6e" stroke-width="1"/>
+    <text y="3" text-anchor="middle" font-family="serif" font-size="9" font-weight="900" fill="#0c4a6e">₫</text>
+  </g>
+  <g transform="translate(364, 80)">
+    <circle r="7" fill="#fbbf24" stroke="#0c4a6e" stroke-width="1"/>
+    <text y="3" text-anchor="middle" font-family="serif" font-size="9" font-weight="900" fill="#0c4a6e">₫</text>
+  </g>
+
+  <!-- fine serial number -->
+  <text x="220" y="198" text-anchor="middle" font-family="monospace" font-size="7" font-weight="600" fill="#0c4a6e" opacity="0.55" letter-spacing="2">SB20K-821298</text>
+</svg>

@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pé Ti — Bộ sưu tập tờ tiền Việt Nam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff8eb;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --accent: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      background: linear-gradient(180deg, #fff8eb 0%, #fef3c7 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 32px 16px 64px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 32px; }
+    .header .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #fef3c7; color: #92400e;
+      padding: 6px 14px; border-radius: 999px;
+      font-weight: 700; font-size: 13px;
+      border: 1.5px solid #fbbf24;
+      margin-bottom: 14px;
+    }
+    .header h1 {
+      font-size: 36px; font-weight: 900; line-height: 1.2;
+      background: linear-gradient(135deg, #b45309, #7c2d12);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .header p { color: var(--muted); font-size: 15px; max-width: 640px; margin: 0 auto; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .card .label-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px;
+    }
+    .card .name { font-weight: 800; font-size: 15px; color: var(--ink); }
+    .card .icon-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #f3f4f6; color: #4b5563;
+      padding: 4px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 700;
+    }
+    .card svg.banknote {
+      width: 100%; height: auto; display: block; border-radius: 10px;
+    }
+    .card .desc {
+      font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.4;
+    }
+    .section-title {
+      font-size: 24px; font-weight: 800; margin: 48px 0 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::before {
+      content: ''; width: 6px; height: 28px;
+      background: linear-gradient(180deg, #f59e0b, #b45309);
+      border-radius: 3px;
+    }
+
+    /* Lesson preview */
+    .lesson-preview {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    }
+    .lesson-header {
+      display: flex; align-items: center; gap: 14px;
+      padding-bottom: 18px; border-bottom: 1px solid #f3f4f6;
+      margin-bottom: 22px;
+    }
+    .lesson-header .icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+    .lesson-header .title { font-size: 20px; font-weight: 800; }
+    .lesson-header .subtitle { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .drag-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .drag-source h4, .drag-target h4 {
+      font-size: 13px; font-weight: 700; color: #6b7280;
+      text-transform: uppercase; letter-spacing: 0.6px;
+      margin-bottom: 12px;
+    }
+    .drag-source .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 999px;
+      background: #f9fafb; border: 1.5px solid #e5e7eb;
+      font-size: 13px; font-weight: 600;
+      cursor: grab;
+    }
+    .drag-target .buckets { display: grid; gap: 10px; }
+    .bucket {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      background: #f9fafb; border: 1.5px dashed #d1d5db;
+      border-radius: 12px;
+      min-height: 76px;
+    }
+    .bucket .slot-label {
+      width: 70px; height: 50px; flex-shrink: 0;
+      background: #e5e7eb; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: #6b7280;
+    }
+    .bucket .note-slot { flex: 1; display: flex; justify-content: center; }
+    .bucket .note-slot svg { height: 56px; width: auto; }
+    .footer-note {
+      margin-top: 28px; padding: 14px 18px;
+      background: #ecfdf5; border: 1.5px solid #6ee7b7;
+      border-radius: 12px; color: #065f46; font-size: 14px; font-weight: 600;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .footer-note .badge { background: #10b981; color: white; padding: 2px 8px; border-radius: 6px; font-size: 12px; }
+
+    /* Comparison */
+    .compare {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      margin: 24px 0;
+    }
+    .compare > div { background: white; border: 1.5px solid var(--border); border-radius: 14px; padding: 18px; }
+    .compare h5 { font-size: 14px; font-weight: 800; margin-bottom: 10px; }
+    .compare .old {
+      filter: grayscale(0.6) sepia(0.2);
+    }
+    .compare svg.banknote { width: 100%; height: auto; }
+
+    .meta {
+      margin-top: 24px; padding: 16px 20px;
+      background: #fef3c7; border-radius: 12px;
+      font-size: 13px; color: #78350f; line-height: 1.6;
+    }
+    .meta strong { color: #92400e; }
+
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+      .drag-board { grid-template-columns: 1fr; }
+      .compare { grid-template-columns: 1fr; }
+      .header h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">🐧 Pé Ti Finance · Demo nghiệm thu</div>
+      <h1>Bộ sưu tập 9 tờ tiền Việt Nam</h1>
+      <p>Mỗi tờ tiền được minh họa theo phong cảnh / di tích thật của Việt Nam, thiết kế lại sạch đẹp cho trẻ 5-15 tuổi học nhận biết mệnh giá.</p>
+    </div>
+
+    <!-- Gallery -->
+    <h2 class="section-title">9 mệnh giá — mỗi tờ một câu chuyện</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="label-row">
+          <span class="name">1.000 đồng</span>
+          <span class="icon-tag">🏛️ Chùa Một Cột</span>
+        </div>
+        <object data="/banknotes/1k.svg" type="image/svg+xml" class="banknote"></object>
+        <div class="desc">Một nghìn đồng — màu xanh dương, biểu tượng Chùa Một Cột, Hà Nội.</div>
+      </div>
+      <div class="card">
+        <div class="label-row">
+          <span class="name">2.000 đồng</span>
+          <span class="icon-tag">🏠 Nhà sàn Bác Hồ</span>
+        </div>
+        <object data="/banknotes/2k.svg" type="image/svg+xml" class="banknote"></object>
+        <div class="desc">Hai nghìn đồng — tông nâu đất, hình nhà sàn truyền thống.</div>
+      </div>
+      <div class="card">
+        <div class="label-row">
+          <span class="name">5.000 đồng</span>
+          <span class="icon-tag">⛰️ Vịnh Hạ Long</span>
+        </div>
+        <object data="/banknotes/5k.svg" type="image/svg+xml" class="banknote"></object>
+        <div class="desc">Năm nghìn đồng — hồng cánh sen, hình núi đá vịnh Hạ Long.</div>
+      </div>
+      <div class="card">
+        <div class="label-row">
+          <span class="name">10.000 đồng</span>
+          <span class="icon-tag">🌉 Cầu Long Biên</span>
+        </div>
+        <object data="/banknotes/10k.svg" type="image/svg+xml" class="banknote"></object>
+        <div class="desc">Mười nghìn đồng — vàng nâu, biểu tượng Cầu Long Biên lịch sử.</div>
+      </div>
+      <div class="card">
+        <div class="label-row">
+          <span class="name">20.000 đồng</span>
+          <span class="icon-tag">🛕 Chùa Phổ Minh</span>
+        </div>
+        <object data="/banknotes/20k.svg" type="image/svg+xml" class="banknote"></object>
+        <div class="desc">Hai mươi nghìn đồng — xanh cyan, chùa Phổ Minh cổ kính.</div>
+      </div>
+      <div class="card">
+        <div class="label-row">
+          <span class="name">50.000 đồng</span>
+          <span class="icon-tag">🏮 Phố cổ Hội An</span>
+        </div>
+        <object data="/banknotes/50k.svg" type="image/svg+xml" class="banknote"></object>
+        <div class="desc">Năm mươi nghìn đồng — hồng phấn, phố cổ Hội An với đèn lồng.</div>
+      </div>
+      <div class="card">
+        <div class="label-row">
+          <span class="name">100.000 đồng</span>
+          <span class="icon-tag">📚 Văn Miếu</span>
+        </div>
+        <object data="/banknotes/100k.svg" type="image/svg+xml" class="banknote"></object>
+        <div class="desc">Một trăm nghìn đồng — xanh lá, Văn Miếu - Quốc Tử Giám.</div>
+      </div>
+      <div class="card">
+        <div class="label-row">
+          <span class="name">200.000 đồng</span>
+          <span class="icon-tag">⛩️ Đền Hùng</span>
+        </div>
+        <object data="/banknotes/200k.svg" type="image/svg+xml" class="banknote"></object>
+        <div class="desc">Hai trăm nghìn đồng — cam đất, đền Hùng trên núi.</div>
+      </div>
+      <div class="card">
+        <div class="label-row">
+          <span class="name">500.000 đồng</span>
+          <span class="icon-tag">🏞️ Phong Nha - Kẻ Bàng</span>
+        </div>
+        <object data="/banknotes/500k.svg" type="image/svg+xml" class="banknote"></object>
+        <div class="desc">Năm trăm nghìn đồng — xanh teal, hang động Phong Nha.</div>
+      </div>
+    </div>
+
+    <!-- Lesson preview -->
+    <h2 class="section-title">Cách hiển thị trong bài học "Làm quen với tờ tiền" (money-2)</h2>
+    <div class="lesson-preview">
+      <div class="lesson-header">
+        <div class="icon">💰</div>
+        <div>
+          <div class="title">Bài 2 · Làm quen với tờ tiền</div>
+          <div class="subtitle">Nhận biết mệnh giá phổ biến · Độ tuổi 5-7, 8-11 · 25 XP</div>
+        </div>
+      </div>
+
+      <div class="drag-board">
+        <div class="drag-source">
+          <h4>Kéo mỗi tờ tiền vào ô mệnh giá đúng</h4>
+          <div class="chips">
+            <span class="chip">💴 1.000đ</span>
+            <span class="chip">💴 2.000đ</span>
+            <span class="chip">💴 5.000đ</span>
+            <span class="chip">💴 10.000đ</span>
+            <span class="chip">💴 20.000đ</span>
+          </div>
+        </div>
+        <div class="drag-target">
+          <h4>5 ô đáp án</h4>
+          <div class="buckets">
+            <div class="bucket">
+              <div class="slot-label">1.000đ</div>
+              <div class="note-slot"><object data="/banknotes/1k.svg" type="image/svg+xml" style="height:56px"></object></div>
+            </div>
+            <div class="bucket">
+              <div class="slot-label">2.000đ</div>
+              <div class="note-slot"><object data="/banknotes/2k.svg" type="image/svg+xml" style="height:56px"></object></div>
+            </div>
+            <div class="bucket">
+              <div class="slot-label">5.000đ</div>
+              <div class="note-slot"><object data="/banknotes/5k.svg" type="image/svg+xml" style="height:56px"></object></div>
+            </div>
+            <div class="bucket">
+              <div class="slot-label">10.000đ</div>
+              <div class="note-slot"><object data="/banknotes/10k.svg" type="image/svg+xml" style="height:56px"></object></div>
+            </div>
+            <div class="bucket">
+              <div class="slot-label">20.000đ</div>
+              <div class="note-slot"><object data="/banknotes/20k.svg" type="image/svg+xml" style="height:56px"></object></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        <span class="badge">+25 XP</span>
+        Bé nhận biết tiền rất tốt! Ghi nhớ mệnh giá giúp tính toán nhanh hơn.
+      </div>
+    </div>
+
+    <!-- Mini-game / story preview -->
+    <h2 class="section-title">Bài học money-2 — Pé Ti kể chuyện (storyboard)</h2>
+    <div class="lesson-preview">
+      <div class="lesson-header">
+        <div class="icon" style="background: linear-gradient(135deg, #60a5fa, #2563eb);">🐧</div>
+        <div>
+          <div class="title">Pé Ti kể chuyện trước bài học</div>
+          <div class="subtitle">5 cảnh — học mà chơi, chơi mà học</div>
+        </div>
+      </div>
+
+      <div style="display: grid; gap: 18px;">
+        <div style="background:#fef3c7;border-radius:14px;padding:18px;display:flex;gap:16px;align-items:center;">
+          <div style="font-size:48px;">🛒</div>
+          <div style="flex:1">
+            <div style="font-weight:800;font-size:14px;color:#92400e;margin-bottom:4px;">Cảnh 1 — Đi siêu thị cùng mẹ</div>
+            <div style="font-size:13px;color:#78350f;">"Hôm nay mẹ cho An 100.000đ để mua đồ. An nhìn tờ tiền xanh và tự hỏi — tờ này mua được gì nhỉ?"</div>
+          </div>
+          <object data="/banknotes/100k.svg" type="image/svg+xml" style="height:64px"></object>
+        </div>
+        <div style="background:#dbeafe;border-radius:14px;padding:18px;display:flex;gap:16px;align-items:center;">
+          <div style="font-size:48px;">🤔</div>
+          <div style="flex:1">
+            <div style="font-weight:800;font-size:14px;color:#1e40af;margin-bottom:4px;">Cảnh 2 — Tờ tiền nào nhiều tiền hơn?</div>
+            <div style="font-size:13px;color:#1e3a8a;">"An lấy 1 tờ 10k và 1 tờ 20k. Vậy 2 tờ này cộng lại bằng bao nhiêu? Cùng đếm với Pé Ti nào!"</div>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <object data="/banknotes/10k.svg" type="image/svg+xml" style="height:48px"></object>
+            <object data="/banknotes/20k.svg" type="image/svg+xml" style="height:48px"></object>
+          </div>
+        </div>
+        <div style="background:#d1fae5;border-radius:14px;padding:18px;display:flex;gap:16px;align-items:center;">
+          <div style="font-size:48px;">🎯</div>
+          <div style="flex:1">
+            <div style="font-weight:800;font-size:14px;color:#065f46;margin-bottom:4px;">Cảnh 3 — Tờ nào để mua kem?</div>
+            <div style="font-size:13px;color:#064e3b;">"Kem 5.000đ. An cần tờ màu hồng — đó là tờ 5k. Bé giúp An chọn nhé!"</div>
+          </div>
+          <object data="/banknotes/5k.svg" type="image/svg+xml" style="height:48px"></object>
+        </div>
+        <div style="background:#fce7f3;border-radius:14px;padding:18px;display:flex;gap:16px;align-items:center;">
+          <div style="font-size:48px;">✨</div>
+          <div style="flex:1">
+            <div style="font-weight:800;font-size:14px;color:#9d174d;margin-bottom:4px;">Cảnh 4 — Đếm tiền trong ví</div>
+            <div style="font-size:13px;color:#831843;">"An mở ví ra: 1 tờ 100k, 3 tờ 10k. Tổng cộng bao nhiêu? Tính nhanh nào!"</div>
+          </div>
+          <div style="display:flex;gap:4px;align-items:center;">
+            <object data="/banknotes/100k.svg" type="image/svg+xml" style="height:60px"></object>
+            <object data="/banknotes/10k.svg" type="image/svg+xml" style="height:36px"></object>
+            <object data="/banknotes/10k.svg" type="image/svg+xml" style="height:36px"></object>
+            <object data="/banknotes/10k.svg" type="image/svg+xml" style="height:36px"></object>
+          </div>
+        </div>
+        <div style="background:#fed7aa;border-radius:14px;padding:18px;display:flex;gap:16px;align-items:center;">
+          <div style="font-size:48px;">🍦</div>
+          <div style="flex:1">
+            <div style="font-weight:800;font-size:14px;color:#9a3412;margin-bottom:4px;">Cảnh 5 — Mua kem thôi!</div>
+            <div style="font-size:13px;color:#7c2d12;">"An chọn 1 cây kem 20k. Đưa tờ 20k cho cô bán hàng. Vậy là còn lại 110.000đ. An vui lắm!"</div>
+          </div>
+          <object data="/banknotes/20k.svg" type="image/svg+xml" style="height:56px"></object>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        <span class="badge">🎬</span>
+        Storyboard tự động chạy trước khi vào bài học — có audio TTS kể chuyện bằng tiếng Việt.
+      </div>
+    </div>
+
+    <div class="meta">
+      <strong>Đã làm:</strong> Thiết kế lại 9 tờ tiền với icon riêng theo mệnh giá (Chùa Một Cột, Hạ Long, Long Biên, Hội An, Văn Miếu...).
+      Mỗi tờ có màu sắc riêng biệt, viền trang trí, ngôi sao, số serial giả lập như tiền thật.
+      <br><br>
+      <strong>So với ảnh cũ:</strong> Ảnh cũ dùng ảnh chụp tờ tiền polymer cũ, chất lượng thấp, lẫn nhiều chi tiết nhỏ khó nhìn.
+      Bản mới là SVG vector sạch, sắc nét, nhận biết mệnh giá nhanh hơn, thân thiện với trẻ em.
+    </div>
+  </div>
+</body>
+</html>

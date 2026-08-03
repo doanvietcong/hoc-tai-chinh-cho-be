@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 220" width="440" height="220">
+  <defs>
+    <linearGradient id="bg-50k" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbcfe8"/>
+      <stop offset="100%" stop-color="#f9a8d4"/>
+    </linearGradient>
+    <pattern id="pat-50k" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+      <path d="M 7 0 L 8 6 L 14 7 L 8 8 L 7 14 L 6 8 L 0 7 L 6 6 Z" fill="#831843" opacity="0.06"/>
+    </pattern>
+    <pattern id="lines-50k" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="20" x2="40" y2="20" stroke="#831843" stroke-width="0.4" opacity="0.15"/>
+      <line x1="20" y1="0" x2="20" y2="40" stroke="#831843" stroke-width="0.4" opacity="0.15"/>
+    </pattern>
+    <radialGradient id="shine-50k" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- base -->
+  <rect width="440" height="220" rx="12" fill="url(#bg-50k)"/>
+  <rect width="440" height="220" rx="12" fill="url(#pat-50k)"/>
+  <rect width="440" height="220" rx="12" fill="url(#lines-50k)"/>
+  <ellipse cx="220" cy="110" rx="220" ry="110" fill="url(#shine-50k)"/>
+
+  <!-- outer border (decorative) -->
+  <rect x="4" y="4" width="432" height="212" rx="9" fill="none" stroke="#831843" stroke-width="1.5" opacity="0.5"/>
+  <rect x="8" y="8" width="424" height="204" rx="7" fill="none" stroke="#831843" stroke-width="0.6" stroke-dasharray="3,2" opacity="0.4"/>
+
+  <!-- corner ornaments -->
+  <g fill="#be185d" opacity="0.85">
+    <path d="M 16 16 L 18 21 L 23 21 L 19 24 L 21 29 L 16 26 L 11 29 L 13 24 L 9 21 L 14 21 Z"/>
+    <path d="M 424 16 L 426 21 L 431 21 L 427 24 L 429 29 L 424 26 L 419 29 L 421 24 L 417 21 L 422 21 Z"/>
+    <path d="M 16 204 L 18 199 L 23 199 L 19 196 L 21 191 L 16 194 L 11 191 L 13 196 L 9 199 L 14 199 Z"/>
+    <path d="M 424 204 L 426 199 L 431 199 L 427 196 L 429 191 L 424 194 L 419 191 L 421 196 L 417 199 L 422 199 Z"/>
+  </g>
+
+  <!-- header -->
+  <text x="220" y="26" text-anchor="middle" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="11" font-weight="800" fill="#831843" letter-spacing="1.4">NGÂN HÀNG NHÀ NƯỚC VIỆT NAM</text>
+
+  <!-- 国徽 style star (left) -->
+  <g transform="translate(48, 60)"><g transform="translate(0,0)">
+      <circle r="14" fill="#fbbf24" stroke="#831843" stroke-width="1.5"/>
+      <path d="M 0 -10 L 2.5 -3 L 9 -3 L 4 1.5 L 6 9 L 0 5 L -6 9 L -4 1.5 L -9 -3 L -2.5 -3 Z" fill="#831843"/>
+    </g></g>
+  <text x="48" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#831843" letter-spacing="0.5">★</text>
+  <text x="48" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#831843" letter-spacing="0.5">★</text>
+  <text x="48" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#831843" letter-spacing="0.5">★</text>
+  <text x="48" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#831843" letter-spacing="0.5">★</text>
+
+  <!-- 国徽 style star (right) -->
+  <g transform="translate(392, 60)"><g transform="translate(0,0)">
+      <circle r="14" fill="#fbbf24" stroke="#831843" stroke-width="1.5"/>
+      <path d="M 0 -10 L 2.5 -3 L 9 -3 L 4 1.5 L 6 9 L 0 5 L -6 9 L -4 1.5 L -9 -3 L -2.5 -3 Z" fill="#831843"/>
+    </g></g>
+  <text x="392" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#831843" letter-spacing="0.5">★</text>
+  <text x="392" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#831843" letter-spacing="0.5">★</text>
+  <text x="392" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#831843" letter-spacing="0.5">★</text>
+  <text x="392" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="800" fill="#831843" letter-spacing="0.5">★</text>
+
+  <!-- central iconic illustration -->
+  <g>
+    <g transform="translate(220, 130)">
+      <!-- ground -->
+      <rect x="-60" y="28" width="120" height="6" fill="#831843" opacity="0.3"/>
+      <!-- left house -->
+      <rect x="-50" y="0" width="34" height="28" fill="#fef3c7" stroke="#831843" stroke-width="1.2"/>
+      <path d="M -54 0 L 38 0 L 32 -10 L -48 -10 Z" fill="#9d174d" stroke="#831843" stroke-width="1.2"/>
+      <rect x="-44" y="6" width="8" height="10" fill="#831843"/>
+      <rect x="-32" y="6" width="8" height="10" fill="#831843"/>
+      <rect x="-20" y="6" width="8" height="10" fill="#831843"/>
+      <!-- middle house -->
+      <rect x="-12" y="-6" width="28" height="34" fill="#fed7aa" stroke="#831843" stroke-width="1.2"/>
+      <path d="M -16 -6 L 20 -6 L 14 -16 L -10 -16 Z" fill="#9d174d" stroke="#831843" stroke-width="1.2"/>
+      <rect x="-6" y="0" width="8" height="14" fill="#831843"/>
+      <rect x="4" y="0" width="8" height="14" fill="#831843"/>
+      <!-- right house -->
+      <rect x="22" y="0" width="32" height="28" fill="#fef3c7" stroke="#831843" stroke-width="1.2"/>
+      <path d="M 18 0 L 58 0 L 52 -10 L 24 -10 Z" fill="#9d174d" stroke="#831843" stroke-width="1.2"/>
+      <rect x="28" y="6" width="8" height="10" fill="#831843"/>
+      <rect x="40" y="6" width="8" height="10" fill="#831843"/>
+      <!-- hanging lantern -->
+      <line x1="2" y1="-20" x2="2" y2="-12" stroke="#831843" stroke-width="0.8"/>
+      <ellipse cx="2" cy="-8" rx="6" ry="8" fill="#fbbf24" stroke="#831843" stroke-width="1"/>
+      <line x1="-4" y1="-8" x2="8" y2="-8" stroke="#831843" stroke-width="0.5"/>
+      <line x1="-4" y1="-4" x2="8" y2="-4" stroke="#831843" stroke-width="0.5"/>
+      <line x1="-2" y1="-16" x2="6" y2="-16" stroke="#831843" stroke-width="0.5"/>
+    </g>
+  </g>
+
+  <!-- big denomination number watermark (subtle) -->
+  <text x="220" y="200" text-anchor="middle" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="46" font-weight="900" fill="#831843" opacity="0.18">50.000</text>
+
+  <!-- bottom text -->
+  <text x="220" y="212" text-anchor="middle" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="10" font-weight="800" fill="#831843" letter-spacing="2" opacity="0.9">NĂM MƯƠI NGHÌN ĐỒNG</text>
+
+  <!-- side number copies (small, near star) -->
+  <text x="76" y="64" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="14" font-weight="800" fill="#831843">50.000</text>
+  <text x="364" y="64" text-anchor="end" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="14" font-weight="800" fill="#831843">50.000</text>
+
+  <!-- coin glyph next to numbers -->
+  <g transform="translate(76, 80)">
+    <circle r="7" fill="#fbbf24" stroke="#831843" stroke-width="1"/>
+    <text y="3" text-anchor="middle" font-family="serif" font-size="9" font-weight="900" fill="#831843">₫</text>
+  </g>
+  <g transform="translate(364, 80)">
+    <circle r="7" fill="#fbbf24" stroke="#831843" stroke-width="1"/>
+    <text y="3" text-anchor="middle" font-family="serif" font-size="9" font-weight="900" fill="#831843">₫</text>
+  </g>
+
+  <!-- fine serial number -->
+  <text x="220" y="198" text-anchor="middle" font-family="monospace" font-size="7" font-weight="600" fill="#831843" opacity="0.55" letter-spacing="2">SB50K-322024</text>
+</svg>

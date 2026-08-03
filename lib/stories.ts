@@ -387,7 +387,7 @@ export const STORIES: Story[] = [
           kind: "props",
           items: [
             { type: "coin", amount: 1, tone: "gold" },
-            { type: "image", src: "/banknotes/100k.jpg", alt: "100.000đ", label: "100.000đ", size: 130 },
+            { type: "image", src: "/banknotes/100k.svg", alt: "100.000đ", label: "100.000đ", size: 130 },
             { type: "emoji", emoji: "📱", size: 60 },
           ],
         },
@@ -410,7 +410,7 @@ export const STORIES: Story[] = [
           kind: "props",
           items: [
             { type: "coin", amount: 1, tone: "gold" },
-            { type: "image", src: "/banknotes/10k.png", alt: "Tờ 10 nghìn", label: "10.000đ" },
+            { type: "image", src: "/banknotes/10k.svg", alt: "Tờ 10 nghìn", label: "10.000đ" },
           ],
         },
         mood: "happy",
@@ -420,10 +420,10 @@ export const STORIES: Story[] = [
         visual: {
           kind: "props",
           items: [
-            { type: "image", src: "/banknotes/10k.png", alt: "10.000đ", label: "10.000đ", size: 110 },
-            { type: "image", src: "/banknotes/20k.jpg", alt: "20.000đ", label: "20.000đ", size: 110 },
-            { type: "image", src: "/banknotes/50k.png", alt: "50.000đ", label: "50.000đ", size: 110 },
-            { type: "image", src: "/banknotes/100k.jpg", alt: "100.000đ", label: "100.000đ", size: 110 },
+            { type: "image", src: "/banknotes/10k.svg", alt: "10.000đ", label: "10.000đ", size: 110 },
+            { type: "image", src: "/banknotes/20k.svg", alt: "20.000đ", label: "20.000đ", size: 110 },
+            { type: "image", src: "/banknotes/50k.svg", alt: "50.000đ", label: "50.000đ", size: 110 },
+            { type: "image", src: "/banknotes/100k.svg", alt: "100.000đ", label: "100.000đ", size: 110 },
           ],
         },
         mood: "thinking",
@@ -433,10 +433,10 @@ export const STORIES: Story[] = [
         visual: {
           kind: "props",
           items: [
-            { type: "image", src: "/banknotes/100k.jpg", alt: "100.000đ", label: "100.000đ", size: 160 },
-            { type: "image", src: "/banknotes/10k.png", alt: "10.000đ", label: "10.000đ", size: 90 },
-            { type: "image", src: "/banknotes/10k.png", alt: "10.000đ", label: "10.000đ", size: 90 },
-            { type: "image", src: "/banknotes/10k.png", alt: "10.000đ", label: "10.000đ", size: 90 },
+            { type: "image", src: "/banknotes/100k.svg", alt: "100.000đ", label: "100.000đ", size: 160 },
+            { type: "image", src: "/banknotes/10k.svg", alt: "10.000đ", label: "10.000đ", size: 90 },
+            { type: "image", src: "/banknotes/10k.svg", alt: "10.000đ", label: "10.000đ", size: 90 },
+            { type: "image", src: "/banknotes/10k.svg", alt: "10.000đ", label: "10.000đ", size: 90 },
           ],
         },
         mood: "happy",
@@ -446,7 +446,7 @@ export const STORIES: Story[] = [
         visual: {
           kind: "props",
           items: [
-            { type: "image", src: "/banknotes/20k.jpg", alt: "20.000đ", label: "20.000đ", size: 130 },
+            { type: "image", src: "/banknotes/20k.svg", alt: "20.000đ", label: "20.000đ", size: 130 },
             { type: "emoji", emoji: "🍦", size: 50 },
             { type: "coin", amount: 5, tone: "gold" },
           ],
