@@ -150,7 +150,8 @@ export type SceneProp =
   | { type: "tree"; size: number } // growing tree = compound interest
   | { type: "bank"; label?: string }
   | { type: "emoji"; emoji: string; size?: number }
-  | { type: "sparkle" };
+  | { type: "sparkle" }
+  | { type: "image"; src: string; alt?: string; label?: string; size?: number };
 
 export type PenguinMoodForStory =
   | "idle"

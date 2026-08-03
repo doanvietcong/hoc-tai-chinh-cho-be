@@ -112,6 +112,8 @@ function parseStories() {
     const lessonId = idMatch[1];
 
     const textRegex = /\btext:\s*"((?:[^"\\]|\\.)*)"/g;
+    const moodRegex = /\bmood:\s*"([^"]+)"/g;
+    const mList = [...block.matchAll(moodRegex)].map((m) => m[1]);
     let m;
     let idx = 0;
     while ((m = textRegex.exec(block)) !== null) {
@@ -121,12 +123,65 @@ function parseStories() {
         .replace(/\\\\/g, "\\")
         .trim();
       if (text.length === 0) continue;
-      stories.push({ lessonId, sceneIdx: idx, text });
+      const mood = mList[idx] || "neutral";
+      stories.push({ lessonId, sceneIdx: idx, text, mood });
       idx++;
     }
   }
 
   return stories;
+}
+
+// ----- Audio tag helpers (mirror scripts/add-audio-tags.js) -----
+function tagBeforeKeyword(text, keyword, tag) {
+  if (text.includes(`${tag} ${keyword}`)) return text;
+  if (!text.includes(keyword)) return text;
+  return text.replace(keyword, `${tag} ${keyword}`);
+}
+
+function prependTag(text, tag) {
+  if (!tag) return text;
+  if (/^\s*\[[\w\s]+\]/.test(text)) return text; // đã có tag
+  return `${tag} ${text}`;
+}
+
+function applyContentTags(text) {
+  let t = text;
+  t = tagBeforeKeyword(t, "Bí mật", "[whispers]");
+  t = tagBeforeKeyword(t, "Bí quyết", "[whispers]");
+  t = tagBeforeKeyword(t, "LƯU Ý", "[whispers]");
+  t = tagBeforeKeyword(t, "ĐỪNG bao giờ", "[whispers]");
+  t = tagBeforeKeyword(t, "KHÔNG BAO GIỜ", "[whispers]");
+  t = tagBeforeKeyword(t, "TRÚNG THƯỞNG", "[whispers]");
+  t = tagBeforeKeyword(t, "VAY NHANH", "[whispers]");
+  t = t.replace(/(?<!\] )Tuyệt vời!/g, "Tuyệt vời! [excited]");
+  t = t.replace(/(?<!\] )Thần kỳ chưa nào\?/g, "Thần kỳ chưa nào? [excited]");
+  return t;
+}
+
+function applyMoodTag(text, mood) {
+  const moodToTag = {
+    celebrate: "[excited]",
+    happy: "[happy]",
+    thinking: "[curious]",
+    sad: "[sighs]",
+    wave: "[cheerful]",
+    neutral: null,
+  };
+  const tag = moodToTag[mood];
+  if (!tag) return text;
+  return prependTag(text, tag);
+}
+
+/** Add audio tags V3 nếu text chưa có. Idempotent. */
+function addAudioTagsIfMissing(text, mood) {
+  let t = text;
+  t = applyContentTags(t);
+  if (t.trimEnd().endsWith("?") && !t.includes("[curious]")) {
+    t = t.trimEnd() + " [curious]";
+  }
+  t = applyMoodTag(t, mood);
+  return t;
 }
 
 // ----- HTTP helper -----
@@ -414,7 +469,9 @@ async function main() {
   let errCount = 0;
 
   for (let i = 0; i < stories.length; i++) {
-    const { lessonId, sceneIdx, text } = stories[i];
+    const { lessonId, sceneIdx, text, mood } = stories[i];
+    // Auto-add audio tags nếu text sạch (chưa có [xxx] ở đầu)
+    const taggedText = addAudioTagsIfMissing(text, mood || "neutral");
     const outPath = path.join(OUT_DIR, lessonId, `${sceneIdx}.mp3`);
 
     if (fs.existsSync(outPath) && !process.argv.includes("--force")) {
@@ -428,10 +485,10 @@ async function main() {
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
 
     try {
-      const audio = await providerFn(text, env);
+      const audio = await providerFn(taggedText, env);
       fs.writeFileSync(outPath, audio);
       okCount++;
-      const preview = text.slice(0, 45).replace(/\n/g, " ");
+      const preview = taggedText.slice(0, 45).replace(/\n/g, " ");
       console.log(
         `   ✓ [${i + 1}/${stories.length}] ${lessonId}/${sceneIdx}.mp3 (${(audio.length / 1024).toFixed(1)}KB) "${preview}..."`,
       );

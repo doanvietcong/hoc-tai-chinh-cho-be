@@ -328,81 +328,127 @@ export const STORIES: Story[] = [
   },
 
   /* =====================================================
-   * MONEY-1: Tiền đến từ đâu
+   * MONEY-1: Tiền là gì? (khái niệm + lịch sử vỏ sò)
    * ===================================================== */
   {
     lessonId: "money-1",
-    title: "Tiền từ đâu ra?",
-    estDurationSec: 25,
+    title: "Tiền là gì?",
+    estDurationSec: 45,
     scenes: [
       {
-        text: "[curious] Pé Ti tự hỏi: tiền ở đâu ra nhỉ? Có phải ở cây tiền không? [curious]",
+        text: "[curious] Bạn thử tưởng tượng nhé: nhà bạn có 10 quả táo, nhà bạn Lan có 1 con gấu bông. Bạn muốn đổi gấu bông lấy táo. Nhưng bạn Lan lại muốn có kẹo, không thích táo. Rắc rối chưa nào!",
         visual: {
-          kind: "spotlight",
-          prop: { type: "emoji", emoji: "🤔", size: 100 },
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "🍎", size: 60 },
+            { type: "emoji", emoji: "🧸", size: 60 },
+            { type: "emoji", emoji: "🍬", size: 60 },
+          ],
         },
         mood: "thinking",
       },
       {
-        text: "[happy] Ngân hàng Nhà nước Việt Nam là nơi IN tiền. Mỗi tờ tiền đều có hình lãnh tụ và phong cảnh đất nước.",
+        text: "[curious] Ngày xưa, người Việt chưa có tiền. Họ đổi đồ lấy đồ: 1 con gà đổi 2 cái rổ, 1 cái áo đổi 5 nải chuối. Nhưng nếu người ta không cần thứ mình có thì sao? Rất khó trao đổi!",
         visual: {
-          kind: "spotlight",
-          prop: { type: "bank", label: "NHNN Việt Nam" },
+          kind: "props",
+          items: [
+            { type: "emoji", emoji: "🐔", size: 60 },
+            { type: "emoji", emoji: "🧺", size: 60 },
+            { type: "emoji", emoji: "👕", size: 60 },
+            { type: "emoji", emoji: "🍌", size: 60 },
+          ],
         },
-        mood: "happy",
+        mood: "thinking",
       },
       {
-        text: "[excited] Ngày xưa chưa có tiền, người Việt đổi hàng bằng vỏ sò, muối. Sau đó mới có tiền xu, rồi tiền giấy!",
+        text: "[happy] Thế là mọi người CHỌN ra một thứ đặc biệt để làm tiền chung. Vỏ sò, muối, trâu, vải... ai cũng muốn có vì nó quý và hiếm!",
         visual: {
           kind: "props",
           items: [
             { type: "emoji", emoji: "🐚", size: 60 },
             { type: "emoji", emoji: "🧂", size: 60 },
-            { type: "coin", amount: 1, tone: "gold" },
-          ],
-        },
-        mood: "celebrate",
-      },
-    ],
-  },
-
-  /* =====================================================
-   * MONEY-2: Làm quen với tờ tiền
-   * ===================================================== */
-  {
-    lessonId: "money-2",
-    title: "Đếm tiền vui",
-    estDurationSec: 25,
-    scenes: [
-      {
-        text: "[happy] Tiền Việt Nam có nhiều mệnh giá: 1 nghìn, 2 nghìn, 5 nghìn, 10 nghìn, 20 nghìn, 50 nghìn, 100 nghìn, 200 nghìn, 500 nghìn!",
-        visual: {
-          kind: "props",
-          items: [
-            { type: "bill", value: 1, tone: "good" },
-            { type: "bill", value: 5, tone: "good" },
-            { type: "bill", value: 10, tone: "good" },
-            { type: "bill", value: 50, tone: "good" },
+            { type: "emoji", emoji: "🐃", size: 60 },
+            { type: "emoji", emoji: "🧵", size: 60 },
           ],
         },
         mood: "happy",
       },
       {
-        text: "[curious] Tờ 500 nghìn màu đỏ cam, tờ 200 nghìn màu nâu, tờ 100 nghìn màu xanh lá. Mỗi tờ có màu riêng!",
+        text: "[excited] Vậy tiền là gì? Tiền là thứ mọi người CÙNG ĐỒNG Ý có giá trị. Có tiền, mình mua được bất cứ thứ gì người khác bán - không cần đổi đồ nữa!",
         visual: {
           kind: "spotlight",
-          prop: { type: "bill", value: 500, tone: "good" },
+          prop: { type: "emoji", emoji: "💡", size: 100 },
+        },
+        mood: "celebrate",
+      },
+      {
+        text: "[happy] Ngày nay tiền có tiền xu, tiền giấy, và cả tiền trong điện thoại. Dù hình dạng nào, chúng đều làm CÙNG MỘT VIỆC: giúp mọi người trao đổi dễ dàng!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "coin", amount: 1, tone: "gold" },
+            { type: "image", src: "/banknotes/100k.jpg", alt: "100.000đ", label: "100.000đ", size: 130 },
+            { type: "emoji", emoji: "📱", size: 60 },
+          ],
+        },
+        mood: "happy",
+      },
+    ],
+  },
+
+  /* =====================================================
+   * MONEY-2: Tiền Việt Nam (mệnh giá + cách đếm)
+   * ===================================================== */
+  {
+    lessonId: "money-2",
+    title: "Tiền Việt Nam",
+    estDurationSec: 45,
+    scenes: [
+      {
+        text: "[happy] Tiền Việt Nam có hai loại: tiền xu (bằng kim loại) và tiền giấy (gọi là tờ tiền). Cả hai đều có giá trị như nhau, chỉ khác hình dạng thôi!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "coin", amount: 1, tone: "gold" },
+            { type: "image", src: "/banknotes/10k.png", alt: "Tờ 10 nghìn", label: "10.000đ" },
+          ],
+        },
+        mood: "happy",
+      },
+      {
+        text: "[curious] Tiền Việt Nam có nhiều mệnh giá: 1 nghìn, 2 nghìn, 5 nghìn, 10 nghìn, 20 nghìn, 50 nghìn, 100 nghìn, 200 nghìn, 500 nghìn đồng. Tờ càng to thì giá trị càng lớn!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "image", src: "/banknotes/10k.png", alt: "10.000đ", label: "10.000đ", size: 110 },
+            { type: "image", src: "/banknotes/20k.jpg", alt: "20.000đ", label: "20.000đ", size: 110 },
+            { type: "image", src: "/banknotes/50k.png", alt: "50.000đ", label: "50.000đ", size: 110 },
+            { type: "image", src: "/banknotes/100k.jpg", alt: "100.000đ", label: "100.000đ", size: 110 },
+          ],
         },
         mood: "thinking",
       },
       {
-        text: "[excited] Bạn nhận 50 nghìn, mua kem 15 nghìn, người bán trả lại bạn 35 nghìn. Đếm tiền thừa là kỹ năng quan trọng!",
+        text: "[happy] Mẹo nhớ: 1 tờ 100 nghìn bằng 10 tờ 10 nghìn! Tờ to tiện hơn, nhưng tổng giá trị không đổi.",
         visual: {
           kind: "props",
           items: [
-            { type: "bill", value: 50, tone: "good" },
-            { type: "coin", amount: 15, tone: "gold" },
-            { type: "coin", amount: 35, tone: "gold" },
+            { type: "image", src: "/banknotes/100k.jpg", alt: "100.000đ", label: "100.000đ", size: 160 },
+            { type: "image", src: "/banknotes/10k.png", alt: "10.000đ", label: "10.000đ", size: 90 },
+            { type: "image", src: "/banknotes/10k.png", alt: "10.000đ", label: "10.000đ", size: 90 },
+            { type: "image", src: "/banknotes/10k.png", alt: "10.000đ", label: "10.000đ", size: 90 },
+          ],
+        },
+        mood: "happy",
+      },
+      {
+        text: "[excited] Bạn mua cây kem 15 nghìn, đưa tờ 20 nghìn - người bán trả lại 5 nghìn. Đếm tiền thừa là kỹ năng quan trọng, giúp bạn không bị thiếu hoặc mất tiền oan!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "image", src: "/banknotes/20k.jpg", alt: "20.000đ", label: "20.000đ", size: 130 },
+            { type: "emoji", emoji: "🍦", size: 50 },
+            { type: "coin", amount: 5, tone: "gold" },
           ],
         },
         mood: "celebrate",
@@ -411,49 +457,63 @@ export const STORIES: Story[] = [
   },
 
   /* =====================================================
-   * MONEY-3: Tiền dùng để làm gì
+   * MONEY-3: Tiền mua được gì? (chức năng + giới hạn)
    * ===================================================== */
   {
     lessonId: "money-3",
-    title: "Tiền làm được gì?",
-    estDurationSec: 25,
+    title: "Tiền mua được gì?",
+    estDurationSec: 40,
     scenes: [
       {
-        text: "[curious] Tiền dùng để MUA ĐỒ cần thiết: cơm, sách vở, áo quần. Không có tiền thì khó sống lắm!",
+        text: "[curious] Tiền mua được những thứ mình CẦN để sống: cơm để không đói, sách vở để đi học, áo quần để mặc, thuốc khi ốm. Không có tiền thì cuộc sống khó khăn lắm!",
         visual: {
           kind: "props",
           items: [
             { type: "emoji", emoji: "🍚", size: 60 },
             { type: "emoji", emoji: "📚", size: 60 },
             { type: "emoji", emoji: "👕", size: 60 },
-            { type: "coin", amount: 50, tone: "gold" },
+            { type: "emoji", emoji: "💊", size: 60 },
           ],
         },
         mood: "thinking",
       },
       {
-        text: "[happy] Tiền còn dùng để TIẾT KIỆM cho tương lai, hoặc CHO ĐI giúp bạn bè. Tiền là công cụ, mình là người sử dụng!",
+        text: "[happy] Tiền cũng mua được những thứ mình THÍCH: kem, đồ chơi, truyện tranh, vé xem phim. Những thứ này làm mình vui hơn!",
         visual: {
           kind: "props",
           items: [
-            { type: "piggy", coins: 5, mood: "happy" },
-            { type: "emoji", emoji: "🎁", size: 60 },
-            { type: "emoji", emoji: "💝", size: 60 },
+            { type: "emoji", emoji: "🍦", size: 60 },
+            { type: "emoji", emoji: "🧸", size: 60 },
+            { type: "emoji", emoji: "📖", size: 60 },
+            { type: "emoji", emoji: "🎬", size: 60 },
           ],
         },
         mood: "happy",
       },
       {
-        text: "[excited] NHƯNG nhớ nhé: tiền không mua được tình yêu thương, sức khỏe và niềm vui. Đó mới là điều QUAN TRỌNG NHẤT!",
+        text: "[excited] NHƯNG có những thứ tiền KHÔNG MUA ĐƯỢC: tình yêu thương của bố mẹ, tình bạn, sức khỏe, niềm vui thật sự. Bạn không thể trả tiền để có những thứ này!",
         visual: {
           kind: "props",
           items: [
             { type: "emoji", emoji: "❤️", size: 60 },
+            { type: "emoji", emoji: "👫", size: 60 },
+            { type: "emoji", emoji: "💪", size: 60 },
             { type: "emoji", emoji: "😊", size: 60 },
-            { type: "emoji", emoji: "🌟", size: 60 },
           ],
         },
         mood: "celebrate",
+      },
+      {
+        text: "[cheerful] Vậy nên: tiền rất quan trọng để sống tốt, nhưng tình yêu thương, sức khỏe và gia đình quan trọng HƠN. Hãy trân trọng cả tiền bạc lẫn những thứ tiền không mua được nhé!",
+        visual: {
+          kind: "props",
+          items: [
+            { type: "coin", amount: 1, tone: "gold" },
+            { type: "emoji", emoji: "❤️", size: 70 },
+            { type: "sparkle" },
+          ],
+        },
+        mood: "wave",
       },
     ],
   },
@@ -661,7 +721,7 @@ export const STORIES: Story[] = [
         mood: "happy",
       },
       {
-        text: "[excited] Càng để lâu, tiền càng nhiều! 100 nghìn sau 5 năm có thể thành 161 nghìn. Thần kỳ chưa nào? [excited]",
+        text: "[excited] Càng để lâu, tiền càng nhiều! 100 nghìn sau 5 năm có thể thành 161 nghìn. Thần kỳ chưa nào? [excited] [excited] [excited]",
         visual: {
           kind: "spotlight",
           prop: { type: "tree", size: 90 },

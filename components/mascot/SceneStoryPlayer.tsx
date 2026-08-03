@@ -7,6 +7,7 @@ import type { Story } from "@/lib/types";
 import { SceneStage } from "./SceneStage";
 import { sfx, ensureAudio } from "@/lib/sounds";
 import { cn } from "@/lib/utils";
+import { stripAudioTags } from "@/lib/text";
 
 interface Props {
   story: Story;
@@ -88,7 +89,7 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
       setAudioMode("speech");
       setLoadingAudio(false);
 
-      const utter = new SpeechSynthesisUtterance(scene.text);
+      const utter = new SpeechSynthesisUtterance(stripAudioTags(scene.text));
       utter.lang = "vi-VN";
       const voices = window.speechSynthesis.getVoices();
       // Try multiple Vietnamese voice patterns
@@ -438,7 +439,7 @@ export function SceneStoryPlayer({ story, open, onClose, className }: Props) {
         {/* Audio source indicator (debug) */}
         {!isFinished && !loadingAudio && (
           <div className="absolute bottom-1 right-3 text-[9px] text-white/30 pointer-events-none">
-            🎙️ {audioMode === "mp3" ? "FPT.AI" : "Web Speech"}
+            🎙️ {audioMode === "mp3" ? "ElevenLabs V3" : "Web Speech"}
           </div>
         )}
 

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { Scene, SceneProp } from "@/lib/types";
 import { Penguin } from "./Penguin";
 import { cn } from "@/lib/utils";
+import { stripAudioTags } from "@/lib/text";
 
 interface Props {
   scene: Scene;
@@ -35,7 +36,7 @@ export function SceneStage({ scene, className }: Props) {
       {/* AnimatePresence for scene changes */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={scene.text.slice(0, 16)}
+          key={stripAudioTags(scene.text).slice(0, 16)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -54,7 +55,7 @@ export function SceneStage({ scene, className }: Props) {
       {/* Caption text */}
       <div className="absolute left-2 right-2 top-2 z-20">
         <motion.div
-          key={scene.text.slice(0, 16) + "-caption"}
+          key={stripAudioTags(scene.text).slice(0, 16) + "-caption"}
           initial={{ y: -8, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -8, opacity: 0 }}
@@ -62,7 +63,7 @@ export function SceneStage({ scene, className }: Props) {
           className="bg-white/95 backdrop-blur rounded-2xl px-3 py-2 shadow-sm border border-[color:var(--color-border)]"
         >
           <p className="text-xs sm:text-sm text-[color:var(--color-text)] leading-relaxed text-center font-medium">
-            🐧 {scene.text}
+            🐧 {stripAudioTags(scene.text)}
           </p>
         </motion.div>
       </div>
@@ -168,6 +169,8 @@ function PropRenderer({
       );
     case "sparkle":
       return <SparkleProp delay={delay} />;
+    case "image":
+      return <ImageProp {...prop} delay={delay} large={large} />;
   }
 }
 
@@ -665,5 +668,42 @@ function SparkleProp({ delay = 0 }: { delay?: number }) {
         </motion.div>
       ))}
     </>
+  );
+}
+
+/** Generic image prop - for real photos of Vietnamese banknotes, etc. */
+function ImageProp({
+  src,
+  alt,
+  label,
+  size,
+  delay = 0,
+  large = false,
+}: Extract<SceneProp, { type: "image" }> & { delay?: number; large?: boolean }) {
+  // Vietnamese banknotes are landscape ratio (≈ 2:1) - cap by width
+  const width = size ?? (large ? 280 : 180);
+  return (
+    <motion.div
+      initial={{ scale: 0, rotate: -8, opacity: 0 }}
+      animate={{ scale: 1, rotate: 0, opacity: 1 }}
+      transition={{ delay, type: "spring", stiffness: 160 }}
+      className="flex flex-col items-center gap-1"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt ?? label ?? ""}
+        width={width * 2}
+        height={width}
+        className="rounded-lg shadow-md border border-black/10 bg-white"
+        style={{ width, height: "auto", objectFit: "contain" }}
+        loading="lazy"
+      />
+      {label && (
+        <span className="bg-white/90 text-[10px] font-extrabold text-brand-purple-dark px-2 py-0.5 rounded-full shadow-sm">
+          {label}
+        </span>
+      )}
+    </motion.div>
   );
 }
