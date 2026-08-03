@@ -330,6 +330,21 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
     }
   }
 
+  // Auto-trigger checkAnswer khi drag-sort hoàn tất
+  useEffect(() => {
+    if (
+      currentQ?.type === "drag-sort" &&
+      sortValue &&
+      Object.keys(sortValue).length === currentQ.items.length &&
+      !isChecked &&
+      !busy
+    ) {
+      // Đợi 1 frame để setSortValue propagate trước khi gọi checkAnswer
+      const t = setTimeout(() => checkAnswer(), 50);
+      return () => clearTimeout(t);
+    }
+  }, [sortValue, isChecked, busy, currentQ]);
+
   return (
     <main className="min-h-screen flex flex-col bg-white">
       {/* Top bar */}

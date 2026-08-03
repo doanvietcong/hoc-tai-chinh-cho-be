@@ -28,7 +28,7 @@ export const STORIES: Story[] = [
           kind: "props",
           items: [
             { type: "piggy", coins: 1, mood: "neutral" },
-            { type: "coin", amount: 5, tone: "gold" },
+            { type: "coin", amount: 5000, tone: "gold" },
           ],
         },
         mood: "thinking",
@@ -39,7 +39,7 @@ export const STORIES: Story[] = [
           kind: "props",
           items: [
             { type: "piggy", coins: 7, mood: "happy" },
-            { type: "coin", amount: 35, tone: "gold" },
+            { type: "coin", amount: 35000, tone: "gold" },
           ],
         },
         mood: "happy",
@@ -89,7 +89,7 @@ export const STORIES: Story[] = [
         text: "[happy] Pé Ti vừa nhận hai trăm nghìn tiền lì xì Tết. Nhiều quá! Nhưng mẹ nói phải biết chia.",
         visual: {
           kind: "spotlight",
-          prop: { type: "coin", amount: 200, tone: "gold" },
+          prop: { type: "coin", amount: 200000, tone: "gold" },
         },
         mood: "happy",
       },
@@ -234,7 +234,7 @@ export const STORIES: Story[] = [
           kind: "props",
           items: [
             { type: "piggy", coins: 6, mood: "rich" },
-            { type: "coin", amount: 30, tone: "gold" },
+            { type: "coin", amount: 30000, tone: "gold" },
             { type: "sparkle" },
           ],
         },
@@ -257,7 +257,7 @@ export const STORIES: Story[] = [
           kind: "props",
           items: [
             { type: "piggy", coins: 10, mood: "neutral" },
-            { type: "coin", amount: 50, tone: "silver" },
+            { type: "coin", amount: 50000, tone: "silver" },
             { type: "emoji", emoji: "🧩", size: 56 },
           ],
         },
@@ -278,7 +278,7 @@ export const STORIES: Story[] = [
           items: [
             { type: "emoji", emoji: "👩", size: 60 },
             { type: "bill", value: 25, tone: "good" },
-            { type: "coin", amount: 150, tone: "gold" },
+            { type: "coin", amount: 150000, tone: "gold" },
           ],
         },
         mood: "happy",
@@ -290,7 +290,7 @@ export const STORIES: Story[] = [
           items: [
             { type: "emoji", emoji: "😈", size: 60 },
             { type: "bill", value: 100, tone: "bad" },
-            { type: "coin", amount: 50, tone: "gold" },
+            { type: "coin", amount: 50000, tone: "gold" },
           ],
         },
         mood: "sad",
@@ -301,7 +301,7 @@ export const STORIES: Story[] = [
           kind: "split",
           left: [
             { type: "emoji", emoji: "😊", size: 80 },
-            { type: "coin", amount: 30, tone: "gold" },
+            { type: "coin", amount: 30000, tone: "gold" },
           ],
           right: [
             { type: "emoji", emoji: "😰", size: 80 },
@@ -386,7 +386,7 @@ export const STORIES: Story[] = [
         visual: {
           kind: "props",
           items: [
-            { type: "coin", amount: 1, tone: "gold" },
+            { type: "coin", amount: 1000, tone: "gold" },
             { type: "image", src: "/banknotes/100k.svg", alt: "100.000đ", label: "100.000đ", size: 130 },
             { type: "emoji", emoji: "📱", size: 60 },
           ],
@@ -409,7 +409,7 @@ export const STORIES: Story[] = [
         visual: {
           kind: "props",
           items: [
-            { type: "coin", amount: 1, tone: "gold" },
+            { type: "coin", amount: 1000, tone: "gold" },
             { type: "image", src: "/banknotes/10k.svg", alt: "Tờ 10 nghìn", label: "10.000đ" },
           ],
         },
@@ -448,7 +448,7 @@ export const STORIES: Story[] = [
           items: [
             { type: "image", src: "/banknotes/20k.svg", alt: "20.000đ", label: "20.000đ", size: 130 },
             { type: "emoji", emoji: "🍦", size: 50 },
-            { type: "coin", amount: 5, tone: "gold" },
+            { type: "coin", amount: 5000, tone: "gold" },
           ],
         },
         mood: "celebrate",
@@ -508,7 +508,7 @@ export const STORIES: Story[] = [
         visual: {
           kind: "props",
           items: [
-            { type: "coin", amount: 1, tone: "gold" },
+            { type: "coin", amount: 1000, tone: "gold" },
             { type: "emoji", emoji: "❤️", size: 70 },
             { type: "sparkle" },
           ],
@@ -620,7 +620,7 @@ export const STORIES: Story[] = [
         visual: {
           kind: "props",
           items: [
-            { type: "coin", amount: 100, tone: "gold" },
+            { type: "coin", amount: 100000, tone: "gold" },
             { type: "emoji", emoji: "🍦", size: 50 },
             { type: "emoji", emoji: "✏️", size: 50 },
             { type: "emoji", emoji: "📖", size: 50 },
@@ -686,7 +686,7 @@ export const STORIES: Story[] = [
         visual: {
           kind: "props",
           items: [
-            { type: "coin", amount: 200, tone: "gold" },
+            { type: "coin", amount: 200000, tone: "gold" },
             { type: "emoji", emoji: "📅", size: 60 },
             { type: "emoji", emoji: "🎯", size: 60 },
           ],
@@ -771,7 +771,7 @@ export const STORIES: Story[] = [
           items: [
             { type: "emoji", emoji: "💪", size: 60 },
             { type: "emoji", emoji: "❤️", size: 60 },
-            { type: "coin", amount: 1, tone: "gold" },
+            { type: "coin", amount: 1000, tone: "gold" },
           ],
         },
         mood: "celebrate",

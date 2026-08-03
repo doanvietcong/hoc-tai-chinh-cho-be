@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Check, X } from "lucide-react";
+import { Check, X, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { DragSortQuestion } from "@/lib/types";
 
@@ -61,13 +61,21 @@ export function DragSortCard({
     if (isChecked) return;
     // If already placed, remove it
     if (placement[itemId]) {
-      const next = { ...placement };
-      delete next[itemId];
-      setPlacement(next);
-      setSelectedItemId(null);
+      removeItem(itemId);
       return;
     }
     setSelectedItemId((cur) => (cur === itemId ? null : itemId));
+  }
+
+  /** Remove an item from its bucket (back to the pool). */
+  function removeItem(itemId: string) {
+    if (isChecked) return;
+    setPlacement((prev) => {
+      const next = { ...prev };
+      delete next[itemId];
+      return next;
+    });
+    setSelectedItemId(null);
   }
 
   function handleBucketClick(bucketId: string) {
@@ -125,14 +133,20 @@ export function DragSortCard({
                 {items.map((it) => {
                   const placedCorrectly = isItemInCorrectBucket(it.id);
                   return (
-                    <motion.span
+                    <motion.button
                       key={it.id}
+                      type="button"
                       layout
                       initial={{ scale: 0.6, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeItem(it.id);
+                      }}
+                      title={isChecked ? undefined : "Bấm để gỡ ra"}
                       className={cn(
                         "inline-flex items-center gap-1 rounded-full border-2 px-2.5 py-1 text-sm font-semibold bg-white",
-                        !isChecked && "border-[color:var(--color-border-strong)]",
+                        !isChecked && "border-[color:var(--color-border-strong)] hover:border-brand-red",
                         isChecked && placedCorrectly && "border-brand-green bg-[#d7ffb8]",
                         isChecked && !placedCorrectly && "border-brand-red bg-[#ffd7d7]",
                       )}
@@ -145,7 +159,7 @@ export function DragSortCard({
                       {isChecked && !placedCorrectly && (
                         <X size={14} className="text-brand-red" />
                       )}
-                    </motion.span>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -189,6 +203,13 @@ export function DragSortCard({
         })}
       </div>
 
+      {/* Hint for how to remove an item */}
+      {!isChecked && Object.keys(placement).length > 0 && (
+        <p className="text-text-muted text-xs text-center">
+          💡 Bấm vào tờ tiền đã xếp để <strong>gỡ ra</strong> và xếp lại
+        </p>
+      )}
+
       {!isChecked && (
         <button
           type="button"
@@ -207,3 +228,4 @@ export function DragSortCard({
     </div>
   );
 }
+
