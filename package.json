@@ -7,10 +7,12 @@
   },
   "scripts": {
     "dev": "next dev",
+    "dev:background": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate-audio": "node scripts/generate-audio.js"
+    "generate-audio": "node scripts/generate-audio.js",
+    "add-audio-tags": "node scripts/add-audio-tags.js"
   },
   "dependencies": {
     "clsx": "^2.1.1",

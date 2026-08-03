@@ -9,8 +9,13 @@
  *
  * Usage:
  *   1. Set API key trong .env.local (ELEVENLABS_API_KEY / VBEE_API_KEY / FPT_AI_API_KEY)
- *   2. Run: npm run generate-audio
+ *   2. Run: npm run generate-audio [-- --force] [-- --lesson=saving-1]
  *   3. Files MP3 xuất hiện trong public/audio/{lessonId}/{sceneIdx}.mp3
+ *
+ * Flags:
+ *   --force          : regen tất cả audio kể cả file đã có
+ *   --lesson=X-Y     : chỉ generate 1 lesson (vd: --lesson=saving-1)
+ *                       Hữu ích khi free tier bị giới hạn, generate từng bài một
  *
  * ElevenLabs V3 audio tags (chèn trực tiếp trong text để tạo biểu cảm):
  *   [excited]  [whispers]  [laughs]  [sighs]  [happy]  [sad]  [cheerful]  [curious]
@@ -340,6 +345,13 @@ async function main() {
     process.exit(1);
   }
 
+  // Parse --lesson=X-Y flag (filter theo lesson)
+  const lessonArg = process.argv.find((a) => a.startsWith("--lesson="));
+  const lessonFilter = lessonArg ? lessonArg.split("=")[1].trim() : null;
+  if (lessonFilter) {
+    console.log(`   Filter: chỉ generate lesson "${lessonFilter}"`);
+  }
+
   console.log(`   Provider: ${provider.toUpperCase()}`);
   if (provider === "elevenlabs") {
     console.log(
@@ -355,11 +367,19 @@ async function main() {
     );
   }
 
-  const stories = parseStories();
-  console.log(`   Found ${stories.length} scenes in stories.ts\n`);
+  const allStories = parseStories();
+  const stories = lessonFilter
+    ? allStories.filter((s) => s.lessonId === lessonFilter)
+    : allStories;
+  console.log(`   Found ${stories.length}/${allStories.length} scenes in stories.ts\n`);
 
   if (stories.length === 0) {
-    console.error("❌ Không tìm thấy scene nào. Kiểm tra lib/stories.ts");
+    if (lessonFilter) {
+      console.error(`❌ Không tìm thấy lesson "${lessonFilter}". Kiểm tra lại lessonId.`);
+      console.error(`   Các lesson có sẵn: ${[...new Set(allStories.map(s => s.lessonId))].join(", ")}`);
+    } else {
+      console.error("❌ Không tìm thấy scene nào. Kiểm tra lib/stories.ts");
+    }
     process.exit(1);
   }
 
