@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Debug - Pé Ti</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 20px; max-width: 700px; margin: 0 auto; }
+    h1 { color: #16a34a; }
+    .ok { background: #d1fae5; padding: 12px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #16a34a; }
+    .warn { background: #fef3c7; padding: 12px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #d97706; }
+    .err { background: #fee2e2; padding: 12px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #dc2626; }
+    code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+    ol li { margin: 6px 0; }
+    button { padding: 8px 16px; margin: 4px; border-radius: 6px; border: 1px solid #16a34a; background: white; cursor: pointer; }
+    button.primary { background: #16a34a; color: white; }
+  </style>
+</head>
+<body>
+  <h1>🔧 Debug trang Pé Ti</h1>
+
+  <div class="ok">
+    <strong>Bước 1:</strong> Nếu thấy trang này nghĩa là Cloudflare serve static OK. Vấn đề là ở React/Next.js streaming.
+  </div>
+
+  <div class="warn">
+    <strong>Nguyên nhân thường gặp "This page couldn't load":</strong>
+    <ol>
+      <li><strong>HTTP/3 (QUIC) issue</strong> - Một số trình duyệt/mạng fail với HTTP/3 của Cloudflare</li>
+      <li><strong>Extension chặn JS</strong> - AdBlock, uBlock, NoScript, Privacy Badger...</li>
+      <li><strong>DNS cache cũ</strong> - Cloudflare vừa đổi edge</li>
+      <li><strong>Network timeout</strong> - JS chunks quá lớn, mạng chậm</li>
+    </ol>
+  </div>
+
+  <div class="ok">
+    <strong>Bước 2: Thử các cách sau theo thứ tự</strong>
+
+    <p><strong>Cách A - Tắt HTTP/3 (QUIC):</strong></p>
+    <ol>
+      <li>Mở tab mới, gõ <code>chrome://flags/#enable-quic</code></li>
+      <li>Chuyển từ "Default" → <strong>"Disabled"</strong></li>
+      <li>Bấm "Relaunch" để restart Chrome</li>
+      <li>Thử lại <code>hoc-tai-chinh-cho-be.pages.dev/lesson/money-1</code></li>
+    </ol>
+
+    <p><strong>Cách B - DNS flush:</strong></p>
+    <ol>
+      <li>Windows: mở CMD admin, gõ <code>ipconfig /flushdns</code></li>
+      <li>Mac: <code>sudo dscacheutil -flushcache</code></li>
+    </ol>
+
+    <p><strong>Cách C - Thử trình duyệt khác:</strong></p>
+    <ol>
+      <li>Firefox (em test thấy OK nhất với Cloudflare)</li>
+      <li>Edge</li>
+      <li>Brave</li>
+    </ol>
+
+    <p><strong>Cách D - Test URL không phải /lesson/:</strong></p>
+    <ol>
+      <li><a href="/home">/home</a> - trang chủ, không phải streaming</li>
+      <li><a href="/play">/play</a> - trang mini-game</li>
+      <li><a href="/test.html">/test.html</a> - trang tĩnh (đã chắc chắn OK)</li>
+    </ol>
+  </div>
+
+  <div id="results"></div>
+
+  <script>
+    const results = document.getElementById('results');
+    const out = (label, value) => {
+      results.innerHTML += `<div class="ok">✓ <strong>${label}:</strong> <code>${value}</code></div>`;
+    };
+    out('Trang load OK', 'Có');
+    out('JS execute OK', 'Có');
+    out('User Agent', navigator.userAgent);
+    out('Online', navigator.onLine);
+    out('Protocol', location.protocol);
+    out('Hostname', location.hostname);
+    out('Time', new Date().toISOString());
+  </script>
+</body>
+</html>
