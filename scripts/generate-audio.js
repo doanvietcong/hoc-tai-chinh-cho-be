@@ -3,7 +3,7 @@
  * Generate Vietnamese TTS audio files for all Pé Ti stories.
  *
  * Supports multiple TTS providers (auto-detect từ .env.local):
- *   - elevenlabs  (RECOMMENDED) - giọng AI tự nhiên, free 10K chars/tháng
+ *   - elevenlabs  (RECOMMENDED) - ElevenLabs V3, giọng AI tự nhiên, hỗ trợ audio tags
  *   - vbee        - Vbee.vn, giọng Việt native, free ~100K chars/tháng
  *   - fpt         - FPT.AI TTS, giọng Việt chuẩn, free 20K chars/tháng
  *
@@ -11,6 +11,10 @@
  *   1. Set API key trong .env.local (ELEVENLABS_API_KEY / VBEE_API_KEY / FPT_AI_API_KEY)
  *   2. Run: npm run generate-audio
  *   3. Files MP3 xuất hiện trong public/audio/{lessonId}/{sceneIdx}.mp3
+ *
+ * ElevenLabs V3 audio tags (chèn trực tiếp trong text để tạo biểu cảm):
+ *   [excited]  [whispers]  [laughs]  [sighs]  [happy]  [sad]  [cheerful]  [curious]
+ *   Ví dụ: "Hôm nay [excited] Pé Ti sẽ kể cho bạn nghe về tiền nhé!"
  *
  * Docs:
  *   - GUIDE_ELEVENLABS.md
@@ -32,7 +36,12 @@ const REQUEST_DELAY_MS = 1100; // rate limit giữa các request
 
 // ElevenLabs defaults
 const EL_VOICE_ID_DEFAULT = "pNInz6obpgDQGcFmaJgB"; // "Adam" - male, deep, narrative
-const EL_MODEL_ID = "eleven_multilingual_v2"; // hỗ trợ tiếng Việt
+// ElevenLabs V3 - mới nhất (2025), hỗ trợ tiếng Việt + audio tags ([excited], [whispers]...)
+// Các model khả dụng:
+//   eleven_v3          - chuẩn, expressive nhất (RECOMMENDED cho kể chuyện)
+//   eleven_turbo_v3    - nhanh hơn, ít expressive hơn
+//   eleven_multilingual_v2 - fallback nếu V3 chưa available
+const EL_MODEL_ID_DEFAULT = "eleven_v3";
 // Voice ID gợi ý:
 //   pNInz6obpgDQGcFmaJgB - Adam (nam, trầm, kể chuyện tốt)
 //   21m00Tcm4TlvDq8ikWAM - Rachel (nữ, dịu dàng)
@@ -139,20 +148,34 @@ function httpRequest(options, body) {
 async function callElevenLabs(text, env) {
   const apiKey = env.ELEVENLABS_API_KEY;
   const voiceId = env.ELEVENLABS_VOICE_ID || EL_VOICE_ID_DEFAULT;
+  const modelId = env.ELEVENLABS_MODEL_ID || EL_MODEL_ID_DEFAULT;
 
   const url = new URL(
     `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
   );
 
+  // V3 voice settings: stability thấp = biểu cảm hơn (V3 mặc định rất expressive)
+  // V2 voice settings: stability 0.5, similarity 0.75 (ổn định hơn)
+  const isV3 = modelId.startsWith("eleven_v3") || modelId.startsWith("eleven_turbo_v3");
+  const voiceSettings = isV3
+    ? {
+        stability: 0.3,        // V3: thấp = expressive hơn
+        similarity_boost: 0.75,
+        style: 0.4,             // V3: thêm style để có cảm xúc
+        use_speaker_boost: true,
+        speed: 0.95,            // V3: chậm hơn một chút cho dễ nghe (trẻ nhỏ)
+      }
+    : {
+        stability: 0.5,
+        similarity_boost: 0.75,
+        style: 0.0,
+        use_speaker_boost: true,
+      };
+
   const bodyObj = {
     text,
-    model_id: EL_MODEL_ID,
-    voice_settings: {
-      stability: 0.5,
-      similarity_boost: 0.75,
-      style: 0.0,
-      use_speaker_boost: true,
-    },
+    model_id: modelId,
+    voice_settings: voiceSettings,
   };
   const body = JSON.stringify(bodyObj);
 
@@ -320,7 +343,7 @@ async function main() {
   console.log(`   Provider: ${provider.toUpperCase()}`);
   if (provider === "elevenlabs") {
     console.log(
-      `   Voice: ${env.ELEVENLABS_VOICE_ID || EL_VOICE_ID_DEFAULT} (model: ${EL_MODEL_ID})`,
+      `   Voice: ${env.ELEVENLABS_VOICE_ID || EL_VOICE_ID_DEFAULT} (model: ${env.ELEVENLABS_MODEL_ID || EL_MODEL_ID_DEFAULT})`,
     );
   } else if (provider === "vbee") {
     console.log(
