@@ -5,80 +5,130 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Debug - Pé Ti</title>
   <style>
-    body { font-family: system-ui, sans-serif; padding: 20px; max-width: 700px; margin: 0 auto; }
-    h1 { color: #16a34a; }
-    .ok { background: #d1fae5; padding: 12px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #16a34a; }
-    .warn { background: #fef3c7; padding: 12px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #d97706; }
-    .err { background: #fee2e2; padding: 12px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #dc2626; }
-    code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
-    ol li { margin: 6px 0; }
-    button { padding: 8px 16px; margin: 4px; border-radius: 6px; border: 1px solid #16a34a; background: white; cursor: pointer; }
-    button.primary { background: #16a34a; color: white; }
+    body { font-family: system-ui, sans-serif; padding: 20px; max-width: 900px; margin: 0 auto; background: #fafafa; }
+    h1 { color: #16a34a; margin: 0 0 12px; }
+    h2 { color: #1f2937; margin: 24px 0 8px; font-size: 18px; }
+    .ok { background: #d1fae5; padding: 12px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #16a34a; font-size: 14px; }
+    .warn { background: #fef3c7; padding: 12px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #d97706; font-size: 14px; }
+    .err { background: #fee2e2; padding: 12px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #dc2626; font-size: 14px; }
+    .info { background: #e0e7ff; padding: 12px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #4f46e5; font-size: 13px; word-break: break-all; }
+    code { background: rgba(0,0,0,0.08); padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+    pre { background: #1f2937; color: #d1d5db; padding: 10px; border-radius: 6px; font-size: 12px; overflow-x: auto; }
+    button { padding: 10px 18px; margin: 6px 4px; border-radius: 6px; border: 0; background: #16a34a; color: white; cursor: pointer; font-weight: 600; }
+    button:hover { background: #15803d; }
+    button.secondary { background: #4f46e5; }
+    #results { margin-top: 16px; }
   </style>
 </head>
 <body>
-  <h1>🔧 Debug trang Pé Ti</h1>
-
-  <div class="ok">
-    <strong>Bước 1:</strong> Nếu thấy trang này nghĩa là Cloudflare serve static OK. Vấn đề là ở React/Next.js streaming.
+  <h1>🔧 Auto-Debug trang Pé Ti</h1>
+  <div class="info">
+    Trang này tự động kiểm tra xem Cloudflare serve static OK và JS có execute bình thường không.
   </div>
 
-  <div class="warn">
-    <strong>Nguyên nhân thường gặp "This page couldn't load":</strong>
-    <ol>
-      <li><strong>HTTP/3 (QUIC) issue</strong> - Một số trình duyệt/mạng fail với HTTP/3 của Cloudflare</li>
-      <li><strong>Extension chặn JS</strong> - AdBlock, uBlock, NoScript, Privacy Badger...</li>
-      <li><strong>DNS cache cũ</strong> - Cloudflare vừa đổi edge</li>
-      <li><strong>Network timeout</strong> - JS chunks quá lớn, mạng chậm</li>
-    </ol>
-  </div>
+  <h2>1. Browser info</h2>
+  <div id="browserInfo"></div>
 
-  <div class="ok">
-    <strong>Bước 2: Thử các cách sau theo thứ tự</strong>
+  <h2>2. Test Cloudflare static (trang tĩnh)</h2>
+  <div id="staticTest"></div>
 
-    <p><strong>Cách A - Tắt HTTP/3 (QUIC):</strong></p>
-    <ol>
-      <li>Mở tab mới, gõ <code>chrome://flags/#enable-quic</code></li>
-      <li>Chuyển từ "Default" → <strong>"Disabled"</strong></li>
-      <li>Bấm "Relaunch" để restart Chrome</li>
-      <li>Thử lại <code>hoc-tai-chinh-cho-be.pages.dev/lesson/money-1</code></li>
-    </ol>
+  <h2>3. Test Next.js (lesson page) - quan trọng nhất</h2>
+  <div id="nextTest"></div>
+  <button onclick="runNextTest()">🔄 Chạy lại test lesson</button>
 
-    <p><strong>Cách B - DNS flush:</strong></p>
-    <ol>
-      <li>Windows: mở CMD admin, gõ <code>ipconfig /flushdns</code></li>
-      <li>Mac: <code>sudo dscacheutil -flushcache</code></li>
-    </ol>
-
-    <p><strong>Cách C - Thử trình duyệt khác:</strong></p>
-    <ol>
-      <li>Firefox (em test thấy OK nhất với Cloudflare)</li>
-      <li>Edge</li>
-      <li>Brave</li>
-    </ol>
-
-    <p><strong>Cách D - Test URL không phải /lesson/:</strong></p>
-    <ol>
-      <li><a href="/home">/home</a> - trang chủ, không phải streaming</li>
-      <li><a href="/play">/play</a> - trang mini-game</li>
-      <li><a href="/test.html">/test.html</a> - trang tĩnh (đã chắc chắn OK)</li>
-    </ol>
-  </div>
+  <h2>4. Test JS chunks</h2>
+  <div id="jsTest"></div>
 
   <div id="results"></div>
 
   <script>
-    const results = document.getElementById('results');
-    const out = (label, value) => {
-      results.innerHTML += `<div class="ok">✓ <strong>${label}:</strong> <code>${value}</code></div>`;
-    };
-    out('Trang load OK', 'Có');
-    out('JS execute OK', 'Có');
-    out('User Agent', navigator.userAgent);
-    out('Online', navigator.onLine);
-    out('Protocol', location.protocol);
-    out('Hostname', location.hostname);
-    out('Time', new Date().toISOString());
+    const browserInfo = document.getElementById('browserInfo');
+    const staticTest = document.getElementById('staticTest');
+    const nextTest = document.getElementById('nextTest');
+    const jsTest = document.getElementById('jsTest');
+
+    function ok(msg, detail = '') {
+      return `<div class="ok">✓ ${msg}${detail ? `<br><small>${detail}</small>` : ''}</div>`;
+    }
+    function err(msg, detail = '') {
+      return `<div class="err">✗ ${msg}${detail ? `<br><small>${detail}</small>` : ''}</div>`;
+    }
+    function warn(msg, detail = '') {
+      return `<div class="warn">⚠ ${msg}${detail ? `<br><small>${detail}</small>` : ''}</div>`;
+    }
+    function info(msg) {
+      return `<div class="info">${msg}</div>`;
+    }
+
+    // 1. Browser info
+    browserInfo.innerHTML = ok('Browser: ' + navigator.userAgent);
+    browserInfo.innerHTML += ok('Online: ' + navigator.onLine);
+    browserInfo.innerHTML += ok('Protocol: ' + location.protocol);
+    browserInfo.innerHTML += ok('Time: ' + new Date().toISOString());
+
+    // 2. Static test
+    async function testStatic() {
+      try {
+        const r = await fetch('/test-static.txt?_=' + Date.now());
+        if (r.ok) {
+          staticTest.innerHTML = ok('Static file test OK', `Status: ${r.status}, Length: ${r.headers.get('content-length')}`);
+        } else {
+          staticTest.innerHTML = err('Static file test FAIL', `Status: ${r.status}`);
+        }
+      } catch (e) {
+        staticTest.innerHTML = err('Static test exception: ' + e.message);
+      }
+    }
+    testStatic();
+
+    // 3. Next.js test
+    async function runNextTest() {
+      nextTest.innerHTML = info('Đang fetch...');
+      try {
+        const start = Date.now();
+        const r = await fetch('/lesson/money-1?_=' + Date.now(), {
+          headers: { 'Accept': 'text/html' }
+        });
+        const elapsed = Date.now() - start;
+        const text = await r.text();
+        nextTest.innerHTML = ok(
+          `Lesson page: ${r.status} (${elapsed}ms, ${text.length} bytes)`,
+          `Content-Type: ${r.headers.get('content-type')}<br>CF-Cache-Status: ${r.headers.get('cf-cache-status') || 'n/a'}<br>CF-Ray: ${r.headers.get('cf-ray') || 'n/a'}<br>Age: ${r.headers.get('age') || 'n/a'}`
+        );
+
+        // Check if response is Next.js RSC streaming or regular HTML
+        const isStreaming = text.includes('self.__next_f.push');
+        const hasTitle = text.includes('<title>');
+        nextTest.innerHTML += info(`RSC streaming: ${isStreaming ? '<strong>CÓ</strong>' : 'Không'} | Title: ${hasTitle ? 'Có' : 'Không'}`);
+
+        if (isStreaming) {
+          nextTest.innerHTML += warn('Đây là React Server Component streaming. Browser CẦN execute JavaScript để build DOM. Nếu JS bị chặn → trang trắng / "page couldn\'t load".');
+        }
+
+        // Show first 200 chars of body
+        const bodyMatch = text.match(/<body[^>]*>([\s\S]*?)<\/body>/);
+        if (bodyMatch) {
+          nextTest.innerHTML += info('Body excerpt: ' + bodyMatch[1].substring(0, 300).replace(/</g, '&lt;'));
+        }
+      } catch (e) {
+        nextTest.innerHTML = err('Next.js test exception: ' + e.message + ' (' + e.name + ')');
+      }
+    }
+    runNextTest();
+
+    // 4. JS chunks test
+    async function testJS() {
+      try {
+        const r = await fetch('/_next/static/chunks/2lgwr-ueo72ww.js');
+        jsTest.innerHTML = ok(`Main JS chunk: ${r.status}, ${r.headers.get('content-length')} bytes`);
+        if (!r.ok) {
+          jsTest.innerHTML += err('JS chunk FAIL → toàn bộ React app sẽ không load được');
+        }
+      } catch (e) {
+        jsTest.innerHTML = err('JS test exception: ' + e.message);
+      }
+    }
+    testJS();
   </script>
 </body>
 </html>
