@@ -116,15 +116,15 @@ const moneyLessons: Lesson[] = [
       ),
       mc(
         "m1-q4",
-        "Một quyển truyện tranh giá 25.000đ. Bạn nên trả bằng những tờ nào?",
+        "Quyển truyện tranh giá 25.000đ. Bạn muốn trả bằng NHIỀU TỜ NHẤT có thể. Cách nào đúng?",
         "2x10+1x5",
         [
           { id: "1x20+1x5", label: "1 tờ 20.000đ + 1 tờ 5.000đ", emoji: "💴" },
           { id: "2x10+1x5", label: "2 tờ 10.000đ + 1 tờ 5.000đ", emoji: "💴" },
           { id: "1x50", label: "1 tờ 50.000đ", emoji: "💴" },
         ],
-        "Mẹo: 25 = 20 + 5, hoặc 10 + 10 + 5",
-        "Tuyệt vời! 10 + 10 + 5 = 25. Bạn giỏi tính toán ghê!",
+        "Mẹo: 25 = 20 + 5 (2 tờ) hoặc 10 + 10 + 5 (3 tờ). Nhiều tờ hơn thì chọn 10 + 10 + 5.",
+        "Đúng rồi! 10 + 10 + 5 = 25, dùng 3 tờ - nhiều nhất có thể. Cách này giúp bạn quen với các tờ nhỏ!",
       ),
     ],
   },
