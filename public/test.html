@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test - Pé Ti Cloudflare</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 40px; background: #fff8dc; }
+    h1 { color: #16a34a; }
+    .ok { background: #d1fae5; padding: 12px; border-radius: 8px; margin: 12px 0; }
+    code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>✅ Trang test tĩnh - Pé Ti</h1>
+  <div class="ok">
+    Nếu anh thấy trang này → Cloudflare serve static OK, vấn đề là ở React streaming của Next.js
+  </div>
+  <p>Để debug:</p>
+  <ol>
+    <li>Nếu thấy trang này: vấn đề là JS React streaming, cần xem JS chunks có load được không</li>
+    <li>Nếu KHÔNG thấy: vấn đề ở Cloudflare / DNS / mạng</li>
+  </ol>
+  <p>URL: <code>https://hoc-tai-chinh-cho-be.pages.dev/test.html</code></p>
+  <p>Thời gian: <span id="now"></span></p>
+  <script>
+    document.getElementById('now').textContent = new Date().toLocaleString('vi-VN');
+  </script>
+</body>
+</html>
