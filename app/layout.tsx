@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+  // Anti-cache: ensures browser always revalidates on visit
+  // (helps users stuck on stale responses after Cloudflare deploys)
+  other: {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    Pragma: "no-cache",
+    Expires: "0",
+  },
 };
 
 export default function RootLayout({
