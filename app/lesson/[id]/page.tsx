@@ -12,6 +12,11 @@ export function generateStaticParams() {
 /** Always re-evaluate at build time, no ISR. */
 export const dynamicParams = false;
 
+/** Force fully static rendering (no streaming RSC) for the lesson page.
+ *  Ensures Cloudflare Pages serves a complete HTML file with body content
+ *  instead of an RSC streaming payload that requires JS to render. */
+export const dynamic = "force-static";
+
 export const metadata = {
   title: "Bài học – Pé Ti",
 };

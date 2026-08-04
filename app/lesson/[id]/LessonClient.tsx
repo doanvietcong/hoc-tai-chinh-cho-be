@@ -144,7 +144,20 @@ export default function LessonClient({ lessonId }: { lessonId: string }) {
     setBusy(false);
   }, [lessonId]);
 
-  if (!mounted || !lesson || !user) return null;
+  // Trước khi client mount: render loading skeleton để trang KHÔNG bị trắng
+  // (Server-side / Cloudflare serve HTML, browser cần thấy gì đó).
+  // Sau khi mount: check user/lesson rồi mới render full UI.
+  if (!mounted) {
+    return (
+      <main className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
+        <div className="text-center space-y-4">
+          <div className="inline-block w-12 h-12 border-4 border-brand-green border-t-transparent rounded-full animate-spin" />
+          <p className="text-text-muted text-sm font-semibold">Đang tải bài học…</p>
+        </div>
+      </main>
+    );
+  }
+  if (!lesson || !user) return null;
 
   const currentQ = lesson.questions[qIdx];
   const totalQ = lesson.questions.length;
